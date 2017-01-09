@@ -12,13 +12,11 @@
 </div>
 
 <!-- hidden fields -->
-<div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle" value="${reportTitle}">
 <input type="hidden" id="reportUrl" name="reportUrl" value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination" value="screen">
 <!--  -->
-</div>
 
 <br />
 <br />
@@ -68,16 +66,11 @@
 </div>
 
 <script type="text/javascript">
-	$("hiddenDiv").hide();
 	makeAllInputFieldsUpperCase();
 	$("txtLineCd").focus();
 	$("btnPrintReport").disable();
 	$("searchForPolicy").observe("click", function(){
 		if (isPolicyNoFieldsOk()){
-			var userInput = "96 " + $F("txtLineCd").trim().toUpperCase() + " "
-			+ $F("txtIssCd").trim().toUpperCase();
-			if (!checkUserAccess(userInput, userAccessObj,
-					userAccessObjLength)) {showMessageBox("User has no access.", "E");}else{
 			new Ajax.Updater('infoOtherBondDoc', contextPath
 					+ '/OutputController', {
 				evalScripts : true,
@@ -104,7 +97,6 @@
 						showMessageBox("No data found.","E");
 				}
 				});
-				}
 		} else {
 			showMessageBox("Please input required fields","I");
 			$("txtSublineCd").focus();	
@@ -135,8 +127,8 @@
 		if (!isPolicyNoFieldsOk()) {
 			showMessageBox("Please input required fields","I");
 		} else {
-			new Ajax.Request(
-					//"mainContents",
+			new Ajax.Updater(
+					"mainContents",
 					contextPath
 							+ "/RiBinderController",
 					{
@@ -156,8 +148,7 @@
 						onCreate : showNotice("Generating report. Please wait..."),
 						onComplete : function(response) {
 							hideNotice("");
-							$("hiddenDiv").update(response.responseText);
-							//outputToPDF($F("reportUrl"), $F("reportTitle"), $F("errorMsg"));
+							outputToPDF($F("reportUrl"), $F("reportTitle"), $F("errorMsg"));
 						}
 					});
 		}

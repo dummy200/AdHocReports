@@ -17,7 +17,6 @@
 
 
 <!-- hidden fields -->
-<div id="hiddenDiv">
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
@@ -37,7 +36,6 @@
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
 <input type="hidden" id="signatory" name="signatory" value="">
-</div>
 <!-- end hidden fields -->
 
 <br />
@@ -399,7 +397,6 @@
 </div>
 
 <script type="text/javascript">
-	$("hiddenDiv").hide();
 	makeInputFieldUpperCase();
 	$("txtSublineCd").focus();
 	$("btnPrint").disable();
@@ -727,7 +724,6 @@
 								onCreate : showNotice("Generating report. Please wait..."),
 								onComplete : function(response) {
 									printOutputPdf();
-									//$("hiddenDiv").update(response.responseText);
 									}
 								});
 							}

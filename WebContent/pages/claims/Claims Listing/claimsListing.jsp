@@ -18,7 +18,6 @@
 
 
 <!-- hidden fields -->
-<div id="hiddenDiv">
 <input type="hidden" id="testClaimId" name="testClaimId"
 	value="${testClaimId}">
 <input type="hidden" id="testRecoveryId" name="testRecoveryId"
@@ -39,7 +38,7 @@
 	value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
-</div>
+<%-- <input type="text" id="letterType" name= "letterType" value = "${letterType}"> --%>
 <!-- end hidden fields -->
 
 <br />
@@ -154,30 +153,15 @@
 						</tr>
 						<tr>
 							<td class="rightAligned">Line</td>
-							<!-- <td class="leftAligned">
-								<input id="txtLineCd" class="leftAligned upper" type="text" name="capsField" style="width: 80%;" value="" title="Line Code" />
-							</td> -->
-							<td class="leftAligned"><select name="selLine" id="selLine"
-								style="width: 80%;">
-									<option value=""></option>
-									<c:forEach var="line" items="${ lineList }">
-										<option value="${line.lineCd}">${line.lineName}</option>
-									</c:forEach>
-							</select>
+							<td class="leftAligned">
+								<input id="txtLineCd" class="leftAligned upper" type="text" name="capsField" style="width: 28%;" value="" title="Line Code" />
 							</td>
 						</tr>
 						<tr>
 							<td class="rightAligned">Branch</td>
-							<!-- <td class="leftAligned">
+							<td class="leftAligned">
 								<input id="txtBranchCd" class="leftAligned upper" type="text" name="capsField" style="width: 28%;" value="" title="Line Code" />
-							</td> -->
-							<td class="leftAligned"><select name="selBranch"
-								id="selBranch" style="width: 80%;">
-									<option value=""></option>
-									<c:forEach var="branch" items="${ branchList }">
-										<option value="${branch.issCd}">${branch.issName}</option>
-									</c:forEach>
-							</select>
+							</td>
 						</tr>
 						<tr>
 							<td class="rightAligned">Processor</td>
@@ -288,7 +272,6 @@
 </div>
 
 <script type="text/javascript">
-	$("hiddenDiv").hide();
 	var page = $F("page");
 	var reportName = 'CLM_ASOF_LD_PER_PROCESSOR_DET';
 	var reportType = 1;
@@ -561,13 +544,13 @@
 						var txtAsOfDate = $F("txtAsOfDate");
 						var txtFromDate = $F("txtFromDate");
 						var txtToDate = $F("txtToDate");
-						var txtLineCd = $F("selLine");//$F("txtLineCd");
-						var txtBranchCd = $F("selBranch");//$F("txtBranchCd");
+						var txtLineCd = $F("txtLineCd");
+						var txtBranchCd = $F("txtBranchCd");
 						var txtUserId = $F("txtUserId");
 						toggleReportName(basedOn);
 						if(checkDate(txtFromDate,txtToDate,txtAsOfDate)){
-							new Ajax.Request(
-									//"mainContents",
+							new Ajax.Updater(
+									"mainContents",
 									contextPath + "/ClaimsListingController",
 									{
 										evalScripts : true,
@@ -585,8 +568,7 @@
 										},
 										onCreate : showNotice("Generating report. Please wait..."),
 										onComplete : function(response) {
-											//printOutputPdf();
-											$("hiddenDiv").update(response.responseText);
+											printOutputPdf();
 										}
 									});
 						}/* else

@@ -8,8 +8,8 @@
 <input type="hidden" id="userModuleList" name="userModuleList" value='${userModuleList}'> --%>
 	<jsp:include page="/pages/userAccess.jsp"></jsp:include>
 </div>
- <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}"> 
-<%--<input type="hidden" id="adhocUser" name="adhocUser" value="CPIRALPH">--%>
+<%--  <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">  --%>
+<input type="hidden" id="adhocUser" name="adhocUser" value="CPIRALPH">
 
 <script type="text/javascript">
 	//init user access
@@ -230,7 +230,7 @@
 		//checkUserAccess2('FCLMLSTAGE', moduleIdObjLength, userModuleObj,"claimsListing","/pages/claims/Claims Listing/claimsListing.jsp","Claims Listing/Aging per Processor");
 		checkUserAccess2('FCLMLSTAGE', moduleIdObjLength, userModuleObj,
 				"claimsListing",
-				"/ClaimsListingController?action=toClaimsListingPage&tranCd=93&userId="+userId,
+				"/ClaimsListingController?action=toClaimsListingPage",
 				"Claims Listing/Aging per Processor");
 		checkUserAccess2('MOTORSHOP', moduleIdObjLength, userModuleObj,
 				"lossesPaidMotor", "/pages/claims/Losses Paid/lossesPaid.jsp",

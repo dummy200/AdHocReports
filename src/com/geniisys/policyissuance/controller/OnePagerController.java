@@ -170,8 +170,6 @@ public class OnePagerController extends HttpServlet {
 
 				if(page.equals("12PlanOnePager")){
 					policyId = (Integer) gipiPolbasicService.fetchTpPolicyId(request);
-				}else if(page.equals("ClgOnePager") && lineCd.equals("FI")){
-					policyId = (Integer) gipiPolbasicService.fetchClgPolicyId(request);
 				}else{
 					policyId = (Integer) gipiPolbasicService.fetchPolicyId(request);
 				}
@@ -294,7 +292,7 @@ public class OnePagerController extends HttpServlet {
 				setRequestPerPage(page, request);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/policy issuance/one pager/hiddenDiv.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(onePagerPage);
 				dispatcher.forward(request, response);
 			}
 		}
@@ -374,7 +372,7 @@ public class OnePagerController extends HttpServlet {
 				setRequestPerPage(page, request);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/policy issuance/one pager/hiddenDiv.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(onePagerPage);
 				dispatcher.forward(request, response);
 			}
 		}

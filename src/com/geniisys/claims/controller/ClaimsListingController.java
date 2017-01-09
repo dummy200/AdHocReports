@@ -27,16 +27,13 @@ import com.geniisys.claims.service.McSwornService;
 import com.geniisys.claims.service.impl.DemandLetterServiceImpl;
 import com.geniisys.claims.service.impl.McSwornServiceImpl;
 import com.geniisys.common.entity.AccountingEntry;
-import com.geniisys.common.entity.Branch;
 import com.geniisys.common.entity.Line;
 import com.geniisys.common.service.AccountingEntryService;
 import com.geniisys.common.service.BranchService;
-import com.geniisys.common.service.IntermediaryService;
 import com.geniisys.common.service.LineService;
 import com.geniisys.common.service.TariffService;
 import com.geniisys.common.service.impl.AccountingEntryServiceImpl;
 import com.geniisys.common.service.impl.BranchServiceImpl;
-import com.geniisys.common.service.impl.IntermediaryServiceImpl;
 import com.geniisys.common.service.impl.LineServiceImpl;
 import com.geniisys.common.service.impl.TariffServiceImpl;
 import com.geniisys.util.ConnectionUtil;
@@ -69,20 +66,6 @@ public class ClaimsListingController extends HttpServlet{
 		String page = "/pages/claims/Claims Listing/claimsListing.jsp";
 		
 		if (action.equals("toClaimsListingPage")) {
-			LineService lineService = new LineServiceImpl();
-			BranchService branchService = new BranchServiceImpl();
-
-			List<Line> lineList = null;
-			List<Branch> branchList = null;
-			try {
-				lineList = (List<Line>) lineService.getLinesByUserAndTranCd(request);
-				branchList = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
-				request.setAttribute("lineList", lineList);
-				request.setAttribute("branchList", branchList);
-			} catch (SQLException e) {
-				errorMsg = e.getMessage();
-			}
-			
 			request.setAttribute("errorMsg", errorMsg);
 
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
@@ -136,7 +119,7 @@ public class ClaimsListingController extends HttpServlet{
 				request.setAttribute("reportTitle", reportName);
 				
 				//redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Claims Listing/hiddenDiv.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
             	dispatcher.forward(request,response);
 			}
 		}

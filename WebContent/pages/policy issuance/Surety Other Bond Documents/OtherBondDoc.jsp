@@ -439,11 +439,7 @@
 	var reportName = "REP_WRITPOSS_BOND";
 	var path = "policyissuance/reports/";
 	$("btnPrintReport").observe("click", function() {
-		var userInput = "95 " +$F("txtLineCd").trim().toUpperCase() + " " + $F("txtIssCd").trim().toUpperCase();
-		if(!checkUserAccess(userInput,userAccessObj, userAccessObjLength)){
-			//alert("User has no access.");
-			showMessageBox("User has no access.", "E");
-		}else if (!isPolicyNoFieldsOk()) {
+		if (!isPolicyNoFieldsOk()) {
 			showMessageBox("Please input required fields","I");
 		}else {
 			new Ajax.Updater(

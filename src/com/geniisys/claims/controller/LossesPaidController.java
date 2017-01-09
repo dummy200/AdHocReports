@@ -85,7 +85,7 @@ public class LossesPaidController extends HttpServlet {
 				request.setAttribute("reportTitle", reportName);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Losses Paid/hiddenDiv.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(PAGE);
 				dispatcher.forward(request, response);
 			}
 		}
