@@ -17,6 +17,7 @@
 
 
 <!-- hidden fields -->
+<div id="hiddenDiv">
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
@@ -31,8 +32,8 @@
 	value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
-
 <input type="hidden" id="signatory" name="signatory" value="">
+</div>
 <!-- end hidden fields -->
 
 <br />
@@ -396,6 +397,7 @@
 </div>
 
 <script type="text/javascript">
+$("hiddenDiv").hide();
 makeInputFieldUpperCase();
 $("txtSublineCd").focus();
 $("btnPrint").disable();
@@ -715,6 +717,7 @@ function toggletxtOthers(){
 									chkBox12 :  $("chkBox12").checked ? "Y" : "N",	
 									chkBox13 : $("chkBox13").checked ? "Y" : "N",
 									chkBox14 : $("chkBox14").checked ? "Y" : "N",
+									chkVoucher : $F("txtCheckVoucher2"),
 									chkBox15 : $("chkBox15").checked ? "Y" : "N",
 									chkBox15a : $("chkBox15").checked ? $F("txtFromDate") : "",
 									chkBox15b : $("chkBox15").checked ? $F("txtToDate") : "",
@@ -730,6 +733,7 @@ function toggletxtOthers(){
 								onCreate : showNotice("Generating report. Please wait..."),
 								onComplete : function(response) {
 									printOutputPdf();
+									//$("hiddenDiv").update(response.responseText);
 									}});
 							}
 				}

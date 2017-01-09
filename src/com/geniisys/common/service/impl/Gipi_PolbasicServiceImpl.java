@@ -56,7 +56,19 @@ public class Gipi_PolbasicServiceImpl implements Gipi_PolbasicService {
 		Integer polSeqNo = Integer.parseInt(request.getParameter("polSeqNo").trim());
 		Integer renewNo = Integer.parseInt(request.getParameter("renewNo").trim());
 		PolicyNo policyNo = new PolicyNo(lineCd,sublineCd,issCd,issueYY,polSeqNo,renewNo);
-		return this.getGipi_polbasicDAO().fetchTpPolicy(policyNo);
+		return this.getGipi_polbasicDAO().fetchTpPolicyId(policyNo);
+	}
+
+	@Override
+	public Integer fetchClgPolicyId(HttpServletRequest request) throws SQLException {
+		String lineCd = request.getParameter("lineCd").toUpperCase().trim();
+		String sublineCd = request.getParameter("sublineCd").toUpperCase().trim();
+		String issCd = request.getParameter("issCd").toUpperCase().trim();
+		Integer issueYY = Integer.parseInt(request.getParameter("issueYY").trim());
+		Integer polSeqNo = Integer.parseInt(request.getParameter("polSeqNo").trim());
+		Integer renewNo = Integer.parseInt(request.getParameter("renewNo").trim());
+		PolicyNo policyNo = new PolicyNo(lineCd,sublineCd,issCd,issueYY,polSeqNo,renewNo);
+		return this.getGipi_polbasicDAO().fetchClgPolicyId(policyNo);
 	}
 
 

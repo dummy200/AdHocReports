@@ -230,7 +230,7 @@
 		//checkUserAccess2('FCLMLSTAGE', moduleIdObjLength, userModuleObj,"claimsListing","/pages/claims/Claims Listing/claimsListing.jsp","Claims Listing/Aging per Processor");
 		checkUserAccess2('FCLMLSTAGE', moduleIdObjLength, userModuleObj,
 				"claimsListing",
-				"/ClaimsListingController?action=toClaimsListingPage",
+				"/ClaimsListingController?action=toClaimsListingPage&tranCd=93&userId="+userId,
 				"Claims Listing/Aging per Processor");
 		checkUserAccess2('MOTORSHOP', moduleIdObjLength, userModuleObj,
 				"lossesPaidMotor", "/pages/claims/Losses Paid/lossesPaid.jsp",

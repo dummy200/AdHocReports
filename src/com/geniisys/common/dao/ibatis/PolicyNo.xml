@@ -72,16 +72,17 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 	
 	<select id="getPolicyIdNonRenew" resultClass="java.lang.Integer"
 		parameterMap="policyNoParamMap">
-		SELECT policy_id FROM GIPI_POLBASIC
-		WHERE LINE_CD =NVL(?,LINE_CD)
-		AND SUBLINE_CD = NVL(?,SUBLINE_CD)
-		AND ISS_CD = NVL(?,ISS_CD)
-		AND ISSUE_YY = NVL(?,ISSUE_YY)
-		AND POL_SEQ_NO = NVL(?,POL_SEQ_NO)
-		AND RENEW_NO =
-		NVL(?,RENEW_NO)
-		AND ENDT_YY = 0
-		AND ENDT_SEQ_NO = 0
+		SELECT a.policy_id FROM GIPI_POLBASIC a, GIEX_EXPIRY b
+		WHERE a.LINE_CD =NVL(?,a.LINE_CD)
+		AND a.SUBLINE_CD = NVL(?,a.SUBLINE_CD)
+		AND a.ISS_CD = NVL(?,a.ISS_CD)
+		AND a.ISSUE_YY = NVL(?,a.ISSUE_YY)
+		AND a.POL_SEQ_NO = NVL(?,a.POL_SEQ_NO)
+		AND a.RENEW_NO =
+		NVL(?,a.RENEW_NO)
+		AND a.ENDT_YY = 0
+		AND a.ENDT_SEQ_NO = 0
+		AND a.policy_id = b.policy_id
 	</select>
 
 	<!-- <select id="getPolicyId" resultClass="java.lang.Integer" parameterMap="policyNoParamMap"> 

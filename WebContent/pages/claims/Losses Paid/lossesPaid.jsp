@@ -18,6 +18,7 @@
 
 
 <!-- hidden fields -->
+<div id="hiddenDiv">
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
@@ -30,6 +31,7 @@
 	value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
+</div>
 <%-- <input type="text" id="letterType" name= "letterType" value = "${letterType}"> --%>
 <!-- end hidden fields -->
 
@@ -112,6 +114,7 @@
 </div>
 
 <script type="text/javascript">
+	$("hiddenDiv").hide();
 	var page = $F("page");
 	var reportName = 'GICLR025_PCI';
 	makeInputFieldUpperCase();
@@ -141,8 +144,8 @@
 										"\"From Date\" must be earlier from \"To Date\".",
 										"E");
 							} else {
-								new Ajax.Updater(
-										"mainContents",
+								new Ajax.Request(
+										//"mainContents",
 										contextPath + "/LossesPaidController",
 										{
 											evalScripts : true,
@@ -157,7 +160,8 @@
 											},
 											onCreate : showNotice("Generating report. Please wait..."),
 											onComplete : function(response) {
-												printOutputPdf();
+												//printOutputPdf();
+												$("hiddenDiv").update(response.responseText);
 											}
 										});
 							}
@@ -177,8 +181,8 @@
 										"\"From Date\" must be earlier from \"To Date\".",
 										"E");
 							} else {
-								new Ajax.Updater(
-										"mainContents",
+								new Ajax.Request(
+										//"mainContents",
 										contextPath + "/LossesPaidController",
 										{
 											evalScripts : true,
@@ -193,7 +197,8 @@
 											},
 											onCreate : showNotice("Generating report. Please wait..."),
 											onComplete : function(response) {
-												printOutputPdf();
+												//printOutputPdf();
+												$("hiddenDiv").update(response.responseText);
 											}
 										});
 							}
