@@ -121,6 +121,7 @@ public class TransmittalController extends HttpServlet{
 			String chkBox12 = request.getParameter("chkBox12");
 			String chkBox13 = request.getParameter("chkBox13");
 			String chkBox14 = request.getParameter("chkBox14");
+			String chkVoucher = request.getParameter("chkVoucher");
 			String chkBox15 = request.getParameter("chkBox15");
 			String chkBox15a = request.getParameter("chkBox15a");
 			String chkBox15b = request.getParameter("chkBox15b");
@@ -159,6 +160,7 @@ public class TransmittalController extends HttpServlet{
 			parameters.put("P_NC_TAG12", chkBox12);
 			parameters.put("P_NC_TAG13", chkBox13);
 			parameters.put("P_NC_TAG14", chkBox14);
+			parameters.put("P_CHECK_VOUCHER", chkVoucher);
 			parameters.put("P_NC_TAG15", chkBox15);
 			parameters.put("P_DS_FROM", chkBox15a);
 			parameters.put("P_DS_TO", chkBox15b);
@@ -209,6 +211,7 @@ public class TransmittalController extends HttpServlet{
 				
 				//redirect to right line
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/TransmittalController?action=toTransmittalPage");
+				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Transmittal/hiddenDiv.jsp");
             	dispatcher.forward(request,response);
 			}
 		}

@@ -109,7 +109,7 @@ public class RiBinderController extends HttpServlet{
 				request.setAttribute("reportTitle", reportName);
 				
 				//redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectPage);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/reinsurance/ri binder/hiddenDiv.jsp");
             	dispatcher.forward(request,response);
 			}
 		}

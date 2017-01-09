@@ -192,13 +192,18 @@ public class OfferLetterController extends HttpServlet {
 				exporter.exportReport();
 				JasperExportManager.exportReportToPdfFile(print, outputPdf);
 				// try excel
-				/*JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parameters, conn);
-
-				JRXlsxExporter exp = new JRXlsxExporter();
-				exp.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
-				exp.setParameter(JRXlsExporterParameter.OUTPUT_FILE_NAME, outputXls);
-
-				exp.exportReport();*/
+				/*
+				 * JasperPrint jasperPrint =
+				 * JasperFillManager.fillReport(fileName, parameters, conn);
+				 * 
+				 * JRXlsxExporter exp = new JRXlsxExporter();
+				 * exp.setParameter(JRXlsExporterParameter.JASPER_PRINT,
+				 * jasperPrint);
+				 * exp.setParameter(JRXlsExporterParameter.OUTPUT_FILE_NAME,
+				 * outputXls);
+				 * 
+				 * exp.exportReport();
+				 */
 			} catch (JRException e) {
 				System.out.println("jre exception: " + e.getMessage().toString());
 				errorMsg = "jre exception: " + e.getMessage().toString();

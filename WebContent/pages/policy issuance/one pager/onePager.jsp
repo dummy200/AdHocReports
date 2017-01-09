@@ -17,17 +17,18 @@
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
-<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
-<input type="hidden" id="reportTitle" name="reportTitle"
-	value="${reportTitle}">
-<input type="hidden" id="reportName" name="reportName"
-	value="${reportName}">
-<input type="hidden" id="reportBatch" name="reportBatch"
-	value="${reportBatch}">
-<input type="hidden" id="reportUrl" name="reportUrl"
-	value="${reportUrl}">
-<input type="hidden" id="selDestination" name="selDestination"
-	value="screen">
+<input type="hidden" id="tpTag" name="tpTag" value="${tag}">
+
+<div id="hiddenDiv">
+	<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
+	<input type="hidden" id="reportTitle" name="reportTitle"
+		value="${reportTitle}"> <input type="hidden" id="reportName"
+		name="reportName" value="${reportName}"> <input type="hidden"
+		id="reportBatch" name="reportBatch" value="${reportBatch}"> <input
+		type="hidden" id="reportUrl" name="reportUrl" value="${reportUrl}">
+	<input type="hidden" id="selDestination" name="selDestination"
+		value="screen">
+</div>
 <!-- end hidden fields -->
 
 <br />
@@ -35,10 +36,6 @@
 <div id="outerDiv" name="outerDiv">
 	<div id="innerDiv" name="outerDiv">
 		<label id="pageTitle">${pageTitle}</label>
-		<!--  <span class="refreshers"
-			style="margin-top: 0;"> <label id="reloadForm"
-			name="reloadForm" title="Reload Form">Reload Form</label>
-		</span> -->
 	</div>
 </div>
 <div id="renewalNoticeDetailsDiv">
@@ -67,7 +64,7 @@
 											<option>${lineCd}</option>
 										</c:forEach>
 								</select> <input id="txtSublineCd" class="leftAligned" type="text"
-									name="capsField" style="width: 15%;" value="CLG"
+									name="capsField" style="width: 15%;" value=""
 									title="Subline Code" maxlength="7" /> <input id="txtIssCd"
 									class="leftAligned" type="text" name="capsField"
 									style="width: 8%;" value="" title="Issue Source Code"
@@ -306,13 +303,12 @@
 							maxlength="2" /></td>
 					</tr>
 					<c:if test='${tag eq "Y"}'>
-					<tr>
-						<td class="rightAligned" style="width: 25%;">User</td>
-						<td class="leftAligned" colspan="5"><input
-							id="batchTxtUserId" class="leftAligned" type="text"
-							name="capsField" style="width: 15%;" value=""
-							maxlength="8" /></td>
-					</tr>
+						<tr>
+							<td class="rightAligned" style="width: 25%;">User</td>
+							<td class="leftAligned" colspan="5"><input
+								id="batchTxtUserId" class="leftAligned" type="text"
+								name="capsField" style="width: 15%;" value="" maxlength="8" /></td>
+						</tr>
 					</c:if>
 					<tr>
 						<td class="rightAligned" style="width: 10%;"></td>
@@ -330,14 +326,17 @@
 				</table>
 			</div>
 			<%-- </c:if> --%>
-			<div class="sectionDiv" id="issueDiv" style="width: 97%; margin-left: 8px; margin-top: 9px; float: left;">
+			<div class="sectionDiv" id="issueDiv"
+				style="width: 97%; margin-left: 8px; margin-top: 9px; float: left;">
 				<table style="margin-top: 10px; width: 100%;">
 					<tr>
-						<td class="rightAligned" style="width: 25%; margin-left: 100px;"><label for="txtIssuePlace"
-							style="margin-top: 3px; margin-left: 140px;">Issued
+						<td class="rightAligned" style="width: 25%; margin-left: 100px;"><label
+							for="txtIssuePlace" style="margin-top: 3px; margin-left: 140px;">Issued
 								At</label></td>
-						<td class="leftAligned" colspan="5"><input id="txtIssuePlace" class="required" type="text" name="capsField" style="width: 55%; margin-left: 5px;" title="Issued Place" maxlength="100"
-							placeholder="eg. MAKATI CITY, PHILIPPINES" /></td>
+						<td class="leftAligned" colspan="5"><input id="txtIssuePlace"
+							class="required" type="text" name="capsField"
+							style="width: 55%; margin-left: 5px;" title="Issued Place"
+							maxlength="100" placeholder="eg. MAKATI CITY, PHILIPPINES" /></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -364,6 +363,7 @@
 
 
 <script type="text/javascript">
+	$("hiddenDiv").hide();
 	var page = $F("page");
 
 	var lineCd = '';
@@ -372,7 +372,34 @@
 		lineCd = $F("lineCd");
 	} else {
 		lineCd = $F("selLineCd");
+		$("txtIssCd").disable();
 		$("selBranchLineCd").disable();
+	}
+
+	//document.getElementById('selLineCd').addEventListener('change', clgChange(), false);
+
+	if (page == 'ClgOnePager' || page == 'PsBankOnePager'
+			|| page == '12PlanOnePager') {
+		clgChange();
+		Event.observe($("selLineCd"), 'change', clgChange);
+	}
+
+	function clgChange() {
+		if (page == 'ClgOnePager') {
+			$("txtIssCd").disable();
+			var val = $F("selLineCd");
+			if (val == 'FI') {
+				$("txtSublineCd").value = '';
+				$("txtSublineCd").enable();
+				$("txtIssCd").disable();
+				$("txtIssCd").value = 'FM';
+			} else {
+				$("txtSublineCd").value = 'CLG';
+				$("txtSublineCd").disable();
+				$("txtIssCd").value = '';
+				$("txtIssCd").enable();
+			}
+		}
 	}
 
 	var fromCalendar = new dhtmlXCalendarObject({
@@ -422,19 +449,23 @@
 			} else {
 				$("selLineCd").enable();
 				$("selBranchLineCd").disable();
-				if(page == 'ClgOnePager'){
+				/* if (page == 'ClgOnePager') {
 					$("txtSublineCd").disable();
 					$("txtSublineCd").value = 'CLG';
-				}else
-					$("txtSublineCd").enable();
-				
-				if(page == 'PsBankOnePager' || page == '12PlanOnePager'){
+				} else
+					$("txtSublineCd").enable(); */
+
+				if (page == 'ClgOnePager' || page == 'PsBankOnePager'
+						|| page == '12PlanOnePager') {
 					$("txtIssCd").disable();
-					if(page == 'PsBankOnePager'){
+					if (page == 'PsBankOnePager') {
 						$("txtIssCd").value = 'PS';
-					}else
+					} else if (page == '12PlanOnePager')
 						$("txtIssCd").value = 'TP';
-				}else
+					if (page == 'ClgOnePager') {
+						clgChange();
+					}
+				} else
 					$("txtIssCd").enable();
 			}
 
@@ -483,11 +514,11 @@
 			} else {
 				$("selLineCd").disable();
 				$("selBranchLineCd").enable();
-				if(page == 'ClgOnePager'){
+				/* if (page == 'ClgOnePager') {
 					$("batchTxtSublineCd").disable();
 					$("batchTxtSublineCd").value = 'CLG';
-				}else
-					$("batchTxtSublineCd").enable();
+				} else
+					$("batchTxtSublineCd").enable(); */
 			}
 
 			$("txtSublineCd").disable();
@@ -614,8 +645,7 @@
 								if (validateInput(lineCd)) {
 									new Ajax.Updater(
 											'infoDiv',
-											contextPath
-													+ '/OnePagerController',
+											contextPath + '/OnePagerController',
 											{
 												evalScripts : true,
 												method : "POST",
@@ -655,7 +685,7 @@
 						$("txtSublineCd").focus();
 					});
 
-	 function validateInput(lineCd) {
+	function validateInput(lineCd) {
 		var sublineCd = $F("txtSublineCd").trim().toUpperCase();
 		var renewNo = $F("txtRenewNo").trim();
 		var issCd = $F("txtIssCd").trim().toUpperCase();
@@ -664,7 +694,7 @@
 		var mcClg = 'MCCLG0';
 		var fiClg = 'FICLG0';
 
-		if (issCd != 'TP') {
+		/* if (issCd != 'TP') {
 			if (lineCd == 'MC' || lineCd == 'FI') {
 				if (sublineCd == 'CLG' && renewNo == '0') {
 					isValid = true;
@@ -686,9 +716,9 @@
 			} else if (renewNo == '0')
 				isValid = false;
 		} else if (renewNo == '0')
-			isValid = false;
-		if(page == '12PlanOnePager' || page == 'regFI'){
-			if(renewNo == '0'){
+			isValid = false; */
+		if (page == '12PlanOnePager' || page == 'regFI') {
+			if (renewNo == '0') {
 				isValid = false;
 			}
 		}
@@ -715,8 +745,8 @@
 		var fromDate = $F("txtFromDate");
 		var toDate = $F("txtToDate");
 		var batchIssCd = $F("batchTxtIssCd");
-		if (checkBlankNull(fromDate)
-				|| checkBlankNull(toDate) || checkBlankNull(batchLineCd)) {
+		if (checkBlankNull(fromDate) || checkBlankNull(toDate)
+				|| checkBlankNull(batchLineCd)) {
 			return false;
 		} else
 			return true;
@@ -785,7 +815,7 @@
 								}
 								if (batchLineCd == 'FI') {
 									reportBatch = 'POLICY_DOCUMENT_REG_TP_ONEPAGER_BATCH';
-								} else if (lineCd == 'MC') {
+								} else if (batchLineCd == 'MC') {
 									reportBatch = 'POLICY_DOCUMENT_12PMTR_ONEPAGER_BATCH';
 								} else {
 									reportBatch = 'POLICY_DOCUMENT_PA_TP_ONEPAGER_BATCH';
@@ -800,8 +830,8 @@
 									showMessageBox(
 											"Please input required fields", "I");
 								} else {
-									new Ajax.Updater(
-											"mainContents",
+									new Ajax.Request(
+											//"mainContents",
 											contextPath + "/OnePagerController",
 											{
 												evalScripts : true,
@@ -824,11 +854,17 @@
 												},
 												onCreate : showNotice("Generating report. Please wait..."),
 												onComplete : function(response) {
-													printOutputPdf();
+													//printOutputPdf();
+													$("hiddenDiv")
+															.update(
+																	response.responseText);
 												}
 											});
 								}
 							} else if (printOptionVal == "B") {
+								if ($F("tpTag") == 'Y') {
+									var batchUserId = $F("batchTxtUserId");
+								}
 								if (compareDate($F("txtFromDate"),
 										$F("txtToDate"))) {
 									showMessageBox(
@@ -840,8 +876,8 @@
 												"Please input required fields",
 												"I");
 									} else {
-										new Ajax.Updater(
-												"mainContents",
+										new Ajax.Request(
+												//"mainContents",
 												contextPath
 														+ "/OnePagerController",
 												{
@@ -858,14 +894,17 @@
 														sublineCd : $F("batchTxtSublineCd"),
 														issCd : $F("batchTxtIssCd"),
 														issueCd : $F("txtIssCd"),
-														userId : $F("batchTxtUserId"),
+														userId : batchUserId,
 														issuePlace : $F("txtIssuePlace"),
 														pdfSw : pdfSw
 													},
 													onCreate : showNotice("Generating report. Please wait..."),
 													onComplete : function(
 															response) {
-														printOutputPdf();
+														//printOutputPdf();
+														$("hiddenDiv")
+																.update(
+																		response.responseText);
 													}
 												});
 									}

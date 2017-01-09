@@ -10,5 +10,6 @@ public interface Gipi_PolbasicDAO {
 	List<Gipi_Polbasic> fetchRefPolNo(Integer policyId) throws SQLException;
 	String getBondDtl(Integer policyID) throws SQLException;
 	Integer fetchPolicyId(PolicyNo policyNo) throws SQLException;
-	Integer fetchTpPolicy(PolicyNo policyNo) throws SQLException;
+	Integer fetchTpPolicyId(PolicyNo policyNo) throws SQLException;
+	Integer fetchClgPolicyId(PolicyNo policyNo) throws SQLException;
 }

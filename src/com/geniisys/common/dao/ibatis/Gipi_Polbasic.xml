@@ -45,9 +45,10 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		NVL(?,RENEW_NO)
 		AND ENDT_YY = 0
 		AND ENDT_SEQ_NO = 0
+		AND pol_flag NOT IN ('4','5')
 	</select>
 	
-	<select id="fetchTpPolicy" resultClass="java.lang.Integer" parameterMap="policyNoParamMap">
+	<select id="fetchTpPolicyId" resultClass="java.lang.Integer" parameterMap="policyNoParamMap">
 		SELECT policy_id FROM GIPI_POLBASIC
 		WHERE LINE_CD =NVL(?,LINE_CD)
 		AND SUBLINE_CD = NVL(?,SUBLINE_CD)
@@ -59,6 +60,21 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		AND ENDT_YY = 0
 		AND ENDT_SEQ_NO = 0
 		AND pol_flag NOT IN ('4','5')
+	</select>
+	
+	<select id="fetchClgPolicyId" resultClass="java.lang.Integer" parameterMap="policyNoParamMap">
+		SELECT a.policy_id FROM GIPI_POLBASIC a, GIPI_COMM_INVOICE b
+        WHERE a.LINE_CD =NVL(:lineCd,a.LINE_CD)
+        AND a.SUBLINE_CD = NVL(:sublineCd,a.SUBLINE_CD)
+        AND a.ISS_CD = NVL(:issCd,a.ISS_CD)
+        AND a.ISSUE_YY = NVL(:issueYy,a.ISSUE_YY)
+        AND a.POL_SEQ_NO = NVL(:polSeqNo,a.POL_SEQ_NO)
+        AND a.RENEW_NO =
+        NVL(:renewNo,a.RENEW_NO)
+        AND a.ENDT_YY = 0
+        AND a.ENDT_SEQ_NO = 0
+        AND a.policy_id = b.policy_id
+        AND b.intrmdry_intm_no = 3858
 	</select>
 	
 	
