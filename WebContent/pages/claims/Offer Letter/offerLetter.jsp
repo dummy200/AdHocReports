@@ -754,8 +754,8 @@
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+					window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					//show excel try
 					//window.open(contextPath + "/OutputController?action=showExcel&reportXls=" + reportXls);
 					hideNotice("");

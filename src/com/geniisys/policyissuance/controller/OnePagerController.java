@@ -62,6 +62,7 @@ public class OnePagerController extends HttpServlet {
 			throws ServletException, IOException {
 		String action = request.getParameter("action");
 		String onePagerPage = "/pages/policy issuance/one pager/onePager.jsp";
+		String tranCd = "95";
 		
 		// menu redirect page
 		if (action.equals("toMC")) {
@@ -239,8 +240,11 @@ public class OnePagerController extends HttpServlet {
 				// parameters.put("P_POLICY_ID", policyId);
 				parameters.put("P_POLICY_ID", polId);
 				parameters.put("P_USER", userId);
+				//parameters.put("P_USER_ID", userId);
 				parameters.put("P_PLACE", issuePlace);
 				parameters.put("P_PDF_SW", pdfSw);
+				//parameters.put("P_TRAN_CD", tranCd);
+				
 				if (page.equalsIgnoreCase("OC")) {
 					Integer yearDiff = onePagerService.getYearDiff(policyId);
 					reportName = "POLICY_DOCUMENT_OTHER_OC_ONEPAGER";
@@ -328,10 +332,12 @@ public class OnePagerController extends HttpServlet {
 			parameters.put("P_CRED_BRANCH", issueCd);
 			parameters.put("P_TO_DATE", toDate);
 			parameters.put("P_FROM_DATE", fromDate);
-			parameters.put("P_USER", userId);
+			//parameters.put("P_USER", userId);
+			parameters.put("P_USER_ID", userId);
 			parameters.put("P_DATE_TYPE", dateType);
 			parameters.put("P_PLACE", issuePlace);
 			parameters.put("P_PDF_SW", pdfSw);
+			parameters.put("P_TRAN_CD", tranCd);
 			
 			try {
 				DefaultJasperReportsContext context = DefaultJasperReportsContext.getInstance();

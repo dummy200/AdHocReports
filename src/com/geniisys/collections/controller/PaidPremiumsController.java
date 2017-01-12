@@ -45,6 +45,7 @@ public class PaidPremiumsController extends HttpServlet {
 		String page = "/pages/collections/paid premiums/paidPremiums.jsp";
 		String page2 = "/PaidPremiumsController?action=toPaidPremiumsPage";
 		String reportName = request.getParameter("reportName");
+		String tranCd = "94";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toPaidPremiumsPage")) {
@@ -95,6 +96,7 @@ public class PaidPremiumsController extends HttpServlet {
 			parameters.put("P_CUT_OFF_PARAM", cutOffParam);
 			parameters.put("P_TRAN_FLAG", tranFlag);
 			parameters.put("P_REPORT_TYPE", reportType);
+			parameters.put("P_TRAN_CD", tranCd);
 			
 			System.out.println("fromDate" + fromDate);
 			System.out.println("toDate" + toDate);

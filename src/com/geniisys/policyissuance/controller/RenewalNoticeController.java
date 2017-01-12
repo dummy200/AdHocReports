@@ -56,6 +56,7 @@ public class RenewalNoticeController extends HttpServlet{
 		String action = request.getParameter("action");
 		String renewalNoticePage = "/pages/policy issuance/renewal notice/renewalNotice.jsp";
 		String redirectPage = request.getParameter("redirectPage");
+		String tranCd = "95";
 		
 		//menu redirect page
 		if(action.equals("toMCRenewal")){
@@ -276,6 +277,7 @@ public class RenewalNoticeController extends HttpServlet{
 			parameters.put("P_CONTACT_DETAILS", contacts);
 			parameters.put("P_CONTACT_PERSON", sales);
 			parameters.put("P_PDF_SW", pdfSw);
+			parameters.put("P_TRAN_CD",tranCd);
 			
 			System.out.println(lineCd);
 			System.out.println(sublineCd);

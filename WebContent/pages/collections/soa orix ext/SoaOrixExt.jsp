@@ -19,6 +19,7 @@
 
 <!-- hidden fields -->
 <input type="hidden" id="page" name="page" value="${page}">
+<input type="hidden" id="userId" name="userId" value="${adhocUser}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
 <input type="hidden" id="selDestination" name="selDestination" value="screen">
 <input type="hidden" id="BranchName" value=""> 	
@@ -209,7 +210,8 @@
 											fromDate : $F("txtFromDate"),
 											toDate : $F("txtToDate"),
 											asofDate : $F("selDate"),
-											branch : $F("selBranch")
+											branch : $F("selBranch"),
+											userId : $F("userId")
 										},
 										onCreate : showNotice("Generating report. Please wait..."),
 										onComplete : function(response) {

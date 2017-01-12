@@ -48,6 +48,7 @@ public class CommissionFundController extends HttpServlet {
 		String page = "/pages/collections/commission fund/commissionFund.jsp";
 		String page2 = "/CommissionFundController?action=toCommissionFundPage";
 		String reportName = request.getParameter("reportName");
+		String tranCd = "94";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toCommissionFundPage")) {
@@ -81,6 +82,7 @@ public class CommissionFundController extends HttpServlet {
 			parameters.put("P_TO_DATE", toDate);
 			parameters.put("P_BRANCH", branchCd);
 			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD",tranCd);
 
 			try {
 				Connection conn = ConnectionUtil.getConnection();

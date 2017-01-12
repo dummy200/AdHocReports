@@ -67,6 +67,7 @@ public class ClaimsListingController extends HttpServlet{
 		String action = request.getParameter("action");
 		String redirectPage = request.getParameter("redirectPage");
 		String page = "/pages/claims/Claims Listing/claimsListing.jsp";
+		String tranCd = "93";
 		
 		if (action.equals("toClaimsListingPage")) {
 			LineService lineService = new LineServiceImpl();
@@ -113,6 +114,7 @@ public class ClaimsListingController extends HttpServlet{
 			parameters.put("P_CRED_BRANCH", branchCd);
 			parameters.put("P_USER_ID",userId);
 			parameters.put("P_PROCESSOR", processor);
+			parameters.put("P_TRAN_CD", tranCd);
 			
 			try {
 				Connection conn = ConnectionUtil.getConnection();

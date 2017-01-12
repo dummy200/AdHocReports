@@ -369,12 +369,20 @@ var filterGridBy = "";
 		filterGridBy = "";
 		gridIntm = new dhtmlXGridObject('gridIntermediaryResult');
 		gridIntm.setImagePath(contextPath + '/css/codebase/imgs/');
-		gridIntm.setHeader("Intm No.,#combo_filter, Intermediary Name");
+		//gridIntm.setHeader("Intm No.,#combo_filter, Intermediary Name");
+		if(reportName == 'DEALERS_PROD_REP'){
+			gridIntm.setHeader("Intm No.,Intm Type, Intermediary Name");
+		}else
+			gridIntm.setHeader("Intm No.,#combo_filter, Intermediary Name");
 		gridIntm.setInitWidths("60,60,*");
 		gridIntm.setColAlign("left,left,left");
 		gridIntm.setColTypes("ro,ro,ro");
 		gridIntm.setColSorting("str,str,str");
 		gridIntm.init();
+		/* if(reportName == 'DEALERS_PROD_REP'){
+			alert(filterGridBy);
+			gridIntm.filterBy(1,'DL');
+		} */
 		gridIntm.parse(data,"json");
 		$("gridIntermediaryResult").hide();
 	}
@@ -382,7 +390,7 @@ var filterGridBy = "";
 	$("searchForIntm").observe("click",function() {
 		var parameter = $F("txtIntmSearch");
 		intermediaryNo = '';
-		
+		//alert(filterGridBy);
 		if(!parameter == ''){
 			new Ajax.Request(contextPath +'/PremProductionController',
 					{
@@ -395,6 +403,9 @@ var filterGridBy = "";
 						onComplete : function(response) {
 							hideNotice("");
 							$("intermediaryResultDiv").update(response.responseText);
+							if(reportName == 'DEALERS_PROD_REP'){
+								gridIntm.filterBy(1,filterGridBy);
+							}
 						}
 					});
 		}else{
@@ -587,7 +598,8 @@ var filterGridBy = "";
 											toDate2 : $("rdoComparative").checked ? $F("txtToDate2") : '',
 											bookingMonth : $("rdoBooking").checked ? $F("selMonth") : '',
 											bookingYear : $("rdoBooking").checked ? $F("txtBookingYear") : 0,
-											intmNo : intmNo
+											intmNo : intmNo,
+											userId : $F("userId")
 										},
 										onCreate : showNotice("Generating report. Please wait..."),
 										onComplete : function(response) {

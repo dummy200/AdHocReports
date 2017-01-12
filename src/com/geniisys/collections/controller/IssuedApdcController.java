@@ -45,6 +45,7 @@ public class IssuedApdcController extends HttpServlet {
 		String action = request.getParameter("action");
 		String redirectPage = "/IssuedApdcController?action=IssuedApdc";
 		String page = "/pages/collections/issued apdc/issuedApdc.jsp";
+		String tranCd = "94";
 
 		if (action.equals("IssuedApdc")) {
 			SignatoryService signatoryService = new SignatoryServiceImpl();
@@ -82,6 +83,7 @@ public class IssuedApdcController extends HttpServlet {
 			String checkby2 = request.getParameter("checkby2");
 			String checkby3 = request.getParameter("checkby3");
 			String checkby4 = request.getParameter("checkby4");
+			String userId = request.getParameter("userId");
 
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 
@@ -107,6 +109,8 @@ public class IssuedApdcController extends HttpServlet {
 			parameters.put("P_PRINTED_BY", checkby1);
 			parameters.put("P_NOTED_BY", checkby2);
 			parameters.put("P_RECEIVED_BY", checkby4);
+			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD",tranCd);
 
 			System.out.println(fileName);
 			request.setAttribute("errorMsg", errorMsg);

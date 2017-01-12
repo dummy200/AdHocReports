@@ -12,6 +12,7 @@
 </div>
 
 <!-- hidden fields -->
+<input type="hidden" id="userId" name="userId" value="${adhocUser}">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle" value="${reportTitle}">
 <input type="hidden" id="reportUrl" name="reportUrl" value="${reportUrl}">
@@ -218,7 +219,8 @@
 							address1 :$F("txtAddress1"),
 							address2 :$F("txtAddress2"),
 							linecd : $F("SelLinecd"),
-							re :$F("txtRe")
+							re :$F("txtRe"),
+							userId :$F("userId")
 							
 						},
 						onCreate : showNotice("Generating report. Please wait..."),

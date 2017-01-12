@@ -64,6 +64,7 @@ public class PremProductionController extends HttpServlet {
 		String action = request.getParameter("action");
 		String page = "/pages/underwriting/premium production/premiumProduction.jsp";
 		String page2 = "/PremProductionController?action=toPremProductionPage";
+		String tranCd = "98";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toPremProductionPage")) {
@@ -126,6 +127,7 @@ public class PremProductionController extends HttpServlet {
 			String branchCd = request.getParameter("branchCd");
 			String stringIntmNo = request.getParameter("intmNo");
 			String getVsDate = request.getParameter("getVsDate");
+			String userId = request.getParameter("userId");
 			Integer intmNo;
 			// Integer intmNo =
 			// Integer.parseInt(request.getParameter("intmNo"));
@@ -186,7 +188,9 @@ public class PremProductionController extends HttpServlet {
 			parameters.put("P_BOOKING_YEAR", bookingYear);
 			parameters.put("P_BRANCH_CD", branchCd);
 			parameters.put("P_CRED_BRANCH", branchCd);
-
+			
+			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD",tranCd);
 			// parameters.put("P_INTM_NO", intmNo);
 
 			if (stringIntmNo.equals("") || stringIntmNo.equals(null)) {

@@ -44,6 +44,7 @@ public class PamsIssuanceController extends HttpServlet{
 		String action = request.getParameter("action");
 		String redirectPage = "/PamsIssuanceController?action=PamsIssuance";
 		String page = "/pages/claims/pams posted/PamsIssuance.jsp";
+		String tranCd = "98";
 		
 		if (action.equals("PamsIssuance")) {
 			SignatoryService signatoryService = new SignatoryServiceImpl();
@@ -76,6 +77,7 @@ public class PamsIssuanceController extends HttpServlet{
 			String rdbutton = request.getParameter("rdbutton");
 			String checkby = request.getParameter("checkby");
 			String checkdes = request.getParameter("checkdes");
+			String userId = request.getParameter("userId");
 
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 			
@@ -107,6 +109,9 @@ public class PamsIssuanceController extends HttpServlet{
 			
 			parameters.put("P_CHECKBY", checkby);
 			parameters.put("P_CHECKDESG", checkdes);
+			
+			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD", tranCd);
 			
 			System.out.println(fileName+user);
 			request.setAttribute("errorMsg", errorMsg);

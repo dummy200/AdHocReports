@@ -54,12 +54,13 @@ public class ThankYouLetterController extends HttpServlet {
 		String page2 = "/ThankYouLetterController?action=toThankYouPage";
 		String redirectPage = "/pages/policy issuance/thank you letter/infoDiv.jsp";
 		String reportName = request.getParameter("reportName");
+		String tranCd = "95";
 		
 		if (action.equals("toThankYouPage")) {
 			SignatoryService signatoryService = new SignatoryServiceImpl();
 			BranchService branchService = new BranchServiceImpl();
 			try {
-				List<Branch> branchList = (List<Branch>) branchService.getAllBranches();
+				List<Branch> branchList = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
 				List<Signatory> signatoryList = (List<Signatory>) signatoryService.getAllActiveSignatory();
 				request.setAttribute("signatoryList", signatoryList);
 				request.setAttribute("branchList", branchList);
@@ -116,6 +117,7 @@ public class ThankYouLetterController extends HttpServlet {
 			String toDate = request.getParameter("toDate");
 			String signatory = request.getParameter("signatory");
 			String designation = request.getParameter("designation");
+			String userId = request.getParameter("userId");
 
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 			String dir = getServletContext().getInitParameter("REPORTS_DIR");
@@ -130,6 +132,8 @@ public class ThankYouLetterController extends HttpServlet {
 			parameters.put("P_TO_DATE", toDate);
 			parameters.put("P_SIGNATORY", signatory);
 			parameters.put("P_DESIGNATION", designation);
+			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD",tranCd);
 
 			try {
 				Connection conn = ConnectionUtil.getConnection();

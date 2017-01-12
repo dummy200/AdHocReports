@@ -45,6 +45,7 @@ public class CollectionBreakdownController extends HttpServlet {
 		String page = "/pages/collections/collection breakdown/collectionBreakdown.jsp";
 		String page2 = "/CollectionBreakdownController?action=toCollectionBreakdownPage";
 		String reportName = request.getParameter("reportName");
+		String tranCd = "94";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toCollectionBreakdownPage")) {
@@ -87,6 +88,7 @@ public class CollectionBreakdownController extends HttpServlet {
 			parameters.put("P_BRANCH", branchCd);
 			parameters.put("P_PAY_MODE", payMode);
 			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD",tranCd);
 
 			try {
 				System.out.println("converting report................");

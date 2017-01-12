@@ -62,6 +62,7 @@ public class SOAperAssdIntmController extends HttpServlet {
 		String action = request.getParameter("action");
 		String page = "/pages/collections/soa per assdIntm/soa.jsp";
 		String page2 = "/SOAperAssdIntmController?action=toSOAPage";
+		String tranCd = "94";
 		Gson gson = new Gson();
 		/* request.getParameter("redirectPage"); */
 
@@ -140,6 +141,7 @@ public class SOAperAssdIntmController extends HttpServlet {
 			parameters.put("P_INTM_NO", intmNo);
 			parameters.put("P_ASSD_NO", assdNo);
 			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD", tranCd);
 
 			try {
 				System.out.println("converting report................");

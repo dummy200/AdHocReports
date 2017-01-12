@@ -8,8 +8,8 @@
 <input type="hidden" id="userModuleList" name="userModuleList" value='${userModuleList}'> --%>
 	<jsp:include page="/pages/userAccess.jsp"></jsp:include>
 </div>
- <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}"> 
-<%--<input type="hidden" id="adhocUser" name="adhocUser" value="CPIRALPH">--%>
+ <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
+<%--<input type="hidden" id="adhocUser" name="adhocUser" value="CPIRALPH">--%> 
 
 <script type="text/javascript">
 	//init user access
@@ -380,7 +380,7 @@
 
 		//thank you letter
 		checkUserAccess2('FTYLETTER', moduleIdObjLength, userModuleObj,
-				"thankYou", "/ThankYouLetterController?action=toThankYouPage",
+				"thankYou", "/ThankYouLetterController?action=toThankYouPage&tranCd=95&userId="+userId,
 				"Please wait.....", "Thank You Letter");
 
 		//to set to function
@@ -477,7 +477,7 @@
 
 		checkUserAccess2('FPRODREP', moduleIdObjLength, userModuleObj,
 				"confirmedPolicy",
-				"/ConfirmedPolicyController?action=toConfirmedPolicyPage&tranCd=96&userId="+userId,
+				"/ConfirmedPolicyController?action=toConfirmedPolicyPage&tranCd=95&userId="+userId,
 				"Please wait.....", "Confirmed Policy");
 
 		//batch gen

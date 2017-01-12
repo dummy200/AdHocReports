@@ -43,8 +43,8 @@
 				},
 				onComplete : function(response) {
 					if ($F("outputType") == 1){
-						window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+						window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					}
 					if ($F("outputType") == 2){
 						window.open(contextPath + "/OutputController?action=showExcel&reportXls=" + reportXls);

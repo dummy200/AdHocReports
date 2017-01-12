@@ -194,7 +194,8 @@
 									toDate : toDate,
 									branchCd : $F("selBranch"),
 									payMode : payMode,
-									reportName : reportName
+									reportName : reportName,
+									userId : userId
 								},
 								onCreate : showNotice("Generating report. Please wait..."),
 								onComplete : function(response) {

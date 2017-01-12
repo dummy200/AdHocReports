@@ -18,8 +18,9 @@
 <input type="hidden" id="selDestination" name="selDestination" value="screen">
 <input type="hidden" id="notedBySign" value=""> 
 <input type="hidden" id="BranchName" value=""> 
-<input type="hidden" id="UserId" value=""> 
-<!--  -->
+<input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
+<input type="hidden" id="UserId" value="">
+<!--   -->
 
 <br />
 <br />
@@ -369,7 +370,8 @@
 							branch : $F("selBranch"), //$F("BranchName"),
 							user :$F("UserId"),
 							checkby :$F("notedBySign"),
-							checkdes : $F("notedByDesig") 
+							checkdes : $F("notedByDesig"),
+							userId : $F("adhocUser")
 						},
 						onCreate : showNotice("Generating report. Please wait..."),
 						onComplete : function(response) {

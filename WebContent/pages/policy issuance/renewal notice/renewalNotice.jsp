@@ -210,7 +210,7 @@
 					<tr>
 						<td class="rightAligned" style="width: 25%;">Extract User</td>
 						<td class="leftAligned" colspan="5"><input id="batchTxtUser"
-							class="leftAligned" type="text" name="capsField"
+							class="leftAligned required" type="text" name="capsField"
 							style="width: 13%;" value="${adhocUser}" title="Extract User" maxlength="10" />
 						</td>
 						<!-- <td class="leftAligned" colspan="5"><input id="batchTxtUser"
@@ -655,8 +655,8 @@
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+					window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					hideNotice("");
 				}
 			});

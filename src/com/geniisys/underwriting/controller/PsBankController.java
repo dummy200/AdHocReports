@@ -35,6 +35,7 @@ public class PsBankController extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		String redirectPage = request.getParameter("redirectPage");
+		String tranCd = "98";
 		String page = "/pages/underwriting/ps bank posted/PsBank.jsp";
 
 		if(action.equals("printBondsReport")){			
@@ -46,7 +47,7 @@ public class PsBankController extends HttpServlet{
 			String address2 = request.getParameter("address2");
 			String re = request.getParameter("re");
 			String linecd = request.getParameter("linecd");		
-			
+			String userId = request.getParameter("userId");
 			
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 			
@@ -68,6 +69,8 @@ public class PsBankController extends HttpServlet{
 			parameters.put("P_ADDRESS1", address1);
 			parameters.put("P_ADDRESS2", address2);
 			parameters.put("P_RE", re);
+			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD", tranCd);
 
 			request.setAttribute("errorMsg", errorMsg);
 			

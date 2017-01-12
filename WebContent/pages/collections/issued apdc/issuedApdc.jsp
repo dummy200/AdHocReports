@@ -12,6 +12,7 @@
 </div>
 
 <!-- hidden fields -->
+<input type="hidden" id="userId" name="userId" value="${adhocUser}">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
@@ -24,7 +25,7 @@
 <input type="hidden" id="notedBySign3" value="">
 <input type="hidden" id="notedBySign4" value="">
 <input type="hidden" id="BranchName" value="">
-<input type="hidden" id="UserId" value="">
+<!-- <input type="hidden" id="UserId" value=""> -->
 <!--  -->
 
 <br />
@@ -488,7 +489,8 @@
 							checkby1 :$F("notedBySign1"),
 							checkby2 :$F("notedBySign2"),
 							checkby3 :$F("notedBySign3"),
-							checkby4 :$F("notedBySign4")
+							checkby4 :$F("notedBySign4"),
+							userId : $F("userId")
 						},
 						onCreate : showNotice("Generating report. Please wait..."),
 						onComplete : function(response) {
@@ -521,8 +523,8 @@
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+					window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					hideNotice("");
 				}
 			});

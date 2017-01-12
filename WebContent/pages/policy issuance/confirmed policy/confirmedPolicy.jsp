@@ -314,6 +314,7 @@
 							var fromDate = $F("txtFromDate");
 							var toDate = $F("txtToDate");
 							var dealersCd = $F("txtDealers");
+							var userId = $F("userId");
 							if(dateType == 1){
 								
 							}
@@ -336,7 +337,8 @@
 											toDateAED :  $("rdoAccounting").checked ? toDate : "",
 											fromDateID : $("rdoIncept").checked ? fromDate : "",
 											toDateID :  $("rdoIncept").checked ? toDate : "",
-											dealersCd : dealersCd
+											dealersCd : dealersCd,
+											userId : userId
 										},
 										onCreate : showNotice("Generating report. Please wait..."),
 										onComplete : function(response) {
