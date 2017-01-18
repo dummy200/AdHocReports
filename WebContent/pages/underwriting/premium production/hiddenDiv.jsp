@@ -2,7 +2,6 @@
 <!-- hidden fields -->
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
-<input type="hidden" id="userId" name="userId" value="${adhocUser}">
 <div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle"
@@ -43,8 +42,8 @@
 				},
 				onComplete : function(response) {
 					if ($F("outputType") == 1){
-						window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+						window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					}
 					if ($F("outputType") == 2){
 						window.open(contextPath + "/OutputController?action=showExcel&reportXls=" + reportXls);

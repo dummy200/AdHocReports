@@ -1,18 +1,15 @@
 
 <!-- hidden fields -->
-<input type="hidden" id="page" name="page" value="${page}">
-<input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
-<input type="hidden" id="userId" name="userId" value="${adhocUser}">
 <div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
 <input type="hidden" id="reportName" name="reportName"
 	value="${reportName}">
-<input type="hidden" id="reportBatch" name="reportBatch"
-	value="${reportBatch}">
 <input type="hidden" id="reportUrl" name="reportUrl"
 	value="${reportUrl}">
+<input type="hidden" id="reportPdf" name="reportXls"
+	value="${reportPdf}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
 </div>
@@ -46,10 +43,14 @@
 			});
 		}
 	}
-
-	function checkBlankNull(str) {
-		if (str == '' || str == null)
-			return true;
-		return false;
+	
+	
+	function compareDate(fromDate, toDate) {
+		var date1 = new Date(fromDate);
+		var date2 = new Date(toDate);
+		if (date1.getTime() > date2.getTime()) {
+			return true
+		}else
+			return false;
 	}
 </script>

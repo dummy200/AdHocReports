@@ -73,7 +73,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		AND a.tran_cd = c.tran_cd
 		AND
 		b.user_id = #value#
-		UNION
+		UNION ALL
 		SELECT distinct a.tran_cd,a.line_cd,a.iss_cd
 		FROM giis_user_line a,giis_user_iss_cd b
 		WHERE a.USERID = #value#
@@ -94,7 +94,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		AND a.tran_cd = c.tran_cd
 		AND b.user_id =
 		#value#
-		UNION
+		UNION ALL
 		SELECT distinct a.tran_cd
 		FROM giis_user_line
 		a,giis_user_iss_cd b
@@ -105,7 +105,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		ORDER BY 1
 	</select>
 
-	<select id="fetchUserLineCdByTranCd" resultMap="userLineCdResultMap"
+	<!-- <select id="fetchUserLineCdByTranCd" resultMap="userLineCdResultMap"
 		parameterClass="java.util.Map">
 		SELECT distinct a.line_cd line_cd FROM giis_user_grp_line a,
 		giis_users b,giis_user_grp_dtl c
@@ -123,6 +123,26 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		AND b.TRAN_CD = a.TRAN_CD
 		AND a.tran_cd = #tranCd#
 		ORDER BY 1
+	</select> -->
+	
+	<select id="fetchUserLineCdByTranCd" resultMap="userLineCdResultMap"
+		parameterClass="java.util.Map">
+		SELECT distinct a.line_cd line_cd
+		FROM giis_user_line a,giis_user_iss_cd b
+		WHERE a.USERID = #userId#
+		AND b.USERID = a.USERID
+		AND b.ISS_CD = a.ISS_CD
+		AND b.TRAN_CD = a.TRAN_CD
+		AND a.tran_cd = #tranCd#
+		UNION ALL
+		SELECT distinct a.line_cd line_cd FROM giis_user_grp_line a,
+		giis_users b,giis_user_grp_dtl c
+		WHERE a.user_grp = b.user_grp
+		AND a.user_grp = c.user_grp
+		AND a.tran_cd = c.tran_cd
+		AND b.user_id = #userId#
+		AND a.tran_cd = #tranCd#
+		ORDER BY 1
 	</select>
 	
 	<select id="fetchUserIssCdByTranCd" resultMap="userIssCdResultMap"
@@ -134,7 +154,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		AND a.tran_cd = c.tran_cd
 		AND b.user_id = #userId#
 		AND a.tran_cd = #tranCd#
-		UNION
+		UNION ALL
 		SELECT distinct a.iss_cd iss_cd
 		FROM giis_user_line a,giis_user_iss_cd b
 		WHERE a.USERID = #userId#
@@ -149,9 +169,9 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		parameterClass="java.lang.String">
 		SELECT module_id
 		FROM GIIS_USER_MODULES
-		WHERE USER_ID = #userId#
+		WHERE USERID = #userId#
 		AND ACCESS_TAG = '1'
-		UNION
+		UNION ALL
 		SELECT module_id
 		FROM GIIS_USER_GRP_MODULES
 		WHERE USER_GRP

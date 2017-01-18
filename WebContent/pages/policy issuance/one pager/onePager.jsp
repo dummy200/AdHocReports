@@ -299,7 +299,7 @@
 						<td class="rightAligned" style="width: 25%;">Cred. Branch</td>
 						<td class="leftAligned" colspan="5"><input id="batchTxtIssCd"
 							class="leftAligned" type="text" name="capsField"
-							style="width: 8%;" value="" title="Issue Source Code"
+							style="width: 8%;" value="" title="Crediting Branch"
 							maxlength="2" /></td>
 					</tr>
 					<c:if test='${tag eq "Y"}'>
@@ -762,7 +762,7 @@
 	}
 
 	var reportLink = "http://localhost:2010/GeniisysAdHocReports/";
-	var strWindowFeatures = "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,resizable=yes,fullscreen=yes";
+	//var strWindowFeatures = "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,resizable=yes,fullscreen=yes";
 	var reportName = $F("reportName");
 	var reportBatch = $F("reportBatch");
 	$("btnPrintOnePager")
@@ -772,6 +772,8 @@
 						var pdfSw = $("chkPdfSw").checked ? "Y" : "N";
 						var issuePlace = $F("txtIssuePlace");
 						var lineCd = '';
+						var issCd = $F("batchTxtIssCd");
+						var sublineCd = $F("batchTxtSublineCd");
 						var batchLineCd = '';
 						if (page != 'ClgOnePager' && page != 'PsBankOnePager'
 								&& page != '12PlanOnePager') {
@@ -789,8 +791,10 @@
 								}
 								if (batchLineCd == 'FI') {
 									reportBatch = 'POLICY_DOCUMENT_REG_CLG_ONEPAGER_BATCH';
+									issCd = 'FM';
 								} else {
 									reportBatch = 'POLICY_DOCUMENT_MTR_ONEPAGER_BATCH';
+									sublineCd = 'CLG';
 								}
 							}
 							if (page == 'PsBankOnePager') {
@@ -801,8 +805,10 @@
 								}
 								if (batchLineCd == 'FI') {
 									reportBatch = 'POLICY_DOCUMENT_PS_FI_ONEPAGER_BATCH';
+									issCd = 'PS';
 								} else {
 									reportBatch = 'POLICY_DOCUMENT_PS_FI_ONEPAGER_BATCH';
+									issCd = 'PS';
 								}
 							}
 							if (page == '12PlanOnePager') {
@@ -815,10 +821,13 @@
 								}
 								if (batchLineCd == 'FI') {
 									reportBatch = 'POLICY_DOCUMENT_REG_TP_ONEPAGER_BATCH';
+									issCd = 'TP';
 								} else if (batchLineCd == 'MC') {
 									reportBatch = 'POLICY_DOCUMENT_12PMTR_ONEPAGER_BATCH';
+									issCd = 'TP';
 								} else {
 									reportBatch = 'POLICY_DOCUMENT_PA_TP_ONEPAGER_BATCH';
+									issCd = 'TP';
 								}
 
 							}
@@ -862,9 +871,15 @@
 											});
 								}
 							} else if (printOptionVal == "B") {
-								if ($F("tpTag") == 'Y') {
-									var batchUserId = $F("batchTxtUserId");
+								//var batchUserId = $F("userId");
+								/* if ($F("tpTag") == 'Y') {
+									batchUserId = $F("batchTxtUserId");
+								} */
+								var batchUserId = '';
+								if($F("tpTag") == 'Y'){
+									batchUserId = $F("batchTxtUserId");   // 1.17.2017
 								}
+								//var batchUserId = $F("batchTxtUserId");   // 1.17.2017
 								if (compareDate($F("txtFromDate"),
 										$F("txtToDate"))) {
 									showMessageBox(
@@ -891,10 +906,11 @@
 														fromDate : $F("txtFromDate"),
 														toDate : $F("txtToDate"),
 														lineCd : batchLineCd,
-														sublineCd : $F("batchTxtSublineCd"),
+														sublineCd :/*  $F("batchTxtSublineCd"), */sublineCd,
 														issCd : $F("batchTxtIssCd"),
-														issueCd : $F("txtIssCd"),
-														userId : batchUserId,
+														issueCd : /* $F("txtIssCd"), */issCd,
+														userId : $F("userId"),
+														batchUserId : batchUserId,
 														issuePlace : $F("txtIssuePlace"),
 														pdfSw : pdfSw
 													},
@@ -948,8 +964,8 @@
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+					window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					hideNotice("");
 				}
 			});

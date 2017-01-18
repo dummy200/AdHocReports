@@ -5,16 +5,9 @@
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
 <div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
-<input type="hidden" id="reportTitle" name="reportTitle"
-	value="${reportTitle}">
-<input type="hidden" id="reportName" name="reportName"
-	value="${reportName}">
-<input type="hidden" id="reportBatch" name="reportBatch"
-	value="${reportBatch}">
-<input type="hidden" id="reportUrl" name="reportUrl"
-	value="${reportUrl}">
-<input type="hidden" id="selDestination" name="selDestination"
-	value="screen">
+<input type="hidden" id="reportTitle" name="reportTitle" value="${reportTitle}">
+<input type="hidden" id="reportUrl" name="reportUrl" value="${reportUrl}">
+<input type="hidden" id="selDestination" name="selDestination" value="screen">
 </div>
 
 <script type="text/javascript">
@@ -26,6 +19,7 @@
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
 			hideNotice("");
+			//alert(errorMsg);
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath

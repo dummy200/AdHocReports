@@ -3,10 +3,6 @@ package com.geniisys.underwriting.controller;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,27 +15,25 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 
-import com.geniisys.common.entity.Assured;
 import com.geniisys.common.entity.Branch;
 import com.geniisys.common.entity.Intermediary;
 import com.geniisys.common.entity.Line;
-import com.geniisys.common.service.AssuredService;
+import com.geniisys.common.entity.Subline;
 import com.geniisys.common.service.BranchService;
 import com.geniisys.common.service.IntermediaryService;
 import com.geniisys.common.service.LineService;
-import com.geniisys.common.service.impl.AssuredServiceImpl;
+import com.geniisys.common.service.SublineService;
 import com.geniisys.common.service.impl.BranchServiceImpl;
 import com.geniisys.common.service.impl.IntermediaryServiceImpl;
 import com.geniisys.common.service.impl.LineServiceImpl;
+import com.geniisys.common.service.impl.SublineServiceImpl;
 import com.geniisys.underwriting.service.PremProductionService;
 import com.geniisys.underwriting.service.impl.PremProductionServiceImpl;
 import com.geniisys.util.ConnectionUtil;
 import com.geniisys.util.MyAppSqlConfig;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
-import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -64,6 +58,7 @@ public class PremProductionController extends HttpServlet {
 		String action = request.getParameter("action");
 		String page = "/pages/underwriting/premium production/premiumProduction.jsp";
 		String page2 = "/PremProductionController?action=toPremProductionPage";
+		String tranCd = "98";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toPremProductionPage")) {
@@ -75,9 +70,11 @@ public class PremProductionController extends HttpServlet {
 			//List<Line> lineList = (List<Line>) lineService.getAllLines();
 			List<Line> lineList = null;
 			List<Branch> branchList = null;
+			List<Intermediary> intmTypeList = null;
 			try {
 				lineList = (List<Line>) lineService.getLinesByUserAndTranCd(request);
 				branchList = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
+				intmTypeList = (List<Intermediary>) intmService.getAllIntmType();
 			} catch (SQLException e) {
 				errorMsg = e.getMessage();
 			}
@@ -86,15 +83,38 @@ public class PremProductionController extends HttpServlet {
 			List<Intermediary> intmList = (List<Intermediary>) intmService.getAllActiveIntermediary();
 			// List<Assured> assdList = (List<Assured>)
 			// assuredService.getAllActiveAssured();
-
+			
 			request.setAttribute("lineList", lineList);
 			request.setAttribute("branchList", branchList);
+			request.setAttribute("intmTypeList", intmTypeList);
 			request.setAttribute("intmList", intmList);
 			// request.setAttribute("assdList", assdList);
 
 			request.setAttribute("pageTitle", "Premium Production Report");
 
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+			dispatcher.forward(request, response);
+		}
+		
+		if(action.equals("getSublineList")){
+			LineService lineService = new LineServiceImpl();
+			SublineService sublineSerive = new SublineServiceImpl();
+			
+			List<Line> lineList = null;
+			List<Subline> sublineList = null;
+			try {
+				sublineList = (List<Subline>) sublineSerive.getAllSubline(request);
+				lineList = (List<Line>) lineService.getLinesByUserAndTranCd(request);
+				String lineCd = request.getParameter("lineCd");
+				
+				request.setAttribute("lineCd", lineCd);
+				request.setAttribute("lineList", lineList);
+				request.setAttribute("sublineList", sublineList);
+				
+			} catch (SQLException e) {
+				errorMsg = e.getMessage();
+			}
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/underwriting/premium production/lineDiv.jsp");
 			dispatcher.forward(request, response);
 		}
 		
@@ -116,6 +136,7 @@ public class PremProductionController extends HttpServlet {
 			String reportName = request.getParameter("reportName");
 			String outputType = request.getParameter("outputType");
 			String lineCd = request.getParameter("lineCd");
+			String sublineCd = request.getParameter("sublineCd");
 			String issCd = request.getParameter("branchCd");
 			String fromDate = request.getParameter("fromDate");
 			String toDate = request.getParameter("toDate");
@@ -126,6 +147,8 @@ public class PremProductionController extends HttpServlet {
 			String branchCd = request.getParameter("branchCd");
 			String stringIntmNo = request.getParameter("intmNo");
 			String getVsDate = request.getParameter("getVsDate");
+			String userId = request.getParameter("userId");
+			String intmType = request.getParameter("intmType");
 			Integer intmNo;
 			// Integer intmNo =
 			// Integer.parseInt(request.getParameter("intmNo"));
@@ -175,8 +198,12 @@ public class PremProductionController extends HttpServlet {
 			String outputPdf = getServletContext().getInitParameter("GENERATED_REPORTS_DIR") + reportName + ".pdf";
 			String outputXls = getServletContext().getInitParameter("GENERATED_REPORTS_DIR") + reportName + ".xls";
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
-
+			
+			//issCd == branchCd
+			//yung ibang report ibang parameter para s branchCd
+			//p_iss_cd,p_branch_cd, at p_cred_branch pero same value lng pinapasa ng java s report :/
 			parameters.put("P_LINE_CD", lineCd);
+			parameters.put("P_SUBLINE_CD", sublineCd);
 			parameters.put("P_ISS_CD", issCd);
 			parameters.put("P_DATE_FROM", fromDate);
 			parameters.put("P_DATE_TO", toDate);
@@ -186,7 +213,10 @@ public class PremProductionController extends HttpServlet {
 			parameters.put("P_BOOKING_YEAR", bookingYear);
 			parameters.put("P_BRANCH_CD", branchCd);
 			parameters.put("P_CRED_BRANCH", branchCd);
-
+			
+			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD",tranCd);
+			parameters.put("P_INTM_TYPE", intmType);
 			// parameters.put("P_INTM_NO", intmNo);
 
 			if (stringIntmNo.equals("") || stringIntmNo.equals(null)) {

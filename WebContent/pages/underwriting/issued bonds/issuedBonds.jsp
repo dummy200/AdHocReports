@@ -205,6 +205,7 @@
 					"click",
 					function() {
 						subline = $F("selSubline");
+						var userId = $F("userId");
 						if (validateInput()) {
 							new Ajax.Updater(
 									"mainContents",
@@ -217,7 +218,8 @@
 											reportName : reportName,
 											fromDate : $F("txtFromDate"),
 											toDate : $F("txtToDate"),
-											sublineCd : subline
+											sublineCd : subline,
+											userId : userId
 										},
 										onCreate : showNotice("Generating report. Please wait..."),
 										onComplete : function(response) {

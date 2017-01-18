@@ -24,8 +24,9 @@ width:340px;
 <!-- hidden fields -->
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
-<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
+<div id="hiddenDiv">
+<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
 <input type="hidden" id="reportName" name="reportName"
@@ -34,6 +35,7 @@ width:340px;
 	value="${reportUrl}">
 <input type="hidden" id="reportXls" name="reportXls"
 	value="${reportXls}">
+</div>
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
 <!-- end hidden fields -->
@@ -244,6 +246,7 @@ width:340px;
 </div>
 
 <script type="text/javascript">
+	$("hiddenDiv").hide();
 	var page = $F("page");
 	var reportName = 'PAID_PREM_REP';
 	var reportType = 1;
@@ -345,8 +348,8 @@ width:340px;
 				}
 					if (validateInput(fromDate,toDate)){
 						branchCd = $F("selBranch");
-							 new Ajax.Updater(
-									"mainContents",
+							 new Ajax.Request(
+									//"mainContents",
 									contextPath + "/PaidPremiumsController",
 									{
 										evalScripts : true,
@@ -366,7 +369,8 @@ width:340px;
 										},
 										onCreate : showNotice("Generating report. Please wait..."),
 										onComplete : function(response) {
-											printOutputXls();
+											//printOutputXls();
+											$("hiddenDiv").update(response.responseText);
 										}
 									});
 					}
@@ -381,11 +385,11 @@ width:340px;
 					"\"From Date\" must be earlier from \"To Date\".",
 					"E");
 			return false;
-		}else if(checkBlankNull(intmNo)){
+		}/* else if(checkBlankNull(intmNo)){
 			showMessageBox(
 					"Intermediary is required.",
-					"E");
-		}else
+					"E"); 
+		}*/else
 			return true;
 	}
 	

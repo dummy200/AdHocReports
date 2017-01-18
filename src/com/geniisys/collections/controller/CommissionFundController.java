@@ -48,11 +48,18 @@ public class CommissionFundController extends HttpServlet {
 		String page = "/pages/collections/commission fund/commissionFund.jsp";
 		String page2 = "/CommissionFundController?action=toCommissionFundPage";
 		String reportName = request.getParameter("reportName");
+		String tranCd = "94";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toCommissionFundPage")) {
 			BranchService branchService = new BranchServiceImpl();
-			List<Branch> branchList = (List<Branch>) branchService.getAllBranches();
+			List<Branch> branchList = null;
+			try {
+				branchList = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			request.setAttribute("branchList", branchList);
 			
 			request.setAttribute("pageTitle", "Commission Fund");
@@ -81,6 +88,7 @@ public class CommissionFundController extends HttpServlet {
 			parameters.put("P_TO_DATE", toDate);
 			parameters.put("P_BRANCH", branchCd);
 			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD",tranCd);
 
 			try {
 				Connection conn = ConnectionUtil.getConnection();
@@ -112,7 +120,7 @@ public class CommissionFundController extends HttpServlet {
 				request.setAttribute("reportTitle", reportName);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/collections/commission fund/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

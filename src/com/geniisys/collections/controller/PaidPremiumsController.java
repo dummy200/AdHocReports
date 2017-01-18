@@ -45,13 +45,20 @@ public class PaidPremiumsController extends HttpServlet {
 		String page = "/pages/collections/paid premiums/paidPremiums.jsp";
 		String page2 = "/PaidPremiumsController?action=toPaidPremiumsPage";
 		String reportName = request.getParameter("reportName");
+		String tranCd = "94";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toPaidPremiumsPage")) {
 			BranchService branchService = new BranchServiceImpl();
 			IntermediaryService intmService = new IntermediaryServiceImpl();
 
-			List<Branch> branchList = (List<Branch>) branchService.getAllBranches();
+			List<Branch> branchList = null;
+			try {
+				branchList = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			List<Intermediary> intmList = (List<Intermediary>) intmService.getAllActiveIntermediary();
 			List<Intermediary> intmTypeList = (List<Intermediary>) intmService.getAllIntmType();
 			// List<Assured> assdList = null;
@@ -95,6 +102,7 @@ public class PaidPremiumsController extends HttpServlet {
 			parameters.put("P_CUT_OFF_PARAM", cutOffParam);
 			parameters.put("P_TRAN_FLAG", tranFlag);
 			parameters.put("P_REPORT_TYPE", reportType);
+			parameters.put("P_TRAN_CD", tranCd);
 			
 			System.out.println("fromDate" + fromDate);
 			System.out.println("toDate" + toDate);
@@ -144,7 +152,7 @@ public class PaidPremiumsController extends HttpServlet {
 				request.setAttribute("reportTitle", reportName);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/collections/paid premiums/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

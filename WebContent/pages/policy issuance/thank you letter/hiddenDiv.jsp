@@ -5,14 +5,18 @@
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
 <div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
-<input type="hidden" id="reportTitle" name="reportTitle"
+<%-- <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
 <input type="hidden" id="reportName" name="reportName"
-	value="${reportName}">
-<input type="hidden" id="reportBatch" name="reportBatch"
-	value="${reportBatch}">
+	value="${reportName}"> --%>
+<input type="hidden" id="reportTitle" name="reportTitle"
+	value="">
+<input type="hidden" id="reportName" name="reportName"
+	value="">
 <input type="hidden" id="reportUrl" name="reportUrl"
 	value="${reportUrl}">
+<input type="hidden" id="reportXls" name="reportXls"
+	value="${reportXls}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
 </div>
@@ -23,6 +27,7 @@
 	function printOutputPdf() {
 		var reportUrl = $F("reportUrl");
 		var reportTitle = $F("reportTitle");
+		var reportXls = $F("reportXls");
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
 			hideNotice("");
@@ -41,9 +46,11 @@
 				onComplete : function(response) {
 					window.open('pages/report.jsp', '',strWindowFeatures);
 							//'location=0, toolbar=0, menubar=0, fullscreen=1');
+					//show excel try
+					//window.open(contextPath + "/OutputController?action=showExcel&reportXls=" + reportXls);
 					hideNotice("");
 				}
-			});
+			});	
 		}
 	}
 

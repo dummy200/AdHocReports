@@ -70,7 +70,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 					AND b.ISS_CD = a.ISS_CD
 					AND b.TRAN_CD = a.TRAN_CD
 					AND a.tran_cd = #tranCd#)
-		ORDER BY 1
+		ORDER BY 2
 	</select>
 	
 	<update id="updateGiisIssource" parameterMap="branchParameterMap">

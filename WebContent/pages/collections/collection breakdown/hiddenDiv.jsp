@@ -9,19 +9,20 @@
 	value="${reportTitle}">
 <input type="hidden" id="reportName" name="reportName"
 	value="${reportName}">
-<input type="hidden" id="reportBatch" name="reportBatch"
-	value="${reportBatch}">
 <input type="hidden" id="reportUrl" name="reportUrl"
 	value="${reportUrl}">
+<input type="hidden" id="reportXls" name="reportXls"
+	value="${reportXls}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
 </div>
 
 <script type="text/javascript">
-	printOutputPdf();
+printOutputXls();
 
-	function printOutputPdf() {
+	function printOutputXls() {
 		var reportUrl = $F("reportUrl");
+		var reportXls = $F("reportXls");
 		var reportTitle = $F("reportTitle");
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
@@ -29,7 +30,7 @@
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath
-					+ "/OutputController?action=showPdf&reportUrl=" + reportUrl;
+					+ "/OutputController?action=showPdf&reportUrl=" + reportXls;
 			new Ajax.Request(contextPath + "/GIISUserController", {
 				action : "POST",
 				asynchronous : false,
@@ -39,8 +40,7 @@
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open('pages/report.jsp', '',strWindowFeatures);
-							//'location=0, toolbar=0, menubar=0, fullscreen=1');
+					window.open(contextPath + "/OutputController?action=showExcel&reportXls=" + reportXls);
 					hideNotice("");
 				}
 			});

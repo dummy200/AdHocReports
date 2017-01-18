@@ -54,6 +54,7 @@ public class IntertradeCheckReportController extends HttpServlet {
 		String action = request.getParameter("action");
 		String page = "/pages/collections/intertrade check report/checkReport.jsp";
 		String page2 = "/IntertradeCheckReportController?action=toPage";
+		String tranCd = "94";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toPage")) {
@@ -65,7 +66,7 @@ public class IntertradeCheckReportController extends HttpServlet {
 			//List<AccountingEntry> accountingEntry = null;
 			try {
 				signatoryList = (List<Signatory>) signatoryService.getAllActiveSignatory();
-				branches = (List<Branch>) branchService.getAllBranches();
+				branches = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
 				//accountingEntry = (List<AccountingEntry>) accountingEntryService.getAllDate();
 
 			} catch (SQLException e) {
@@ -85,7 +86,8 @@ public class IntertradeCheckReportController extends HttpServlet {
 			String toDate = request.getParameter("toDate");
 			String asofDate = request.getParameter("asofDate");
 			String branch = request.getParameter("branch");
-
+			String userId = request.getParameter("userId");
+			
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 			String dir = getServletContext().getInitParameter("REPORTS_DIR");
 			String fileName = dir + "\\" + reportName + ".jasper";
@@ -96,6 +98,8 @@ public class IntertradeCheckReportController extends HttpServlet {
 			parameters.put("P_FROM_DATE", fromDate);
 			parameters.put("P_AS_OF", asofDate);
 			parameters.put("P_TO_DATE", toDate);
+			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD", tranCd);
 			
 			try {
 				System.out.println("converting report................");
@@ -124,7 +128,7 @@ public class IntertradeCheckReportController extends HttpServlet {
 				request.setAttribute("reportUrl", outputPdf);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/collections/intertrade check report/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

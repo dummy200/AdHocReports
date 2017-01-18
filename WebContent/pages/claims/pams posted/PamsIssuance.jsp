@@ -12,14 +12,17 @@
 </div>
 
 <!-- hidden fields -->
+<div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle" value="${reportTitle}">
 <input type="hidden" id="reportUrl" name="reportUrl" value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination" value="screen">
+</div>
 <input type="hidden" id="notedBySign" value=""> 
 <input type="hidden" id="BranchName" value=""> 
-<input type="hidden" id="UserId" value=""> 
-<!--  -->
+<input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
+<input type="hidden" id="UserId" value="">
+<!--   -->
 
 <br />
 <br />
@@ -162,6 +165,7 @@
 	</div>		
     </div>
 <script type="text/javascript">
+	$("hiddenDiv").hide();
 	makeAllInputFieldsUpperCase();
 	$("btnPrintReport").enable();
 	
@@ -353,8 +357,8 @@
 				"I");
 	}else
 		{
-			new Ajax.Updater(
-					"mainContents",
+			new Ajax.Request(
+					//"mainContents",
 					contextPath
 							+ "/PamsIssuanceController",
 					{
@@ -369,12 +373,14 @@
 							branch : $F("selBranch"), //$F("BranchName"),
 							user :$F("UserId"),
 							checkby :$F("notedBySign"),
-							checkdes : $F("notedByDesig") 
+							checkdes : $F("notedByDesig"),
+							userId : $F("adhocUser")
 						},
 						onCreate : showNotice("Generating report. Please wait..."),
 						onComplete : function(response) {
 							hideNotice("");
-							outputToPDF($F("reportUrl"), $F("reportTitle"), $F("errorMsg"));
+							//outputToPDF($F("reportUrl"), $F("reportTitle"), $F("errorMsg"));
+							$("hiddenDiv").update(response.responseText);
 						}
 					});
 	    }

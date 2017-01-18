@@ -23,6 +23,7 @@
 	var daysBeforePasswordExpires = 0;
 	var resultMessageDelimiter = "-*|@geniisys@|*-";
 	var modules = null;
+	var strWindowFeatures = "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,resizable=yes,fullscreen=yes";
 </script>
 
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/misc/geniisys.ico" />
