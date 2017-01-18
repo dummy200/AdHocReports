@@ -49,7 +49,7 @@ public class OsApdcController extends HttpServlet{
 			BranchService branchService = new BranchServiceImpl();
 			AccountingEntryService accountingEntryService = new AccountingEntryServiceImpl();
 			try {
-				List<Branch> branches = (List<Branch>) branchService.getAllBranches();
+				List<Branch> branches = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
 				request.setAttribute("branches", branches);
 				
 				List<AccountingEntry> accountingEntry = (List<AccountingEntry>) accountingEntryService.getAllDate();
@@ -118,7 +118,7 @@ public class OsApdcController extends HttpServlet{
 				request.setAttribute("reportUrl", outputPdf);
 				request.setAttribute("reportTitle", reportName);
 				
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectPage);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/collections/os apdc/hiddenDiv.jsp");
             	dispatcher.forward(request,response);
 			}
 		}

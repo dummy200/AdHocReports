@@ -299,7 +299,7 @@
 						<td class="rightAligned" style="width: 25%;">Cred. Branch</td>
 						<td class="leftAligned" colspan="5"><input id="batchTxtIssCd"
 							class="leftAligned" type="text" name="capsField"
-							style="width: 8%;" value="" title="Issue Source Code"
+							style="width: 8%;" value="" title="Crediting Branch"
 							maxlength="2" /></td>
 					</tr>
 					<c:if test='${tag eq "Y"}'>

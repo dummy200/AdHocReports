@@ -14,6 +14,7 @@
 <!-- hidden fields -->
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
+<div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
@@ -25,6 +26,7 @@
 	value="${reportPdf}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
+</div>
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
 <input type="hidden" id="BranchName" value="">
 
@@ -221,8 +223,8 @@
 					function() {
 						if (validateInput()) {
 							var userId = $F("userId");
-							new Ajax.Updater(
-									"mainContents",
+							new Ajax.Request(
+									//"mainContents",
 									contextPath + "/IntertradeCheckReportController",
 									{
 										evalScripts : true,
@@ -238,8 +240,9 @@
 										},
 										onCreate : showNotice("Generating report. Please wait..."),
 										onComplete : function(response) {
-											$("imgToDate").click();
-											printOutputPdf();
+											//$("imgToDate").click();
+											//printOutputPdf();
+											$("hiddenDiv").update(response.responseText);
 										}
 									});
 						}

@@ -66,7 +66,7 @@ public class IntertradeCheckReportController extends HttpServlet {
 			//List<AccountingEntry> accountingEntry = null;
 			try {
 				signatoryList = (List<Signatory>) signatoryService.getAllActiveSignatory();
-				branches = (List<Branch>) branchService.getAllBranches();
+				branches = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
 				//accountingEntry = (List<AccountingEntry>) accountingEntryService.getAllDate();
 
 			} catch (SQLException e) {
@@ -128,7 +128,7 @@ public class IntertradeCheckReportController extends HttpServlet {
 				request.setAttribute("reportUrl", outputPdf);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/collections/intertrade check report/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

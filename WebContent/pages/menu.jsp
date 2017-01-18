@@ -301,7 +301,7 @@
 
 		checkUserAccess2('FACCHKREP', moduleIdObjLength, userModuleObj,
 				"intertradeCheckReport",
-				"/IntertradeCheckReportController?action=toPage",
+				"/IntertradeCheckReportController?action=toPage&tranCd=94&userId="+userId,
 				"Intertrade/BNC - Check Report");
 
 		checkUserAccess2('FISSAPDC', moduleIdObjLength, userModuleObj,
@@ -311,7 +311,7 @@
 				"jvPerUser", "/JvPerUserController?action=toJvPerUserPage",
 				"Journal Voucher Entries Per User");
 		checkUserAccess2('OUTS_APDC', moduleIdObjLength, userModuleObj,
-				"outstandingAPDC", "/OsApdcController?action=OsApdc",
+				"outstandingAPDC", "/OsApdcController?action=OsApdc&tranCd=94&userId="+userId,
 				"Outstanding APDC");
 		checkUserAccess2('FPAIDPREM', moduleIdObjLength, userModuleObj,
 				"paidPremiums",
@@ -513,7 +513,7 @@
 				"Issued Bond");
 
 		checkUserAccess2('FPOSTEDPOL', moduleIdObjLength, userModuleObj,
-				"psBank", "/pages/underwriting/ps bank posted/PsBank.jsp",
+				"psBank", "/PsBankController?action=toPsBankPage&tranCd=98&userId="+userId,
 				"Ps Bank Posted Policy");
 		checkUserAccess2('FPSBPSTPOL', moduleIdObjLength, userModuleObj,
 				"pamsIssuance", "/PamsIssuanceController?action=PamsIssuance&tranCd=98&userId="+userId,

@@ -110,11 +110,22 @@ public class RenewalNoticeController extends HttpServlet{
 			//String bond_dtl = null;
 			//String fetchPolicyIdErrorMsg = "";
 			Integer policyId = null;
+			Integer resultPolicyId = null;
 			try {
-				
-				Integer extractId = null;
+				//Integer extractId = null;
 				policyId = (Integer)policyNoService.getPolicyIdRenew(request);
-				extractId = (Integer)extractIdservice.getExtractId(policyId);
+				if (policyId == null){
+					errorMsg = "No data found.";
+					request.setAttribute("errorMsg", errorMsg);
+				}else{
+					resultPolicyId = (Integer)policyNoService.getResultPolicyIdRenewal(policyId,tranCd,request);
+					if (resultPolicyId == null){
+						errorMsg = "User has no access.";
+						request.setAttribute("errorMsg", errorMsg);
+					}else
+						request.setAttribute("policyId", resultPolicyId);
+				}
+				/*extractId = (Integer)extractIdservice.getExtractId(policyId);
 				System.out.println("policyId: " + policyId);
 				System.out.println("extractId: " + extractId);
 				if (extractId == null){
@@ -126,14 +137,14 @@ public class RenewalNoticeController extends HttpServlet{
 				if(policyId == null){
 					errorMsg = "No data found.";
 				}else
-					errorMsg = null;
+					errorMsg = null;*/
 				
-				Integer assdNo = assuredService.fetchAssuredNo(policyId);
+				/*Integer assdNo = assuredService.fetchAssuredNo(policyId);
 				System.out.println("assd: " + assdNo);
 				assured = assuredService.getAssured(assdNo);
 				System.out.println("assured: " + assured);
 				Integer assdNoGipiPolbasic = assuredService.fetchAssdNoGipiPolbasic(policyId);
-				Gipi_Polbasic = gipiPolbasicService.fetchRefPolNo(policyId);
+				Gipi_Polbasic = gipiPolbasicService.fetchRefPolNo(policyId);*/
 				//assuredGipiPolbasic = assuredService.getAssured(assdNoGipiPolbasic);
 				//bond_dtl = gipiPolbasicService.getBondDtl(policyId);
 				//gipi_Invoices = gipiInvoiceService.fetchGipiInvoice(policyId);
@@ -146,11 +157,11 @@ public class RenewalNoticeController extends HttpServlet{
 				errorMsg = e1.getMessage().toString();
 			}finally{
 				System.out.println(errorMsg);
-				
-				request.setAttribute("errorMsg", errorMsg);
-				request.setAttribute("assured", assured);
+				System.out.println(resultPolicyId);
+				System.out.println(policyId);
+				//request.setAttribute("errorMsg", errorMsg);
 				request.setAttribute("lineCd", lineCd);
-				request.setAttribute("policyId", policyId);
+				//request.setAttribute("policyId", policyId);
 				
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectPage);
         		dispatcher.forward(request,response);

@@ -299,7 +299,8 @@ var filterGridBy = "";
 											<td class="rightAligned" style="width: 5%;">Year</td>
 											<td class="leftAligned" style="width: 42%;"><input
 												class="required upper" type="text" id="txtBookingYear"
-												name="txtBookingYear" style="width: 20%;" maxlength="4"></td>
+												name="txtBookingYear" style="width: 20%;" maxlength="4"
+												pattern=".{4,}"   required title="4 characters minimum"></td>
 										</tr>
 									</table>
 								</div>
@@ -744,8 +745,12 @@ var filterGridBy = "";
 			}
 		}
 		}else if(dateType == 2){
+			var bookingYear = $F("txtBookingYear");
 			if(checkBlankNull($F("txtBookingYear"))){
 				showMessageBox("Please input required fields", "I");
+				isOk = false;
+			}else if(bookingYear.length < 4){
+				showMessageBox("Invalid year.", "E");
 				isOk = false;
 			}else if(!/^\d+$/.test($F("txtBookingYear").trim())){
 				showMessageBox("Invalid Input. Year must be number", "E");

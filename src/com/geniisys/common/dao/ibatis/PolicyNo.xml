@@ -70,6 +70,15 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		<!--AND #userId# = (SELECT extract_user from giex_expiry where policy_id = a.policy_id) -->
 	</select>
 	
+	<select id="getResultPolicyIdRenewal" resultClass="java.lang.Integer" parameterClass="java.util.HashMap">
+		 SELECT a.POLICY_ID FROM GIEX_EXPIRY a, gipi_polbasic b
+      WHERE  a.policy_id = b.policy_id
+        AND a.policy_id = #policyId#
+       AND a. extract_user = #userId#
+       AND b.cred_branch IN (SELECT ISS_CD FROM TABLE (line_iss_adhoc_pkg.get_adhoc_issource(#userId#,#tranCd#)))
+       AND b.pol_flag NOT IN ('4','5')
+	</select>
+	
 	<select id="getPolicyIdNonRenew" resultClass="java.lang.Integer"
 		parameterMap="policyNoParamMap">
 		SELECT a.policy_id FROM GIPI_POLBASIC a, GIEX_EXPIRY b

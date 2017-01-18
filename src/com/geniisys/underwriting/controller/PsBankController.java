@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.geniisys.common.entity.Branch;
+import com.geniisys.common.entity.Intermediary;
+import com.geniisys.common.entity.Line;
+import com.geniisys.common.service.BranchService;
+import com.geniisys.common.service.IntermediaryService;
+import com.geniisys.common.service.LineService;
+import com.geniisys.common.service.impl.BranchServiceImpl;
+import com.geniisys.common.service.impl.IntermediaryServiceImpl;
+import com.geniisys.common.service.impl.LineServiceImpl;
 import com.geniisys.util.ConnectionUtil;
 import com.geniisys.util.MyAppSqlConfig;
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -37,6 +47,24 @@ public class PsBankController extends HttpServlet{
 		String redirectPage = request.getParameter("redirectPage");
 		String tranCd = "98";
 		String page = "/pages/underwriting/ps bank posted/PsBank.jsp";
+		
+		if (action.equals("toPsBankPage")) {
+			LineService lineService = new LineServiceImpl();
+			List<Line> lineList = null;
+			try {
+				lineList = (List<Line>) lineService.getLinesByUserAndTranCd(request);
+			} catch (SQLException e) {
+				errorMsg = e.getMessage();
+			}
+			
+			request.setAttribute("lineList", lineList);
+			request.setAttribute("errorMsg", errorMsg);
+
+			request.setAttribute("pageTitle", "Premium Production Report");
+
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+			dispatcher.forward(request, response);
+		}
 
 		if(action.equals("printBondsReport")){			
 			String dateFrom = request.getParameter("dateFrom");
@@ -46,7 +74,7 @@ public class PsBankController extends HttpServlet{
 			String address1 = request.getParameter("address1");
 			String address2 = request.getParameter("address2");
 			String re = request.getParameter("re");
-			String linecd = request.getParameter("linecd");		
+			String lineCd = request.getParameter("lineCd");		
 			String userId = request.getParameter("userId");
 			
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
@@ -60,19 +88,17 @@ public class PsBankController extends HttpServlet{
 			String outputPdf = getServletContext().getInitParameter("GENERATED_REPORTS_DIR") + reportName + ".pdf";
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
 			
-			request.setAttribute("errorMsg", errorMsg);
-			
+			parameters.put("P_LINE", lineCd);
 			parameters.put("P_FROM", dateFrom);
 			parameters.put("P_TO", dateTo);
-			parameters.put("P_TO_TEXT", fromtext);
-			parameters.put("P_FROM_TEXT", totext);
+			parameters.put("P_TO_TEXT", totext);
+			parameters.put("P_FROM_TEXT", fromtext);
 			parameters.put("P_ADDRESS1", address1);
 			parameters.put("P_ADDRESS2", address2);
 			parameters.put("P_RE", re);
 			parameters.put("P_USER_ID", userId);
 			parameters.put("P_TRAN_CD", tranCd);
 
-			request.setAttribute("errorMsg", errorMsg);
 			
 			try {
 				DefaultJasperReportsContext context = DefaultJasperReportsContext.getInstance();
@@ -100,7 +126,7 @@ public class PsBankController extends HttpServlet{
 				request.setAttribute("reportUrl", outputPdf);
 				request.setAttribute("reportTitle", reportName);
 				
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/underwriting/ps bank posted/hiddenDiv.jsp");
             	dispatcher.forward(request,response);
 			}
 		}

@@ -74,4 +74,15 @@ public class PolicyNoServiceImpl implements PolicyNoService{
 		return this.getPolicyNoDAO().getPolicyIdNonRenew(policyNo);
 	}
 
+
+	@Override
+	public Integer getResultPolicyIdRenewal(Integer policyId,String tranCd,HttpServletRequest request) throws SQLException {
+		String userId = request.getParameter("userId");
+		Map<String, Object> params = new HashMap<>();
+		params.put("policyId", policyId);
+		params.put("userId", userId);
+		params.put("tranCd", tranCd);
+		return this.getPolicyNoDAO().getResultPolicyIdRenewal(params);
+	}
+
 }
