@@ -505,11 +505,11 @@
 			//return false;
 		}/*  else
 			isOk = true; */
-		if(renewNo == 0){
+		/* if(renewNo == 0){
 			isOk = false;
 			showMessageBox("Invalid Renew No", "E");
 			$("txtRenewNo").focus();
-		}
+		} */
 		
 		return isOk;
 	}

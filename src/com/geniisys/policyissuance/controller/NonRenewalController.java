@@ -227,7 +227,7 @@ public class NonRenewalController extends HttpServlet {
 				request.setAttribute("reportTitle", reportName);
 				request.setAttribute("pageTitle", "Non Renewal Notice");
 				
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/NonRenewalController?action=toNonRenewPage");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/policy issuance/non renewal/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

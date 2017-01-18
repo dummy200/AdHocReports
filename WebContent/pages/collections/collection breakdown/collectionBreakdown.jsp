@@ -14,8 +14,9 @@
 <!-- hidden fields -->
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
-<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
+<div id="hiddenDiv">
+<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
 <input type="hidden" id="reportName" name="reportName"
@@ -26,6 +27,7 @@
 	value="${reportXls}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
+</div>
 <%-- <input type="hidden" id="branchList4" name="branchList4" value='${branchList4}'> --%>
 <input type="hidden" id="assuredList2" name="assuredList2" value='${assuredList2}'>
 <!-- end hidden fields -->
@@ -139,6 +141,7 @@
 </div>
 
 <script type="text/javascript">
+	$("hiddenDiv").hide();
 	var page = $F("page");
 	var reportName = 'COLLECTION_BREAKDOWN_REP';
 	var issCd = '';
@@ -181,8 +184,8 @@
 				}
 				if(!checkBlankNull(fromDate) && !checkBlankNull(toDate)){
 				if (!compareDate(fromDate, toDate)) {
-					new Ajax.Updater(
-							"mainContents",
+					new Ajax.Request(
+							//"mainContents",
 							contextPath
 									+ "/CollectionBreakdownController",
 							{
@@ -199,7 +202,8 @@
 								},
 								onCreate : showNotice("Generating report. Please wait..."),
 								onComplete : function(response) {
-									printOutputXls();
+									//printOutputXls();
+									$("hiddenDiv").update(response.responseText);
 								}
 							});
 				} else {
@@ -216,7 +220,7 @@
 	
 	$("selBranch").observe("change", function(){
 		 issCd = $("selBranch").getValue();
-		console.log("issCd: " + issCd);
+		//console.log("issCd: " + issCd);
 	});
 	
 	function printOutputXls() {

@@ -13,6 +13,7 @@
 
 <!-- hidden fields -->
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
+<div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
@@ -20,6 +21,7 @@
 	value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
+</div>
 <input type="hidden" id="notedBySign1" value="">
 <input type="hidden" id="notedBySign2" value="">
 <input type="hidden" id="notedBySign3" value="">
@@ -225,6 +227,7 @@
 	</div>
 </div>
 <script type="text/javascript">
+	$("hiddenDiv").hide();
 	makeAllInputFieldsUpperCase();
 	//$("btnPrintReport").enable();
 	
@@ -472,8 +475,8 @@
  		showMessageBox("Please input signatory fields", "I");
 	}else
 		{
-			new Ajax.Updater(
-					"mainContents",
+			new Ajax.Request(
+					//"mainContents",
 					contextPath
 							+ "/IssuedApdcController",
 					{
@@ -496,7 +499,8 @@
 						onComplete : function(response) {
 							hideNotice("");
 							//outputToPDF($F("reportUrl"), $F("reportTitle"), $F("errorMsg"));
-							printOutputPdf();
+							//printOutputPdf();
+							$("hiddenDiv").update(response.responseText);
 						}
 					});
 	    }

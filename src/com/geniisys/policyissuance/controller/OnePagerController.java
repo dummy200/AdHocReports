@@ -310,11 +310,13 @@ public class OnePagerController extends HttpServlet {
 			String toDate = request.getParameter("toDate");
 			String sublineCd = request.getParameter("sublineCd");
 			String issCd = request.getParameter("issCd");
-			String userId = request.getParameter("userId");
 			String dateType = request.getParameter("dateType");
 			String issuePlace = request.getParameter("issuePlace");
 			String issueCd = request.getParameter("issueCd");
 			String pdfSw = request.getParameter("pdfSw");
+			
+			String userId = request.getParameter("userId");
+			String batchUserId = request.getParameter("batchUserId");
 			
 			System.out.println("Issue code: " + issueCd);
 
@@ -332,8 +334,9 @@ public class OnePagerController extends HttpServlet {
 			parameters.put("P_CRED_BRANCH", issueCd);
 			parameters.put("P_TO_DATE", toDate);
 			parameters.put("P_FROM_DATE", fromDate);
-			//parameters.put("P_USER", userId);
-			parameters.put("P_USER_ID", userId);
+			parameters.put("P_ADHOC_USER", userId);
+			parameters.put("P_USER", batchUserId);
+			//parameters.put("P_USER_ID", userId);
 			parameters.put("P_DATE_TYPE", dateType);
 			parameters.put("P_PLACE", issuePlace);
 			parameters.put("P_PDF_SW", pdfSw);

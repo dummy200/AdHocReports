@@ -20,8 +20,9 @@
 <!-- hidden fields -->
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
-<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
+<div id="hiddenDiv">
+<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
 <input type="hidden" id="reportName" name="reportName"
@@ -30,6 +31,7 @@
 	value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
+</div>
 <%-- <input type="text" id="letterType" name= "letterType" value = "${letterType}"> --%>
 <!-- end hidden fields -->
 
@@ -129,6 +131,7 @@
 </div>
 
 <script type="text/javascript">
+	$("hiddenDiv").hide();
 	var page = $F("page");
 	var reportName = 'COMMISSION_FUND_REP';
 	var issCd = '';
@@ -166,8 +169,8 @@
 				var toDate = $F("txtToDate");
 				var userId = $F("userId");
 				if (!compareDate(fromDate, toDate)) {
-					new Ajax.Updater(
-							"mainContents",
+					new Ajax.Request(
+							//"mainContents",
 							contextPath
 									+ "/CommissionFundController",
 							{
@@ -183,7 +186,8 @@
 								},
 								onCreate : showNotice("Generating report. Please wait..."),
 								onComplete : function(response) {
-									printOutputPdf();
+									//printOutputPdf();
+									$("hiddenDiv").update(response.responseText);
 								}
 							});
 				} else {

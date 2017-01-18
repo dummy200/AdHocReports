@@ -300,6 +300,15 @@
 		<servlet-name>UpdateRefNameController</servlet-name>
 		<url-pattern>/UpdateRefNameController</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CheckRequestController</servlet-name>
+		<servlet-class>com.geniisys.collections.controller.CheckRequestController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CheckRequestController</servlet-name>
+		<url-pattern>/CheckRequestController</url-pattern>
+	</servlet-mapping>
 	<!-- end collections -->
 	
 	<!-- underwriting -->

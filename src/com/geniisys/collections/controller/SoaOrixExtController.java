@@ -89,7 +89,7 @@ public class SoaOrixExtController extends HttpServlet {
 			String outputXls = getServletContext().getInitParameter("GENERATED_REPORTS_DIR") + reportName + ".xls";
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
 
-			parameters.put("P_SUBLINE", branch);
+			parameters.put("P_BRANCH_CD", branch);
 			parameters.put("P_FROM", fromDate);
 			parameters.put("P_ASOF", asofDate);
 			parameters.put("P_TO", toDate);

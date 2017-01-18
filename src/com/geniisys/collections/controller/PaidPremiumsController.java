@@ -52,7 +52,13 @@ public class PaidPremiumsController extends HttpServlet {
 			BranchService branchService = new BranchServiceImpl();
 			IntermediaryService intmService = new IntermediaryServiceImpl();
 
-			List<Branch> branchList = (List<Branch>) branchService.getAllBranches();
+			List<Branch> branchList = null;
+			try {
+				branchList = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			List<Intermediary> intmList = (List<Intermediary>) intmService.getAllActiveIntermediary();
 			List<Intermediary> intmTypeList = (List<Intermediary>) intmService.getAllIntmType();
 			// List<Assured> assdList = null;
@@ -146,7 +152,7 @@ public class PaidPremiumsController extends HttpServlet {
 				request.setAttribute("reportTitle", reportName);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/collections/paid premiums/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

@@ -8,8 +8,8 @@
 <input type="hidden" id="userModuleList" name="userModuleList" value='${userModuleList}'> --%>
 	<jsp:include page="/pages/userAccess.jsp"></jsp:include>
 </div>
- <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
-<%--<input type="hidden" id="adhocUser" name="adhocUser" value="CPIRALPH">--%> 
+ <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}"> 
+<%--<input type="hidden" id="adhocUser" name="adhocUser" value="CPIRALPH">--%>
 
 <script type="text/javascript">
 	//init user access
@@ -60,10 +60,11 @@
 			+ '}';
 	var claimsLineCdObj = JSON.parse(userClaimsLineCd);
 	var lineCdClaimsLength = claimsLineCdObj.userLineCd.length;
-
+	
 	//policy issuance lineCd
 	var userPolIssuanceLineCd = '{"userLineCd" : '
 			+ $F("userPolIssuanceLineCdList") + '}';
+			//alert(userPolIssuanceLineCd);
 	var polIssuanceLineCdObj = JSON.parse(userPolIssuanceLineCd);
 	var lineCdPolIssuanceLength = polIssuanceLineCdObj.userLineCd.length;
 
@@ -128,6 +129,9 @@
 								Account - ORIX</a></li>
 						<li><a id="updateRefName" name="updateRefName">Update
 								Referror Name</a></li>
+						<li class="menuSeparator"></li>
+						<li><a id="checkRequest" name="checkRequest">Update
+								Check Request</a></li>
 					</ul></li>
 				<li><a id="policyIssuance">Policy Issuance</a>
 					<ul style="width: 120px;">
@@ -209,7 +213,11 @@
 	</div>
 </div>
 
+<div id="blankDiv1">
+</div>
+
 <script type="text/javascript">
+	$("blankDiv1").hide();
 	initializeMenu();
 	var divToUpdate = "mainContents";
 	var userId = $F("adhocUser");
@@ -224,7 +232,6 @@
 		disableMenu('demandLetter');
 		disableMenu('transmittal');
 		disableMenu('lossesPaidMotor');
-
 	} else {
 		//check per module
 		//checkUserAccess2('FCLMLSTAGE', moduleIdObjLength, userModuleObj,"claimsListing","/pages/claims/Claims Listing/claimsListing.jsp","Claims Listing/Aging per Processor");
@@ -245,12 +252,9 @@
 		checkUserAccess2("FCLTRNSMTL", moduleIdObjLength, userModuleObj,
 				"transmittal",
 				"/TransmittalController?action=toTransmittalPage",
-				"Please wait.....",
 				"Motor Car - Transmittal(Total Loss/Carnap)");
 		checkUserAccess2("FCLDMNDLET", moduleIdObjLength, userModuleObj,
-				"demandLetter", "/pages/claims/Demand Letter/demandLetter.jsp",
-				"Please wait.....", "Demand Letter");
-
+				"demandLetter", "/pages/claims/Demand Letter/demandLetter.jsp", "Demand Letter");
 		if (!checkUserLineCd('MC', lineCdClaimsLength, claimsLineCdObj)) {
 			disableMenu('lossesPaidMotor');
 			disableMenu('mcSworn');
@@ -276,6 +280,7 @@
 		disableMenu('soaPerAssdIntm');
 		disableMenu('orixSoaExt');
 		disableMenu('updateRefName');
+		disableMenu('checkRequest');
 	} else {
 		//check per module
 		checkUserAccess2(
@@ -283,11 +288,11 @@
 				moduleIdObjLength,
 				userModuleObj,
 				"collectionBreakdown",
-				"/CollectionBreakdownController?action=toCollectionBreakdownPage",
+				"/CollectionBreakdownController?action=toCollectionBreakdownPage&tranCd=94&userId="+userId,
 				"Collection Breakdown");
 		checkUserAccess2('FCOMMFUND', moduleIdObjLength, userModuleObj,
 				"commissionFund",
-				"/CommissionFundController?action=toCommissionFundPage",
+				"/CommissionFundController?action=toCommissionFundPage&tranCd=94&userId="+userId,
 				"Commission Fund");
 		checkUserAccess2('INTCHKINQ', moduleIdObjLength, userModuleObj,
 				"inquiryMetrobank",
@@ -300,7 +305,7 @@
 				"Intertrade/BNC - Check Report");
 
 		checkUserAccess2('FISSAPDC', moduleIdObjLength, userModuleObj,
-				"issuedApdc", "/IssuedApdcController?action=IssuedApdc",
+				"issuedApdc", "/IssuedApdcController?action=IssuedApdc&tranCd=94&userId="+userId,
 				"Issued APDC");
 		checkUserAccess2('FJVPERUSER', moduleIdObjLength, userModuleObj,
 				"jvPerUser", "/JvPerUserController?action=toJvPerUserPage",
@@ -310,7 +315,7 @@
 				"Outstanding APDC");
 		checkUserAccess2('FPAIDPREM', moduleIdObjLength, userModuleObj,
 				"paidPremiums",
-				"/PaidPremiumsController?action=toPaidPremiumsPage",
+				"/PaidPremiumsController?action=toPaidPremiumsPage&tranCd=94&userId="+userId,
 				"Paid Premiums by Intermediary");
 		checkUserAccess2('DOLLAR', moduleIdObjLength, userModuleObj,
 				"receiptedDollarAcct",
@@ -320,12 +325,13 @@
 				"soaPerAssdIntm", "/SOAperAssdIntmController?action=toSOAPage&tranCd=94&userId="+userId,
 				"SOA per Assured/Intermediary");
 		checkUserAccess2('FSOAORIX', moduleIdObjLength, userModuleObj,
-				"orixSoaExt", "/SoaOrixExtController?action=OrixSoaExt&tranCd=94&userId="+userId,
-				"Please wait.....", "Statement of Account ORIX");
+				"orixSoaExt", "/SoaOrixExtController?action=OrixSoaExt&tranCd=94&userId="+userId, "Statement of Account ORIX");
 		checkUserAccess2('FACINTRADE', moduleIdObjLength, userModuleObj,
 				"updateRefName",
 				"/pages/collections/update referror name/updateRefName.jsp",
 				"Inquiry - Metrobank Referror");
+		checkUserAccess2('FACCHKREP', moduleIdObjLength, userModuleObj,
+				"checkRequest", "/CheckRequestController?action=toCheckRequest&userId="+userId, "Statement of Account ORIX");
 	}
 	/**END COLLECTIONS MENU**/
 
@@ -363,27 +369,25 @@
 		//renewal
 		//check renewal access per module
 		checkUserAccess2('FENRENNOTE', moduleIdObjLength, userModuleObj,
-				"enRenewal", "/RenewalNoticeController?action=toENRenewal",
-				"Please wait.....", "Engineering - Renewal Notice");
+				"enRenewal", "/RenewalNoticeController?action=toENRenewal","Engineering - Renewal Notice");
 		checkUserAccess2('FMCRENOTE', moduleIdObjLength, userModuleObj,
-				"mcRenewal", "/RenewalNoticeController?action=toMCRenewal",
-				"Please wait.....", "Motor Car - Renewal Notice");
+				"mcRenewal", "/RenewalNoticeController?action=toMCRenewal","Motor Car - Renewal Notice");
 		checkUserAccess2('FFIRENNOTE', moduleIdObjLength, userModuleObj,
-				"fiRenewal", "/RenewalNoticeController?action=toFIRenewal",
-				"Please wait.....", "Fire - Renewal Notice");
+				"fiRenewal", "/RenewalNoticeController?action=toFIRenewal","Fire - Renewal Notice");
 		checkUserAccess2('FPARENNOTE', moduleIdObjLength, userModuleObj,
-				"ocRenewal", "/RenewalNoticeController?action=toOCRenewal",
-				"Please wait.....", "Other Casualty - Renewal Notice");
+				"ocRenewal", "/RenewalNoticeController?action=toOCRenewal","Other Casualty - Renewal Notice");
 		checkUserAccess2('FPARENNOTE', moduleIdObjLength, userModuleObj,
-				"paRenewal", "/RenewalNoticeController?action=toPARenewal",
-				"Please wait.....", "Personal Accident - Renewal Notice");
+				"paRenewal", "/RenewalNoticeController?action=toPARenewal","Personal Accident - Renewal Notice");
 
 		//thank you letter
 		checkUserAccess2('FTYLETTER', moduleIdObjLength, userModuleObj,
-				"thankYou", "/ThankYouLetterController?action=toThankYouPage&tranCd=95&userId="+userId,
-				"Please wait.....", "Thank You Letter");
+				"thankYou", "/ThankYouLetterController?action=toThankYouPage&tranCd=95&userId="+userId, "Thank You Letter");
 
 		//to set to function
+		if (!checkUserLineCd('MC', lineCdPolIssuanceLength,
+				polIssuanceLineCdObj)) {
+			disableMenu('thankYou');
+		}
 		if (!checkUserLineCd('EN', lineCdPolIssuanceLength,
 				polIssuanceLineCdObj)) {
 			disableMenu('enRenewal');
@@ -400,21 +404,16 @@
 				polIssuanceLineCdObj)) {
 			disableMenu('paRenewal');
 		}
-		if (!checkUserLineCd('MC', lineCdPolIssuanceLength,
-				polIssuanceLineCdObj)) {
-			disableMenu('thankYou');
-		}
+		
 
 		//one pager
 		checkUserAccess2('FMCCONFCOV', moduleIdObjLength, userModuleObj,
-				"mcOnePager", "/OnePagerController?action=toMC",
-				"Please wait.....", "Motor Car One Pager");
+				"mcOnePager", "/OnePagerController?action=toMC","Motor Car One Pager");
 		/* checkUserAccess2('FCMC_TP', moduleIdObjLength, userModuleObj,
 				"12pMcOnePager", "/OnePagerController?action=to12PMC",
 				"Please wait.....", "12P Motor Car One Pager"); */
 		checkUserAccess2('GIRC003', moduleIdObjLength, userModuleObj,
-				"regFiOnePager", "/OnePagerController?action=toREGFI",
-				"Please wait.....", "REG Fire One Pager");
+				"regFiOnePager", "/OnePagerController?action=toREGFI","REG Fire One Pager");
 		/* checkUserAccess2('GIRC003', moduleIdObjLength, userModuleObj,
 				"clgFiOnePager", "/OnePagerController?action=toCLGFI",
 				"Please wait.....", "CLG Fire One Pager");
@@ -425,8 +424,7 @@
 				"psFiOnePager", "/OnePagerController?action=toPSFI",
 				"Please wait.....", "PS Fire One Pager");*/
 		checkUserAccess2('FOCINDEMTY', moduleIdObjLength, userModuleObj,
-				"ocOnePager", "/OnePagerController?action=toOC",
-				"Please wait.....", "Other Casualty One Pager");
+				"ocOnePager", "/OnePagerController?action=toOC","Other Casualty One Pager");
 		/* checkUserAccess2('FPACOC', moduleIdObjLength, userModuleObj,
 				"12paOnePager", "/OnePagerController?action=to12pPA",
 				"Please wait.....", "12P PA One Pager"); */
@@ -461,24 +459,20 @@
 		//surety bonds
 		checkUserAccess2('FSUOTHDOCS', moduleIdObjLength, userModuleObj,
 				"SOtherBondDoc",
-				"/BondsReportController?action=toSOtherBondDoc",
-				"Please wait.....", "SU - Other Bond Documents");
+				"/BondsReportController?action=toSOtherBondDoc","SU - Other Bond Documents");
 
 		//bond detail maintenance
 		checkUserAccess2('FSUDTLMAIN', moduleIdObjLength, userModuleObj,
 				"bondDetails",
-				"/BondDetailsController?action=toBondDetailsPage",
-				"Please wait.....", "SU - Bond Detail Maintenance");
+				"/BondDetailsController?action=toBondDetailsPage", "SU - Bond Detail Maintenance");
 
 		//nonRenewal
 		checkUserAccess2('FNONRENEW', moduleIdObjLength, userModuleObj,
-				"nonRenewal", "/NonRenewalController?action=toNonRenewPage",
-				"Please wait.....", "Non Renewal");
+				"nonRenewal", "/NonRenewalController?action=toNonRenewPage","Non Renewal");
 
 		checkUserAccess2('FPRODREP', moduleIdObjLength, userModuleObj,
 				"confirmedPolicy",
-				"/ConfirmedPolicyController?action=toConfirmedPolicyPage&tranCd=95&userId="+userId,
-				"Please wait.....", "Confirmed Policy");
+				"/ConfirmedPolicyController?action=toConfirmedPolicyPage&tranCd=95&userId="+userId,"Confirmed Policy");
 
 		//batch gen
 		checkUserAccess2('CPAICM001', moduleIdObjLength, userModuleObj,
@@ -494,8 +488,7 @@
 		disableMenu('riBinder');
 	} else {
 		checkUserAccess2('RI_BINDER', moduleIdObjLength, userModuleObj,
-				"riBinder", "/pages/reinsurance/ri binder/RiBinder.jsp",
-				"Please wait.....", "Ri Binder");
+				"riBinder", "/pages/reinsurance/ri binder/RiBinder.jsp","Ri Binder");
 	}
 	/*END REINSURANCE MENU*/
 
@@ -521,10 +514,10 @@
 
 		checkUserAccess2('FPOSTEDPOL', moduleIdObjLength, userModuleObj,
 				"psBank", "/pages/underwriting/ps bank posted/PsBank.jsp",
-				"Please wait.....", "Ps Bank Posted Policy");
+				"Ps Bank Posted Policy");
 		checkUserAccess2('FPSBPSTPOL', moduleIdObjLength, userModuleObj,
-				"pamsIssuance", "/PamsIssuanceController?action=PamsIssuance",
-				"Please wait.....", "PAMS Issuance");
+				"pamsIssuance", "/PamsIssuanceController?action=PamsIssuance&tranCd=98&userId="+userId,
+				"PAMS Issuance");
 		//checkUserAccess2('FPOSTEDPOL', moduleIdObjLength, userModuleObj,"postedPolicy","/PostedPoliciesController?action=toPostedPolicyPage","Posted Policies per User");
 		var premProductionAccess = 'FPRMPRODRP DP_FRM FSOADLRS GPRC001 PROD800 ';
 		checkUserAccess3(premProductionAccess, moduleIdObjLength,

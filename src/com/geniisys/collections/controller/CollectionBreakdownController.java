@@ -50,7 +50,13 @@ public class CollectionBreakdownController extends HttpServlet {
 
 		if (action.equals("toCollectionBreakdownPage")) {
 			BranchService branchService = new BranchServiceImpl();
-			List<Branch> branchList = (List<Branch>) branchService.getAllBranches();
+			List<Branch> branchList = null;
+			try {
+				branchList = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			/*String branchList4 = (String) branchService.getAllBranches4();*/
 			
 			/*AssuredService assuredService = new AssuredServiceImpl();
@@ -127,7 +133,7 @@ public class CollectionBreakdownController extends HttpServlet {
 				request.setAttribute("reportTitle", reportName);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/collections/collection breakdown/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

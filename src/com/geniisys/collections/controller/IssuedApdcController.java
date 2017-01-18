@@ -56,7 +56,7 @@ public class IssuedApdcController extends HttpServlet {
 			List<User> users = null;
 			try {
 				signatoryList = (List<Signatory>) signatoryService.getAllActiveSignatory();
-				branches = (List<Branch>) branchService.getAllBranches2();
+				branches = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
 				users = (List<User>) userService.getAllUsers();
 				
 			} catch (SQLException e) {
@@ -136,7 +136,7 @@ public class IssuedApdcController extends HttpServlet {
 				request.setAttribute("reportUrl", outputPdf);
 				request.setAttribute("reportTitle", reportName);
 
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectPage);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/collections/issued apdc/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

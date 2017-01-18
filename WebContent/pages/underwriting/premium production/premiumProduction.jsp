@@ -33,6 +33,7 @@ var filterGridBy = "";
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
+<!-- <input type="hidden" id="userId" name="userId" value="MISMEM"> -->
 
 <div id="hiddenDiv">
 	<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
@@ -75,7 +76,7 @@ var filterGridBy = "";
 							</select> <input id="txtBranchCd" name="capsField"
 								class="leftAligned" type="hidden" /></td>
 						</tr>
-						<tr>
+						<%-- <tr>
 							<td class="rightAligned" style="width: 25%;">Line</td>
 							<td class="leftAligned"><select name="selLine" id="selLine"
 								style="width: 100%;">
@@ -86,6 +87,37 @@ var filterGridBy = "";
 							</select>
 							<input id="txtLineCd" name="capsField"
 								class="leftAligned" type="hidden" /></td>
+						</tr> --%>
+						</table>
+						<div id="lineOnlyDiv">
+						<table style="width: 100%;">
+						<tr>
+							<td class="rightAligned" style="width: 25%;">Line</td>
+							<td class="leftAligned"><select name="selLineOnly" id="selLineOnly"
+								style="width: 100%;">
+									<option value=""></option>
+									<c:forEach var="line" items="${ lineList }">
+										<option value="${line.lineCd}">${line.lineName}</option>
+									</c:forEach>
+							</select>
+							<input id="txtLineCd" name="capsField"
+								class="leftAligned" type="hidden" /></td>
+						</tr>
+						</table>
+						</div>
+								<div id="lineDiv">
+								<jsp:include page="/pages/underwriting/premium production/lineDiv.jsp"></jsp:include>
+								</div>
+						<table style="width: 100%;">
+						<tr id="trIntmType">
+							<td class="rightAligned" style="width: 25%;">Intm Type</td>
+							<td class="leftAligned"><select name="selIntmType" id="selIntmType"
+								style="width: 100%;">
+									<option value=""></option>
+									<c:forEach var="intm" items="${ intmTypeList }">
+										<option value="${intm.intmType}">${intm.intmName}</option>
+									</c:forEach>
+							</select></td>
 						</tr>
 						<tr>
 							<td class="rightAligned" style="width: 25%;">Intermediary</td>
@@ -100,6 +132,7 @@ var filterGridBy = "";
 									style="margin-top: 2px;" title="Search Intermediary" />
 							</span></td>
 						</tr>
+						
 					</table>
 					<table style="margin-top: 10px; width: 100%;">
 						<tr>
@@ -182,7 +215,7 @@ var filterGridBy = "";
 													style="float: left; border: solid 1px gray; width: 108px; height: 20px; margin-right: 3px;">
 													<input type="text" class="required"
 														style="float: left; margin-top: 0px; margin-right: 3px; width: 74%; border: none;"
-														name="fmDate" id="txtFromDate" readonly="readonly" /> <img
+														name="txtFromDate" id="txtFromDate" readonly="readonly" /> <img
 														id="imgFromDate" alt="imgFromDate" style="height: 18px;"
 														class="hover"
 														src="${pageContext.request.contextPath}/images/misc/but_calendar.gif" />
@@ -218,7 +251,7 @@ var filterGridBy = "";
 													style="float: left; border: solid 1px gray; width: 108px; height: 20px; margin-right: 3px;">
 													<input type="text"
 														style="float: left; margin-top: 0px; margin-right: 3px; width: 74%; border: none;"
-														name="fmDate" id="txtFromDate2" readonly="readonly" /> <img
+														name="fmDate" id="txtFromDate2" readonly="readonly"/> <img
 														id="imgFromDate2" alt="imgFromDate2" style="height: 18px;"
 														class="hover"
 														src="${pageContext.request.contextPath}/images/misc/but_calendar.gif" />
@@ -292,7 +325,7 @@ var filterGridBy = "";
 							<td class="rightAligned"><input type="radio"
 								id="rdoComparative" name="reportOption" value="2"
 								style="margin-left: 10px; float: left; margin-left: 50px;"
-								checked="" /> <label for="rdoComparative"
+								checked="" /> <label for="rdoComparative" id="lblComparative"
 								style="margin-top: 3px;">Comparative</label></td>
 						</tr>
 					</table>
@@ -317,7 +350,7 @@ var filterGridBy = "";
 							<td class="rightAligned"><input type="radio" id="rdoBooking"
 								name="dateType" value="2"
 								style="margin-left: 10px; float: left; margin-left: 50px;"
-								checked="" /> <label for="rdoBooking" style="margin-top: 3px;">Booking
+								checked="" /> <label for="rdoBooking" id="lblBooking" style="margin-top: 3px;">Booking
 									Date</label></td>
 						</tr>
 					</table>
@@ -344,6 +377,7 @@ var filterGridBy = "";
 </div>
 
 <script type="text/javascript">
+	var userId = $F("userId");
 	makeAllInputFieldsUpperCase();
 	var page = $F("page");
 	reportName = 'PREMIUM_PROD_REP';
@@ -356,6 +390,8 @@ var filterGridBy = "";
 	var outputType = 2;  //1 = pdf  2 = xls
 	var isIntmRequired = false;
 	var branchCode = "";
+	var rdoReportTypeValue = 1;
+	var lineCdVal = "";
 	
 	/*INTERMEDIARY*/
 	var intermediaryNo = "";
@@ -414,8 +450,11 @@ var filterGridBy = "";
 			emptyIntmGrid();
 		}
 	});
+
 	/*END INTERMEDIARY*/
 	
+	//$("lineOnlyDiv").hide();
+	$("lineDiv").hide();
 	
 	$("hiddenDiv").hide();
 	
@@ -430,6 +469,12 @@ var filterGridBy = "";
 	$("comparativeDiv").hide();
 	$("rdoBooking").disable();
 	$("rdoComparative").disable();
+	
+	$("lblComparative").hide();
+	$("lblBooking").hide();
+	$("rdoComparative").hide();
+	$("rdoBooking").hide();
+	
 	makeInputFieldUpperCase();
 	
 	var fromCalendar = new dhtmlXCalendarObject({
@@ -450,12 +495,30 @@ var filterGridBy = "";
 	var toCalendar2 = new dhtmlXCalendarObject({
 		input : "txtToDate2",
 		button : "imgToDate2"
+	});	
+	
+	fromCalendar.attachEvent("onClick", function(side,d){
+		//alert("onClick event called, "+side+" calendar, date "+fromCalendar.getFormatedDate(null,d));
+		var strFromD = fromCalendar.getFormatedDate(null,d);
+		var subtractedYear = +strFromD.substring(0, 4) - 1;
+		var strFromD2 = subtractedYear.toString() + strFromD.substring(4,10);
+		$("txtFromDate2").value = strFromD2;
+	});
+	
+	toCalendar.attachEvent("onClick", function(side,d){
+		//alert("onClick event called, "+side+" calendar, date "+fromCalendar.getFormatedDate(null,d));
+		var strToD = toCalendar.getFormatedDate(null,d);
+		var subtractedYear = +strToD.substring(0, 4) - 1;
+		var strToD2 = subtractedYear.toString() + strToD.substring(4,10);
+		$("txtToDate2").value = strToD2;
 	});
 	
 	//toggle report type
 	$$("input[name='reportType']").each(function(radio) {
 		radio.observe("click", function() {
 			toggleReportType(radio.value);
+			rdoReportTypeValue = radio.value;
+			$("selSubline").value = "";
 		});
 	});
 	
@@ -466,22 +529,35 @@ var filterGridBy = "";
 		$("rdoAcct").checked = true;
 		$("rdoRegular").checked = true;
 		isIntmRequired = false;
+		$("selSubline").value = "";
 	}
 	
 	
 	function toggleReportType(option){
+		$("trIntmType").hide();
+		$("selSubline").value = "";
 		$("rdoComparative").disable();
+		$("rdoComparative").hide();
 		$("txtOrixIntm").hide();
 		$("txtIntmSearch").show();
 		$("searchForIntm").show();
+		$("dateTypeDiv").hide();
+		$("lblComparative").hide();
+		$("lblBooking").hide();
+		$("lineDiv").hide();
 		intmNo = '';
 		emptyIntmGrid();
+		isIntmRequired = false;
 		if(option == 1){
 			reportName = 'PREMIUM_PROD_REP';
 			toggleDateType(1);
 			$("rdoAcct").checked = true;
 			$("rdoAcct").enable();
 			$("rdoBooking").disable();
+			$("rdoBooking").hide();
+			$("dateTypeDiv").show();
+			$("lineOnlyDiv").show();
+			$("trIntmType").show();
 			outputType = 2;
 		}
 		if(option == 2){
@@ -489,7 +565,11 @@ var filterGridBy = "";
 			toggleDateType(2);
 			$("rdoBooking").checked = true;
 			$("rdoBooking").enable();
-			$("rdoAcct").disable();
+			$("rdoBooking").show();
+			$("lblBooking").show();
+			$("rdoAcct").enable(); //1.16.2017 set to enable 
+			$("dateTypeDiv").show();
+			$("lineOnlyDiv").show();
 			outputType = 1;
 		}
 		if(option == 3){
@@ -499,12 +579,18 @@ var filterGridBy = "";
 			isIntmRequired = true;
 			gridIntm.filterBy(1,"DL");
 			filterGridBy = "DL";
+			$("lineOnlyDiv").show();
 		}
 		if(option == 4){
 			resetToggleReportType();
 			reportName = 'PROD_REPORT_PER_INTM';
 			$("rdoAcct").checked = true;
 			$("rdoComparative").enable();
+			$("rdoComparative").show();
+			$("lblComparative").show();
+			$("lineDiv").show();
+			$("lineOnlyDiv").hide();
+			$("trIntmType").show();
 			outputType = 1;
 		}
 		if(option == 5){	
@@ -515,6 +601,8 @@ var filterGridBy = "";
 			outputType = 1;
 			$("txtIntmSearch").hide();
 			$("searchForIntm").hide();
+			$("lineDiv").show();
+			$("lineOnlyDiv").hide();
 		}
 	}
 	
@@ -580,6 +668,13 @@ var filterGridBy = "";
 						if(reportName == 'PROD_REPORT_ORIX'){
 							intmNo = 800;
 						}
+						lineCdVal = $F("selLineOnly");
+						 /* if(rdoReportTypeValue == 4 || rdoReportTypeValue == 5){
+							lineCdVal = $("selLine");
+						} */
+						if(reportName == 'Daily_Report_Per_Month' || reportName == 'Daily_Report_Per_Acct_Ent_Date'){
+							reportName = $("rdoAcct").checked ? 'Daily_Report_Per_Acct_Ent_Date': 'Daily_Report_Per_Month';
+						}
 							 new Ajax.Request(
 									contextPath + "/PremProductionController",
 									{
@@ -589,7 +684,8 @@ var filterGridBy = "";
 											action : "printReport",
 											outputType : outputType,
 											reportName :$("rdoComparative").checked ? 'PROD_REPORT_PER_INTM_VS': reportName,
-											lineCd : $F("txtLineCd"),
+											lineCd : lineCdVal,//$F("selLine"),
+											sublineCd : $F("selSubline"),
 											branchCd :  $F("txtBranchCd"),
 											fromDate : $F("txtFromDate"),
 											toDate : $F("txtToDate"),
@@ -598,8 +694,9 @@ var filterGridBy = "";
 											toDate2 : $("rdoComparative").checked ? $F("txtToDate2") : '',
 											bookingMonth : $("rdoBooking").checked ? $F("selMonth") : '',
 											bookingYear : $("rdoBooking").checked ? $F("txtBookingYear") : 0,
+											intmType : $F("selIntmType"),
 											intmNo : intmNo,
-											userId : $F("userId")
+											userId : $F("userId")//userId
 										},
 										onCreate : showNotice("Generating report. Please wait..."),
 										onComplete : function(response) {
@@ -710,7 +807,20 @@ var filterGridBy = "";
 		}
 	
 	//line
-	$("selLine").observe("change", function(){
+	$("selLineOnly").observe("change", function(){
+		var selected = $("selLineOnly").getValue();
+		$("selLine").value = selected;
+	});
+	
+	//intmType
+	$("selIntmType").observe("change", function(){
+		var selected = $("selIntmType").getValue();
+		filterGridBy = selected;
+		$("searchForIntm").click();
+		gridIntm.filterBy(1, selected);
+	});
+	
+	/* $("selLine").observe("change", function(){
 		var selected = $("selLine").getValue();
 		getLineName(selected,"txtLineName");
 	});
@@ -735,7 +845,7 @@ var filterGridBy = "";
 		}
 		}
 		$("txtLineCd").writeAttribute("value",lCd);
-		}
+		} */
 
 	function printOutputPdf() {
 		var reportUrl = $F("reportUrl");

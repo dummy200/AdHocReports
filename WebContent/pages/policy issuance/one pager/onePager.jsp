@@ -871,9 +871,15 @@
 											});
 								}
 							} else if (printOptionVal == "B") {
-								if ($F("tpTag") == 'Y') {
-									var batchUserId = $F("batchTxtUserId");
+								//var batchUserId = $F("userId");
+								/* if ($F("tpTag") == 'Y') {
+									batchUserId = $F("batchTxtUserId");
+								} */
+								var batchUserId = '';
+								if($F("tpTag") == 'Y'){
+									batchUserId = $F("batchTxtUserId");   // 1.17.2017
 								}
+								//var batchUserId = $F("batchTxtUserId");   // 1.17.2017
 								if (compareDate($F("txtFromDate"),
 										$F("txtToDate"))) {
 									showMessageBox(
@@ -903,7 +909,8 @@
 														sublineCd :/*  $F("batchTxtSublineCd"), */sublineCd,
 														issCd : $F("batchTxtIssCd"),
 														issueCd : /* $F("txtIssCd"), */issCd,
-														userId : batchUserId,
+														userId : $F("userId"),
+														batchUserId : batchUserId,
 														issuePlace : $F("txtIssuePlace"),
 														pdfSw : pdfSw
 													},

@@ -165,7 +165,7 @@ public class ThankYouLetterController extends HttpServlet {
 				request.setAttribute("reportTitle", reportName);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/policy issuance/thank you letter/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}
