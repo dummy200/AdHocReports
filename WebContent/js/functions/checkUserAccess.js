@@ -26,6 +26,7 @@ function checkUserAccess2(id, length, obj,menu,func,title){
 					onCreate: showNotice("Please wait....."),
 					onComplete: function (response) {
 						hideNotice("");
+						$("blankDiv1").update(response.responseText);
 					}
 				});
 				});

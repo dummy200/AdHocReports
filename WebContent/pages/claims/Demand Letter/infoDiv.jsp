@@ -75,6 +75,8 @@
 <script>
 	 var errorMsg2 = $F("errorMsg2");
 	 var letterType = $F("letterType");
+	 var reprintFirst = $F("reprintFirst");
+	 var reprintSecond = $F("reprintSecond");
 	if (!checkBlankNull(errorMsg2)) {
 		//alert(errorMsg2);
 		/* if (checkBlankNull(errorMsg)){
@@ -97,7 +99,7 @@
 	}else
 		$("rdoSecond").disable();
 	
-	if($F("reprintFirst") == 'true' || $("reprintSecond"))
+	if($F("reprintFirst") == 'true' || $F("reprintSecond")== 'true' )
 		$("btnReprint").enable();
 
 	function checkBlankNull(str) {

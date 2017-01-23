@@ -34,9 +34,10 @@ public class CheckRequestController extends HttpServlet {
 			String page = "http://10.20.39.122/intertrade/intertrade_request.php?useraccess=";
 			HttpSession session = request.getSession();
 
-			String userId = (String) session.getAttribute("adhocUser");
+			//String userId = (String) session.getAttribute("adhocUser");
+			String userId = request.getParameter("userId");
 			
-			System.out.println(toMd5(userId));
+			//System.out.println(toMd5(userId));
 
 			//request.setAttribute("url", page + toMd5(userId));
 			request.setAttribute("url", page + userId);
