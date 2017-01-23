@@ -76,7 +76,7 @@
 							<td class="rightAligned"><input type="radio"
 								id="rdoByPeriod" name="dateType" value="2"
 								style="margin-left: 15px; float: left; margin-left: 50px;"
-								checked="" /> <label for="rdoByPeriod" style="margin-top: 3px;">By Period</label></td>
+								checked="" /> <label for="rdoByPeriod" id="lblByPeriod" style="margin-top: 3px;">By Period</label></td>
 						</tr>
 					</table>
 				</div>
@@ -222,12 +222,12 @@
 						<tr>
 							<td colspan="2"><input type="radio" id="rdoDetailed" name="reportType2" value="1"
 								style="float: left; margin-left: 50px;" checked="" />
-								<label for="rdoDetailed" style="margin-top: 3px;">Detailed Report</label></td>
+								<label for="rdoDetailed" id="lblDetailed" style="margin-top: 3px;">Detailed Report</label></td>
 						</tr>
 						<tr>
 							<td colspan="2"><input type="radio" id="rdoSummary" name="reportType2" value="2"
 								style="float: left; margin-left: 50px;" checked="" />
-								<label for="rdoSummary" style="margin-top: 3px;">Summary Report</label></td>
+								<label for="rdoSummary" id="lblSummary" style="margin-top: 3px;">Summary Report</label></td>
 						</tr>
 					</table>
 				</div>
@@ -242,16 +242,16 @@
 						<tr>
 							<td colspan="2"><input type="radio" id="rdoLossDate" name="basedOnType" value="1"
 								style="float: left; margin-left: 50px;" checked="" />
-								<label for="rdoLossDate" style="margin-top: 3px;">Loss Date</label></td>
+								<label for="rdoLossDate" id="lblLossDate" style="margin-top: 3px;">Loss Date</label></td>
 						</tr>
 						<tr>
 							<td colspan="2"><input type="radio" id="rdoEntryDate" name="basedOnType" value="2"
 								style="margin-left: 15px; float: left; margin-left: 50px;" checked="" />
-								<label for="rdoEntryDate" style="margin-top: 3px;">Entry Date</label></td>
+								<label for="rdoEntryDate" id="lblEntryDate" style="margin-top: 3px;">Entry Date</label></td>
 						</tr>
 						<tr>
 							<td colspan="2"><input type="radio" id="rdoFileDate" name="basedOnType" value="3" style="margin-left: 15px; float: left; margin-left: 50px;" checked="" />
-								<label for="rdoFileDate" style="margin-top: 3px;">File Date</label></td>
+								<label for="rdoFileDate" id="lblFileDate" style="margin-top: 3px;">File Date</label></td>
 						</tr>
 						<!-- <tr>
 							<td colspan="2">
@@ -262,10 +262,10 @@
 						<tr>
 							<td colspan="1"><input type="radio" id="rdoLoss" name="lossExpenseType" value="1"
 								style="float: left; margin-left: 50px;" checked="" disabled />
-								<label for="rdoLoss" style="margin-top: 3px;">Loss</label></td>
+								<label for="rdoLoss" id="lblLoss" style="margin-top: 3px;">Loss</label></td>
 							<td colspan="1"><input type="radio" id="rdoExpense" name="lossExpenseType" value="2"
 								style="float: left; margin-left: 50px;" checked="" disabled />
-								<label for="rdoExpense" style="margin-top: 3px;">Expense</label></td>
+								<label for="rdoExpense" id="lblExpense" style="margin-top: 3px;">Expense</label></td>
 						</tr>
 					</table>
 				</div>
@@ -297,6 +297,10 @@
 	var basedOn = 1;
 	var lossExpenseType = 1;
 	var user = $F("userId");
+	$("rdoLoss").hide();
+	$("rdoExpense").hide();
+	$("lblLoss").hide();
+	$("lblExpense").hide();
 	
 	makeInputFieldUpperCase();
 	$("rdoAsOf").checked = true;
@@ -499,9 +503,28 @@
 	});
 	
 	function toggleReportType1(option){
+		//toggleReportName(basedOn);
 		$("rdoByPeriod").enable();
 		if (option == '1') {
 			//$("checkBoxInclude").enable();
+			//showhide
+			$("rdoLoss").hide();
+			$("rdoExpense").hide();
+			$("lblLoss").hide();
+			$("lblExpense").hide();
+			$("rdoLossDate").show();
+			$("rdoEntryDate").show();
+			$("rdoFileDate").show();
+			$("lblLossDate").show();
+			$("lblEntryDate").show();
+			$("lblFileDate").show();
+			$("rdoDetailed").show();
+			$("rdoSummary").show();
+			$("lblDetailed").show();
+			$("lblSummary").show();
+			$("lblByPeriod").show();
+			$("rdoByPeriod").show();
+			
 			$("rdoLoss").disable();
 			$("rdoExpense").disable();
 			$("rdoDetailed").enable();
@@ -514,7 +537,29 @@
 
 			$("txtUserId").value = '';
 			$("txtUserId").enable();
+			if(dateType == 1){
+				reportName = 'CLM_ASOF_LD_PER_PROCESSOR_DET';
+			}else if(dateType == 2){
+				reportName = 'CLM_FROM_TO_LD_PER_PROCESSOR_DET';
+			}
 		} else if (option == '2') {
+			$("rdoLoss").hide();
+			$("rdoExpense").hide();
+			$("lblLoss").hide();
+			$("lblExpense").hide();
+			$("rdoLossDate").show();
+			$("rdoEntryDate").show();
+			$("rdoFileDate").show();
+			$("lblLossDate").show();
+			$("lblEntryDate").show();
+			$("lblFileDate").show();
+			$("rdoDetailed").hide();
+			$("rdoSummary").hide();
+			$("lblDetailed").hide();
+			$("lblSummary").hide();
+			$("lblByPeriod").show();
+			$("rdoByPeriod").show();
+			
 			$("rdoDetailed").disable();
 			$("rdoSummary").disable();
 			//$("checkBoxStatus").disable();
@@ -528,8 +573,34 @@
 
 			$("txtUserId").value = '';
 			$("txtUserId").enable();
+			//reportName = "CLM_ASOF_LD_PER_AGING";
+			if(dateType == 1){
+				reportName = 'CLM_ASOF_LD_PER_AGING';
+			}else if(dateType == 2){
+				reportName = 'CLM_FROM_TO_LD_PER_AGING';
+			}
 		}else if (option == '3') {
 			//$("checkBoxInclude").disable();
+			$("rdoLoss").show();
+			$("rdoExpense").show();
+			$("lblLoss").show();
+			$("lblExpense").show();
+			$("rdoLossDate").hide();
+			$("rdoEntryDate").hide();
+			$("rdoFileDate").hide();
+			$("lblLossDate").hide();
+			$("lblEntryDate").hide();
+			$("lblFileDate").hide();
+			$("rdoDetailed").show();
+			$("rdoSummary").show();
+			$("lblDetailed").show();
+			$("lblSummary").show();
+			$("lblByPeriod").hide();
+			$("rdoByPeriod").hide();
+			
+			toogleDateTypeOption('1');
+			
+			
 			$("rdoLoss").enable();
 			$("rdoExpense").enable();
 			$("rdoDetailed").enable();
@@ -546,6 +617,8 @@
 
 			$("txtUserId").value = user;
 			$("txtUserId").disable();
+			reportName = "CLM_ASOF_PER_OUTSTANDING_LOSS_DET";
+			$("rdoAsOf").click();
 		}
 		$("rdoLossDate").checked = true;
 		$("rdoDetailed").checked = true;
@@ -580,8 +653,8 @@
 											toDate : txtToDate,
 											lineCd : txtLineCd,
 											branchCd : txtBranchCd,
-											userId : txtUserId,
-											processor : $F("userId") //'CLRBR'
+											userId : $F("userId"),
+											processor : txtUserId//'CLRBR'
 										},
 										onCreate : showNotice("Generating report. Please wait..."),
 										onComplete : function(response) {

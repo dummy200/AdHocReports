@@ -37,7 +37,7 @@ public class IssuedApdcController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -46,6 +46,7 @@ public class IssuedApdcController extends HttpServlet {
 		String redirectPage = "/IssuedApdcController?action=IssuedApdc";
 		String page = "/pages/collections/issued apdc/issuedApdc.jsp";
 		String tranCd = "94";
+		String errorMsg = "";
 
 		if (action.equals("IssuedApdc")) {
 			SignatoryService signatoryService = new SignatoryServiceImpl();

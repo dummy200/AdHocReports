@@ -207,6 +207,7 @@
 </div>
 
 <script type="text/javascript">
+	$("selDealers").disable();
 	$("hiddenDiv").hide();
 	var page = $F("page");
 	var reportName = 'CONFIRM_POL_REPORT';
@@ -248,11 +249,13 @@
 		toggleTP = 1;
 		if (toggleDealers == 1){
 			$('chkBoxDealers').checked = true;
+			$("selDealers").enable();
 			$("selLine").value = 'MC';
 			//$("txtLineName").value = 'MOTOR CAR';
 			toggleDealers = 2;
 		}else{
 			$('chkBoxDealers').checked = false;
+			$("selDealers").disable();
 			toggleDealers = 1;
 		}
 	}

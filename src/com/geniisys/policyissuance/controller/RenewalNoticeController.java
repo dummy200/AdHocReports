@@ -49,7 +49,7 @@ public class RenewalNoticeController extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -57,6 +57,7 @@ public class RenewalNoticeController extends HttpServlet{
 		String renewalNoticePage = "/pages/policy issuance/renewal notice/renewalNotice.jsp";
 		String redirectPage = request.getParameter("redirectPage");
 		String tranCd = "95";
+		String errorMsg = "";
 		
 		//menu redirect page
 		if(action.equals("toMCRenewal")){

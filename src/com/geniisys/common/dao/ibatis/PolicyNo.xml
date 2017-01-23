@@ -64,7 +64,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		AND a.ISSUE_YY = NVL(#issueYY#,a.ISSUE_YY)
 		AND a.POL_SEQ_NO = NVL(#polSeqNo#,a.POL_SEQ_NO)
 		AND a.RENEW_NO = NVL(#renewNo#,a.RENEW_NO)
-		AND (SELECT extract_user from giex_expiry where policy_id = a.policy_id) = #userId#
+		<!-- AND (SELECT extract_user from giex_expiry where policy_id = a.policy_id) = #userId# -->
 		AND a.POLICY_ID NOT IN(SELECT policy_id FROM gipi_polbasic WHERE pol_flag = '4')
 		AND a.POLICY_ID NOT IN(SELECT policy_id FROM gipi_polbasic WHERE pol_flag = '5')
 		<!--AND #userId# = (SELECT extract_user from giex_expiry where policy_id = a.policy_id) -->
@@ -74,7 +74,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		 SELECT a.POLICY_ID FROM GIEX_EXPIRY a, gipi_polbasic b
       WHERE  a.policy_id = b.policy_id
         AND a.policy_id = #policyId#
-       AND a. extract_user = #userId#
+       <!-- AND a. extract_user = #userId# -->
        AND b.cred_branch IN (SELECT ISS_CD FROM TABLE (line_iss_adhoc_pkg.get_adhoc_issource(#userId#,#tranCd#)))
        AND b.pol_flag NOT IN ('4','5')
 	</select>
@@ -89,6 +89,22 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		AND a.POL_SEQ_NO = NVL(?,a.POL_SEQ_NO)
 		AND a.RENEW_NO =
 		NVL(?,a.RENEW_NO)
+		AND a.ENDT_YY = 0
+		AND a.ENDT_SEQ_NO = 0
+		AND a.policy_id = b.policy_id
+	</select>
+	
+	<select id="getPolicyIdNonRenewByUserId" resultClass="java.lang.Integer"
+		parameterClass="java.util.HashMap">
+		SELECT a.policy_id FROM GIPI_POLBASIC a, GIEX_EXPIRY b
+		WHERE a.LINE_CD =NVL(#lineCd#,a.LINE_CD)
+		AND a.SUBLINE_CD = NVL(#sublineCd#,a.SUBLINE_CD)
+		AND a.ISS_CD = NVL(#issCd#,a.ISS_CD)
+		AND a.ISSUE_YY = NVL(#issYy#,a.ISSUE_YY)
+		AND a.POL_SEQ_NO = NVL(#polSeqNo#,a.POL_SEQ_NO)
+		AND a.RENEW_NO =
+		NVL(#renewNo#,a.RENEW_NO)
+		AND b.extract_user = #userId#
 		AND a.ENDT_YY = 0
 		AND a.ENDT_SEQ_NO = 0
 		AND a.policy_id = b.policy_id

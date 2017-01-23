@@ -43,7 +43,7 @@ public class OfferLetterController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -54,6 +54,7 @@ public class OfferLetterController extends HttpServlet {
 		String page2 = "/OfferLetterController?action=toOfferLetterPage";
 		String redirectPage = "/pages/claims/Offer Letter/infoDiv.jsp";
 		String reportName = "FCLTOTOFFR";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toOfferLetterPage")) {

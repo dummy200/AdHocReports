@@ -55,7 +55,7 @@ public class OnePagerController extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -63,6 +63,7 @@ public class OnePagerController extends HttpServlet {
 		String action = request.getParameter("action");
 		String onePagerPage = "/pages/policy issuance/one pager/onePager.jsp";
 		String tranCd = "95";
+		String errorMsg = "";
 		
 		// menu redirect page
 		if (action.equals("toMC")) {
@@ -168,11 +169,13 @@ public class OnePagerController extends HttpServlet {
 			String fetchPolicyIdErrorMsg = "";
 			Integer policyId = null;
 			try {
-
+				System.out.println(page);
 				if(page.equals("12PlanOnePager")){
 					policyId = (Integer) gipiPolbasicService.fetchTpPolicyId(request);
 				}else if(page.equals("ClgOnePager") && lineCd.equals("FI")){
 					policyId = (Integer) gipiPolbasicService.fetchClgPolicyId(request);
+				}else if(page.equals("regFI")){
+					policyId = (Integer) gipiPolbasicService.fetchRegPolicyId(request);
 				}else{
 					policyId = (Integer) gipiPolbasicService.fetchPolicyId(request);
 				}
@@ -330,8 +333,10 @@ public class OnePagerController extends HttpServlet {
 
 			parameters.put("P_LINE_CD", lineCd);
 			parameters.put("P_SUBLINE_CD", sublineCd);
-			parameters.put("P_ISS_CD", issCd);
-			parameters.put("P_CRED_BRANCH", issueCd);
+			//parameters.put("P_ISS_CD", issCd);
+			//parameters.put("P_CRED_BRANCH", issueCd);
+			parameters.put("P_ISS_CD", issueCd);
+			parameters.put("P_CRED_BRANCH", issCd);
 			parameters.put("P_TO_DATE", toDate);
 			parameters.put("P_FROM_DATE", fromDate);
 			parameters.put("P_ADHOC_USER", userId);
@@ -341,6 +346,19 @@ public class OnePagerController extends HttpServlet {
 			parameters.put("P_PLACE", issuePlace);
 			parameters.put("P_PDF_SW", pdfSw);
 			parameters.put("P_TRAN_CD", tranCd);
+			
+			/*System.out.println("P_SUBLINE_CD "+ sublineCd);
+			System.out.println("P_ISS_CD "+ issCd);
+			System.out.println("P_CRED_BRANCH "+ issueCd);
+			System.out.println("P_TO_DATE "+ toDate);
+			System.out.println("P_FROM_DATE "+ fromDate);
+			System.out.println("P_ADHOC_USER"+ userId);
+			System.out.println("P_USER"+ batchUserId);
+			//System.out.println("P_USER_ID"+ userId);
+			System.out.println("P_DATE_TYPE"+ dateType);
+			System.out.println("P_PLACE"+ issuePlace);
+			System.out.println("P_PDF_SW"+ pdfSw);
+			System.out.println("P_TRAN_CD"+ tranCd);*/
 			
 			try {
 				DefaultJasperReportsContext context = DefaultJasperReportsContext.getInstance();

@@ -38,7 +38,7 @@ public class CommissionFundController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -49,6 +49,7 @@ public class CommissionFundController extends HttpServlet {
 		String page2 = "/CommissionFundController?action=toCommissionFundPage";
 		String reportName = request.getParameter("reportName");
 		String tranCd = "94";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toCommissionFundPage")) {

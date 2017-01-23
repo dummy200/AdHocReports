@@ -37,7 +37,7 @@ public class PamsIssuanceController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -46,6 +46,7 @@ public class PamsIssuanceController extends HttpServlet {
 		String redirectPage = "/PamsIssuanceController?action=PamsIssuance";
 		String page = "/pages/claims/pams posted/PamsIssuance.jsp";
 		String tranCd = "98";
+		String errorMsg = "";
 
 		if (action.equals("PamsIssuance")) {
 			SignatoryService signatoryService = new SignatoryServiceImpl();

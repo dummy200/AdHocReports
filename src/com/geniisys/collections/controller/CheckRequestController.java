@@ -16,7 +16,7 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 public class CheckRequestController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

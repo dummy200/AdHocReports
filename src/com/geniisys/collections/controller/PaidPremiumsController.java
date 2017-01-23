@@ -34,7 +34,7 @@ public class PaidPremiumsController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -46,6 +46,7 @@ public class PaidPremiumsController extends HttpServlet {
 		String page2 = "/PaidPremiumsController?action=toPaidPremiumsPage";
 		String reportName = request.getParameter("reportName");
 		String tranCd = "94";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toPaidPremiumsPage")) {

@@ -32,13 +32,14 @@ public class RiBinderController extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		String redirectPage = request.getParameter("redirectPage");
 		String reportName = "RI_BINDER_REP";
+		String errorMsg = "";
 		
 		//on click print button(individual)
 		if(action.equals("printBondsReport")){

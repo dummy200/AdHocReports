@@ -10,8 +10,6 @@ import com.geniisys.underwriting.service.PremProductionService;
 
 public class PremProductionServiceImpl implements PremProductionService {
 
-	private PremProductionController premProductionController = new PremProductionController();
-
 	@Override
 	public String parseVsDate(String date) {
 
@@ -40,7 +38,7 @@ public class PremProductionServiceImpl implements PremProductionService {
 			 * System.out.println(toDate2);
 			 */
 		} catch (ParseException e1) {
-			premProductionController.errorMsg = "Error parsing date : " + e1.getMessage();
+			e1.printStackTrace();
 		}
 		return date2;
 	}

@@ -20,7 +20,7 @@ public class CatAccumulationController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -30,6 +30,7 @@ public class CatAccumulationController extends HttpServlet {
 		String page = "/pages/underwriting/CAT/catAccumulation.jsp";
 		String page2 = "/CatAccumulationController?action=toCATAccumulationPage";
 		String reportName = "FCLTOTOFFR";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toCATAccumulationPage")) {

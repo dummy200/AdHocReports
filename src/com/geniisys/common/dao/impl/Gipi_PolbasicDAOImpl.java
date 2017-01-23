@@ -2,6 +2,7 @@ package com.geniisys.common.dao.impl;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.geniisys.common.dao.Gipi_PolbasicDAO;
 import com.geniisys.common.entity.Gipi_Polbasic;
@@ -46,6 +47,13 @@ public class Gipi_PolbasicDAOImpl implements Gipi_PolbasicDAO{
 	public Integer fetchClgPolicyId(PolicyNo policyNo) throws SQLException {
 		sqlMap = MyAppSqlConfig.getSqlMapInstance();
 		Integer policyId = (Integer) sqlMap.queryForObject("fetchClgPolicyId", policyNo);
+		return policyId;
+	}
+
+	@Override
+	public Integer fetchRegPolicyId(Map<String, Object> params) throws SQLException {
+		sqlMap = MyAppSqlConfig.getSqlMapInstance();
+		Integer policyId = (Integer) sqlMap.queryForObject("fetchRegPolicyId", params);
 		return policyId;
 	}
 	

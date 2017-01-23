@@ -39,7 +39,7 @@ public class JvPerUserController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -48,6 +48,7 @@ public class JvPerUserController extends HttpServlet {
 		String action = request.getParameter("action");
 		String page = "/pages/collections/journal voucher/jvPerUser.jsp";
         String page2 = "/JvPerUserController?action=toJvPerUserPage";
+        String errorMsg = "";
 		//String reportName = "FCLTOTOFFR";
 		/* request.getParameter("redirectPage"); */
 

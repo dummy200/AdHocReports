@@ -30,7 +30,7 @@ public class BatchGenerationController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -40,6 +40,7 @@ public class BatchGenerationController extends HttpServlet {
 		String action = request.getParameter("action");
 		String page = "/pages/underwriting/batch generation/batchGeneration.jsp";
 		String page2 = "/BatchGenerationController?action=toBatchGenerationPage";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toBatchGenerationPage")) {

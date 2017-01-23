@@ -43,7 +43,7 @@ public class OutputController2 extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -52,6 +52,7 @@ public class OutputController2 extends HttpServlet{
 		String redirectPage = request.getParameter("redirectPage");
 		String moduleId = request.getParameter("moduleId");
 		HttpSession session = request.getSession();
+		String errorMsg = "";
 		
 		if(action.equals("checkPolicyId")){
 			

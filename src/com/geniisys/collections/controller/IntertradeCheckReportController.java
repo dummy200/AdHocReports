@@ -44,7 +44,7 @@ public class IntertradeCheckReportController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -55,6 +55,7 @@ public class IntertradeCheckReportController extends HttpServlet {
 		String page = "/pages/collections/intertrade check report/checkReport.jsp";
 		String page2 = "/IntertradeCheckReportController?action=toPage";
 		String tranCd = "94";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toPage")) {
