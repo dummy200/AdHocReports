@@ -17,7 +17,7 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 public class BatchGenerationServiceImpl implements BatchGenerationService {
 
 	private BatchGenerationDAO batchGenerationDAO = new BatchGenerationDAOImpl();
-	BatchGenerationController batchGenController = new BatchGenerationController();
+	//BatchGenerationController batchGenController = new BatchGenerationController();
 	private SqlMapClient sqlMap;
 
 	@Override
@@ -104,12 +104,14 @@ public class BatchGenerationServiceImpl implements BatchGenerationService {
 			sqlMap.executeBatch();
 			sqlMap.commitTransaction();
 		} catch (Exception e) {
-			batchGenController.errorMsg = e.getMessage();
+			//batchGenController.errorMsg = e.getMessage();
+			e.printStackTrace();
 		} finally {
 			try {
 				sqlMap.endTransaction();
 			} catch (SQLException e) {
-				batchGenController.errorMsg = e.getMessage();
+				//batchGenController.errorMsg = e.getMessage();
+				e.printStackTrace();
 			}
 		}
 	}

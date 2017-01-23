@@ -60,7 +60,7 @@ public class ClaimsListingController extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -68,6 +68,7 @@ public class ClaimsListingController extends HttpServlet{
 		String redirectPage = request.getParameter("redirectPage");
 		String page = "/pages/claims/Claims Listing/claimsListing.jsp";
 		String tranCd = "93";
+		String errorMsg = "";
 		
 		if (action.equals("toClaimsListingPage")) {
 			LineService lineService = new LineServiceImpl();
@@ -112,8 +113,8 @@ public class ClaimsListingController extends HttpServlet{
 			parameters.put("P_DATE_TO", toDate);
 			parameters.put("P_LINE_CD", lineCd);
 			parameters.put("P_CRED_BRANCH", branchCd);
-			parameters.put("P_USER_ID",userId);
-			parameters.put("P_PROCESSOR", processor);
+			parameters.put("P_USER_ID", userId);   //current user
+			parameters.put("P_PROCESSOR", processor);	  //input processor txt
 			parameters.put("P_TRAN_CD", tranCd);
 			
 			try {
@@ -128,6 +129,7 @@ public class ClaimsListingController extends HttpServlet{
 				errorMsg="";
 			} catch (JRException e) {
 				System.out.println("jre exception: " + e.getMessage().toString());
+				e.printStackTrace();
 				errorMsg = "jre exception: " + e.getMessage().toString();
 			} catch (SQLException e) {
 				System.out.println("sql exception: " + e.getMessage().toString());

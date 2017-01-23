@@ -32,7 +32,7 @@ public class LossesPaidController extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -41,6 +41,7 @@ public class LossesPaidController extends HttpServlet {
 		String redirectPage = request.getParameter("redirectPage");
 		String PAGE = "/pages/claims/Losses Paid/lossesPaid.jsp";
 		String reportName = "MTSHOP_REPORT";
+		String errorMsg = "";
 
 		if (action.equals("printLossesPaid")) {
 			String fromDate = request.getParameter("fromDate");

@@ -37,13 +37,14 @@ public class OsApdcController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		String redirectPage = "/OsApdcController?action=OsApdc";
 		String page = "/pages/collections/os apdc/OsApdc.jsp";
+		String errorMsg = "";
 		
 		if (action.equals("OsApdc")) {
 			BranchService branchService = new BranchServiceImpl();

@@ -64,17 +64,36 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 	
 	<select id="fetchClgPolicyId" resultClass="java.lang.Integer" parameterMap="policyNoParamMap">
 		SELECT a.policy_id FROM GIPI_POLBASIC a, GIPI_COMM_INVOICE b
-        WHERE a.LINE_CD =NVL(:lineCd,a.LINE_CD)
-        AND a.SUBLINE_CD = NVL(:sublineCd,a.SUBLINE_CD)
-        AND a.ISS_CD = NVL(:issCd,a.ISS_CD)
-        AND a.ISSUE_YY = NVL(:issueYy,a.ISSUE_YY)
-        AND a.POL_SEQ_NO = NVL(:polSeqNo,a.POL_SEQ_NO)
+        WHERE a.LINE_CD =NVL(?,a.LINE_CD)
+        AND a.SUBLINE_CD = NVL(?,a.SUBLINE_CD)
+        AND a.ISS_CD = NVL(?,a.ISS_CD)
+        AND a.ISSUE_YY = NVL(?,a.ISSUE_YY)
+        AND a.POL_SEQ_NO = NVL(?,a.POL_SEQ_NO)
         AND a.RENEW_NO =
-        NVL(:renewNo,a.RENEW_NO)
+        NVL(?,a.RENEW_NO)
         AND a.ENDT_YY = 0
         AND a.ENDT_SEQ_NO = 0
         AND a.policy_id = b.policy_id
         AND b.intrmdry_intm_no = 3858
+	</select>
+	
+	<select id="fetchRegPolicyId" resultClass="java.lang.Integer" parameterClass="java.util.HashMap">
+		SELECT a.policy_id FROM GIPI_POLBASIC a, GIPI_COMM_INVOICE b
+        WHERE a.LINE_CD =NVL(#lineCd#,a.LINE_CD)
+        AND a.SUBLINE_CD = NVL(#sublineCd#,a.SUBLINE_CD)
+        AND a.ISS_CD = NVL(#issCd#,a.ISS_CD)
+        AND a.ISSUE_YY = NVL(#issueYY#,a.ISSUE_YY)
+        AND a.POL_SEQ_NO = NVL(#polSeqNo#,a.POL_SEQ_NO)
+        AND a.RENEW_NO =
+        NVL(#renewNo#,a.RENEW_NO)
+        AND a.ENDT_YY = 0
+        AND a.ENDT_SEQ_NO = 0
+        AND a.policy_id = b.policy_id
+        AND a.policy_id IN (DECODE(#lineCd#,
+                                        'FI',DECODE(a.subline_cd,
+                                                        'REG',(SELECT distinct(policy_id) FROM gipi_fireitem where policy_id = a.policy_id and SUBSTR(tarf_cd,1,1) between '4' and '5'),
+                                                        a.policy_id),
+                                                        a.policy_id))
 	</select>
 	
 	

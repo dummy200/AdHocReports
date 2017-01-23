@@ -53,7 +53,7 @@ public class ConfirmedPolicyController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -64,6 +64,7 @@ public class ConfirmedPolicyController extends HttpServlet {
 		String page2 = "/ConfirmedPolicyController?action=toConfirmedPolicyPage";
 		String reportName = request.getParameter("reportName");
 		String tranCd = "95";
+		String errorMsg = "";
 
 		if (action.equals("toConfirmedPolicyPage")) {
 			LineService lineService = new LineServiceImpl();

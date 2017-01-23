@@ -49,7 +49,7 @@ public class BondsReportController extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -58,6 +58,7 @@ public class BondsReportController extends HttpServlet{
 		String page = "/pages/policy issuance/Surety Other Bond Documents/OtherBondDoc.jsp";
 		String back = "/BondsReportController?action=toSOtherBondDoc";
 		String fetchPolicyIdErrorMsg = "";
+		String errorMsg = "";
 		//String redirectPage = "/pages/policy issuance/Surety Other Bond Documents/infoOtherBondDoc.jsp";
 		
 		if (action.equals("toSOtherBondDoc")) {

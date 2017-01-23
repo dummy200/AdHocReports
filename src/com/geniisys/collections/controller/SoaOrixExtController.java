@@ -38,7 +38,7 @@ public class SoaOrixExtController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -49,6 +49,7 @@ public class SoaOrixExtController extends HttpServlet {
 		String page = "/pages/collections/soa orix ext/SoaOrixExt.jsp";
 		String page2 = "/SoaOrixExtController?action=OrixSoaExt";
 		String tranCd = "94";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("OrixSoaExt")) {

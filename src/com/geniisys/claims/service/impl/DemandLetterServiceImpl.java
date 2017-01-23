@@ -19,7 +19,7 @@ import com.geniisys.claims.service.DemandLetterService;
 public class DemandLetterServiceImpl implements DemandLetterService {
 
 	private DemandLetterDAO demandLetterDAO = new DemandLetterDAOImpl();
-	DemandLetterController demandLetter = new DemandLetterController();
+	//DemandLetterController demandLetter = new DemandLetterController();
 
 	public DemandLetterDAO getDemandLetterDAO() {
 		return demandLetterDAO;
@@ -49,7 +49,7 @@ public class DemandLetterServiceImpl implements DemandLetterService {
 			DemandLetterParameter params = new DemandLetterParameter(claimId, recoveryId);
 			return this.getDemandLetterDAO().populateDemandLetterInfo(params);
 		} else {
-			demandLetter.errorMsg = "No data found.";
+			//demandLetter.errorMsg = "No data found.";
 			List<DemandLetter> noList = null;
 			return noList;
 		}

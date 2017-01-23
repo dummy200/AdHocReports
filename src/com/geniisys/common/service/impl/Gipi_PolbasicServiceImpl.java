@@ -1,7 +1,9 @@
 package com.geniisys.common.service.impl;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,6 +71,18 @@ public class Gipi_PolbasicServiceImpl implements Gipi_PolbasicService {
 		Integer renewNo = Integer.parseInt(request.getParameter("renewNo").trim());
 		PolicyNo policyNo = new PolicyNo(lineCd,sublineCd,issCd,issueYY,polSeqNo,renewNo);
 		return this.getGipi_polbasicDAO().fetchClgPolicyId(policyNo);
+	}
+
+	@Override
+	public Integer fetchRegPolicyId(HttpServletRequest request) throws SQLException {
+		Map<String, Object> params = new HashMap<>();
+		params.put("lineCd",request.getParameter("lineCd").toUpperCase().trim());
+		params.put("sublineCd",request.getParameter("sublineCd").toUpperCase().trim());
+		params.put("issCd",request.getParameter("issCd").toUpperCase().trim());
+		params.put("issueYY",Integer.parseInt(request.getParameter("issueYY").trim()));
+		params.put("polSeqNo",Integer.parseInt(request.getParameter("polSeqNo").trim()));
+		params.put("renewNo",Integer.parseInt(request.getParameter("renewNo").trim()));
+		return this.getGipi_polbasicDAO().fetchRegPolicyId(params);
 	}
 
 

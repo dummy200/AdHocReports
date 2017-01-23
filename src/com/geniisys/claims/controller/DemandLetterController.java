@@ -47,7 +47,7 @@ public class DemandLetterController extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,6 +56,7 @@ public class DemandLetterController extends HttpServlet{
 		String demandLetterPage = "/pages/claims/Demand Letter/demandLetter.jsp";
 		String reportName = request.getParameter("reportName");
 		Integer letterType = 1;
+		String errorMsg = "";
 		
 		if (action.equals("checkClaimNo")){
 			DemandLetterService demandLetterService = new DemandLetterServiceImpl();

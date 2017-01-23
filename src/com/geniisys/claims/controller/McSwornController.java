@@ -45,14 +45,15 @@ public class McSwornController extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		String redirectPage = request.getParameter("redirectPage");
 		String mcSwornPage = "/pages/claims/MC Sworn/mcSworn.jsp";
-		String reportName = "GICLR_SWORN_PCI"; 
+		String reportName = "GICLR_SWORN_PCI";
+		String errorMsg = "";
 				
 		if (action.equals("checkClaimNo")){
 			McSwornService mcSwornService = new McSwornServiceImpl();

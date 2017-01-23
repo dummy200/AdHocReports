@@ -48,7 +48,7 @@ public class PremProductionController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -59,6 +59,7 @@ public class PremProductionController extends HttpServlet {
 		String page = "/pages/underwriting/premium production/premiumProduction.jsp";
 		String page2 = "/PremProductionController?action=toPremProductionPage";
 		String tranCd = "98";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toPremProductionPage")) {
@@ -83,7 +84,7 @@ public class PremProductionController extends HttpServlet {
 			List<Intermediary> intmList = (List<Intermediary>) intmService.getAllActiveIntermediary();
 			// List<Assured> assdList = (List<Assured>)
 			// assuredService.getAllActiveAssured();
-			
+			request.setAttribute("errorMsg", errorMsg);
 			request.setAttribute("lineList", lineList);
 			request.setAttribute("branchList", branchList);
 			request.setAttribute("intmTypeList", intmTypeList);
@@ -217,6 +218,12 @@ public class PremProductionController extends HttpServlet {
 			parameters.put("P_USER_ID", userId);
 			parameters.put("P_TRAN_CD",tranCd);
 			parameters.put("P_INTM_TYPE", intmType);
+			
+			System.out.println(lineCd);
+			System.out.println(issCd);
+			System.out.println(fromDate);
+			System.out.println(toDate);
+			System.out.println(reportName);
 			// parameters.put("P_INTM_NO", intmNo);
 
 			if (stringIntmNo.equals("") || stringIntmNo.equals(null)) {

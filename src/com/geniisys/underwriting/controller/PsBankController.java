@@ -39,7 +39,7 @@ public class PsBankController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,6 +47,7 @@ public class PsBankController extends HttpServlet{
 		String redirectPage = request.getParameter("redirectPage");
 		String tranCd = "98";
 		String page = "/pages/underwriting/ps bank posted/PsBank.jsp";
+		String errorMsg = "";
 		
 		if (action.equals("toPsBankPage")) {
 			LineService lineService = new LineServiceImpl();

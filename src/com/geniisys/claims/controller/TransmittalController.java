@@ -41,7 +41,7 @@ public class TransmittalController extends HttpServlet{
 			
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -50,6 +50,7 @@ public class TransmittalController extends HttpServlet{
 		String page = "/pages/claims/Transmittal/transmittal.jsp";
 		String redirectPage = "/pages/claims/Transmittal/infoDiv.jsp";
 		String reportName = "FCLTRNSMTL";
+		String errorMsg = "";
 		
 		if (action.equals("toTransmittalPage")) {
 			SignatoryService signatoryService = new SignatoryServiceImpl();
