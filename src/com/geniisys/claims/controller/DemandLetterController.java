@@ -67,9 +67,32 @@ public class DemandLetterController extends HttpServlet{
 			Boolean reprintSecond = false;
 			
 			try {
-				demandLetterList =(List<DemandLetter>) demandLetterService.populateDemandLetterInfo(request); 
-				Integer listSize = demandLetterList.size();
-				
+				demandLetterList =(List<DemandLetter>) demandLetterService.populateDemandLetterInfo(request);
+				try{
+					Integer listSize = demandLetterList.size();
+					errorMsg = "";
+				}catch(NullPointerException e){
+					errorMsg = "No data found.";
+				}
+				if(!errorMsg.equals("No data found")){
+				Integer claimCount = (Integer) demandLetterService.checkClaimIdFromDBDemandLetter(request);
+				recoveryId = demandLetterList.get(0).getRecoveryId();
+				claimId = demandLetterList.get(0).getClaimId();
+				if(claimCount.equals(1) || claimCount.equals(2)){
+					letterType = 2;
+				}else
+					letterType = 0;
+				//check reprint
+				DemandLetterReprint firstLetter = new DemandLetterReprint();
+				firstLetter.setClaimId(claimId);
+				firstLetter.setDemandType("FIRST");
+				reprintFirst = (Boolean) demandLetterService.checkIfExistsInReprint(firstLetter);
+				DemandLetterReprint secondLetter = new DemandLetterReprint();
+				secondLetter.setClaimId(claimId);
+				secondLetter.setDemandType("SECOND");
+				reprintSecond = (Boolean) demandLetterService.checkIfExistsInReprint(secondLetter);
+				}
+				/*Integer listSize = demandLetterList.size();
 				if(listSize.equals(0)){
 					errorMsg = "No data found.";
 				}else{
@@ -90,7 +113,7 @@ public class DemandLetterController extends HttpServlet{
 					secondLetter.setClaimId(claimId);
 					secondLetter.setDemandType("SECOND");
 					reprintSecond = (Boolean) demandLetterService.checkIfExistsInReprint(secondLetter);
-				}
+				}*/
 				//System.out.println(demandLetterList.get(0).getClaimNo());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
