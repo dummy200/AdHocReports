@@ -8,7 +8,7 @@
 <input type="hidden" id="userModuleList" name="userModuleList" value='${userModuleList}'> --%>
 	<jsp:include page="/pages/userAccess.jsp"></jsp:include>
 </div>
- <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}"> 
+<input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}"> 
 <%--<input type="hidden" id="adhocUser" name="adhocUser" value="CPIRALPH">--%>
 
 <script type="text/javascript">
@@ -130,8 +130,11 @@
 						<li><a id="updateRefName" name="updateRefName">Update
 								Referror Name</a></li>
 						<li class="menuSeparator"></li>
-						<li><a id="checkRequest" name="checkRequest">Update
+						<!-- <li><a id="checkRequest" name="checkRequest">Update
+								Check Request</a></li> -->
+						<li><a id="checkRequest" name="checkRequest">Intertrade/NEV
 								Check Request</a></li>
+						<li><a id="dynamicUrl" name="dynamicUrl">Dynamic URL</a></li>
 					</ul></li>
 				<li><a id="policyIssuance">Policy Issuance</a>
 					<ul style="width: 120px;">
@@ -331,7 +334,11 @@
 				"/pages/collections/update referror name/updateRefName.jsp",
 				"Inquiry - Metrobank Referror");
 		checkUserAccess2('FACCHKREP', moduleIdObjLength, userModuleObj,
-				"checkRequest", "/CheckRequestController?action=toCheckRequest&userId="+userId, "Statement of Account ORIX");
+				"checkRequest", "/CheckRequestController?action=toCheckRequest&userId="+userId, "Update Check Request");
+		
+		$("dynamicUrl").observe("click", function() {
+			goToModule(divToUpdate, contextPath + "/DynamicUrlController?action=toPage", "Please wait.........", "Dynamic URL");
+		});
 	}
 	/**END COLLECTIONS MENU**/
 
@@ -511,11 +518,11 @@
 				"issuedBonds",
 				"/IssuedBondsController?action=toIssuedBondsPage",
 				"Issued Bond");
-
-		checkUserAccess2('FPOSTEDPOL', moduleIdObjLength, userModuleObj,
+		
+		checkUserAccess2('FPSBPSTPOL', moduleIdObjLength, userModuleObj,
 				"psBank", "/PsBankController?action=toPsBankPage&tranCd=98&userId="+userId,
 				"Ps Bank Posted Policy");
-		checkUserAccess2('FPSBPSTPOL', moduleIdObjLength, userModuleObj,
+		checkUserAccess2('PAMS_ISS', moduleIdObjLength, userModuleObj,
 				"pamsIssuance", "/PamsIssuanceController?action=PamsIssuance&tranCd=98&userId="+userId,
 				"PAMS Issuance");
 		//checkUserAccess2('FPOSTEDPOL', moduleIdObjLength, userModuleObj,"postedPolicy","/PostedPoliciesController?action=toPostedPolicyPage","Posted Policies per User");

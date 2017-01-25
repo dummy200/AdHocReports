@@ -9,5 +9,4 @@
 $("blankDiv1").hide();
 $("openURL").click();
 $("openURL").hide();
-location.reload();
 </script>

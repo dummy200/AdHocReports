@@ -51,7 +51,7 @@ width:340px;
 	<div id="premiumProductionSectionDiv" class="sectionDiv"
 		style="margin-bottom: 10px;">
 		<div class="sectionDiv" id="premiumProductionMainDiv"
-			style="width: 90%; height: 500px; margin-top: 40px; margin-left: 45px; margin-bottom: 10px;">
+			style="width: 90%; margin-top: 40px; margin-left: 45px; margin-bottom: 10px;">
 			<div id="parametersDiv"
 				style="width: 97%; margin-left: 8px; margin-top: 9px; float: left;">
 				
@@ -209,6 +209,40 @@ width:340px;
 					</table>
 				</div>
 				
+				<!-- new search intm -->
+				<div class="sectionDiv" id="intermediaryDiv"
+					style="width: 100%; margin-left: 22%; float: left; border-color: white;">
+					<table style="width: 100%;">
+						<tr>
+							<td class="rightAligned" style="width: 12%;">Intermediary</td>
+							<td class="leftAligned"><input id="txtIntmSearch"
+								name="capsField" class="leftAligned" type="text"
+								style="width: 45%;" value="" title="Search Intermediary" placeholder="TYPE INTERMEDIARY HERE.."/> <span>
+									<img
+									src="${pageContext.request.contextPath}/images/misc/searchIcon.png"
+									id="searchForIntm" name="searchForIntm" alt="Go"
+									style="margin-top: 2px;" title="Search Intermediary" />
+							</span></td>
+						</tr>
+					</table>
+				</div>
+				<div class="sectionDiv" id="intermediaryDiv2"
+					style="width: 100%; margin-left: 5%; float: left; border-color: white;">
+					<table style="width: 100%;">
+						<tr>
+						<tr>
+							<td class="rightAligned" style="width: 12%;"></td>
+							<td class="leftAligned">
+								<div class="sectionDiv" id="intermediaryResultDiv"
+									style="width: 90%; float: left; border-color: white;">
+									<div id="gridIntermediaryResult" style="width:90%; height: 200px; overflow:hidden"></div>
+									<input type="hidden" id="txtIntermediaryNo">
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				
 				<!-- type div -->
 				<div class="sectionDiv" id="lineDiv"
 					style="width: 50%; margin-left: 22%; float: left; border-color: white;">
@@ -247,6 +281,7 @@ width:340px;
 
 <script type="text/javascript">
 	$("hiddenDiv").hide();
+	$("intmDiv").hide(); //hide temp replaced by new intm search
 	var page = $F("page");
 	var reportName = 'PAID_PREM_REP';
 	var reportType = 1;
@@ -257,6 +292,50 @@ width:340px;
 	var branchCd = '';
 	var intmNo = '';
 	var intmType = '';
+	
+	var gridIntm;
+	var data={ rows: []};
+	emptyIntmGrid();
+	function emptyIntmGrid(){
+		gridIntm = new dhtmlXGridObject('gridIntermediaryResult');
+		gridIntm.setImagePath(contextPath + '/css/codebase/imgs/');
+		//gridIntm.setHeader("Intm No., Intm Type, Intermediary Name");
+		//gridIntm.setHeader("&nbsp;,&nbsp;,&nbsp;");
+		gridIntm.setHeader("Intm No.,#combo_filter, Intermediary Name");
+		gridIntm.setInitWidths("60,60,*");
+		gridIntm.setColAlign("left,left,left");
+		gridIntm.setColTypes("ro,ro,ro");
+		gridIntm.setColSorting("str,str,str");
+		gridIntm.init();
+		gridIntm.enableSmartRendering(true);
+		gridIntm.parse(data,"json");
+	}
+	
+	//use same search function from soaperassdintmcontroller......
+	$("searchForIntm").observe("click",function() {
+		var parameter = $F("txtIntmSearch");
+		intermediaryNo = '';
+		
+		if(!parameter == ''){
+			new Ajax.Request(contextPath +'/SOAperAssdIntmController',
+					{
+						method : "POST",
+						parameters : {
+							action : "searchIntermediary",
+							parameter : parameter
+						},
+						onCreate : showNotice("Fetching Intermediary Details. Please wait..."),
+						onComplete : function(response) {
+							hideNotice("");
+							$("intermediaryResultDiv").update(response.responseText);
+						}
+					});
+		}else{
+			intermediaryNo = '';
+			$("txtIntermediaryNo").value = "";
+			emptyIntmGrid();
+		}
+	});
 	
 	$("rdoTran").checked = true;
 	$("chkBox1").checked = true;
@@ -360,7 +439,7 @@ width:340px;
 											toDate : toDate,
 											reportName : reportName,
 											branchCd : branchCd,
-											intmNo : intmNo,
+											intmNo : $F("txtIntermediaryNo"),//intmNo,
 											intmType : intmType,
 											userId : userId,
 											cutOffParam : cutOffParam,

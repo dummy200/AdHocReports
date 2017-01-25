@@ -25,9 +25,6 @@
 <div id ="outerDiv" name="outerDiv">
 	<div id ="innerDiv" name="outerDiv">
 		<label id="pageTitle">Ri Binder</label>
-		<span class="refreshers" style="margin-top: 0;">
-			<label id="reloadForm" name="reloadForm" title="Reload Form">Reload Form</label>
-		</span>
 	</div>
 </div>
 <div id="otherBondDetailsDiv">

@@ -1,6 +1,12 @@
 package com.geniisys.common.controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -35,7 +41,7 @@ public class GIISUserController extends HttpServlet{
 			String reportUrl = request.getParameter("reportUrl");
 			String reportTitle = request.getParameter("reportTitle");
 			PAGE = "/pages/policy issuance/renewal notice/renewalNotice.jsp";
-
+			
 			 session.setAttribute("reportUrl", reportUrl);
 			 session.setAttribute("reportTitle", reportTitle);
 
