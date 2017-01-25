@@ -309,6 +309,15 @@
 		<servlet-name>CheckRequestController</servlet-name>
 		<url-pattern>/CheckRequestController</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DynamicUrlController</servlet-name>
+		<servlet-class>com.geniisys.collections.controller.DynamicUrlController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DynamicUrlController</servlet-name>
+		<url-pattern>/DynamicUrlController</url-pattern>
+	</servlet-mapping>
 	<!-- end collections -->
 	
 	<!-- underwriting -->

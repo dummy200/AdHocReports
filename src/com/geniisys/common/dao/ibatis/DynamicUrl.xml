@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="DynamicUrl">
+
+	<resultMap class="com.geniisys.common.entity.Url" id="urlTables">
+		<result property="urlNo" column="URL_NO" />
+		<result property="urlName" column="URL_NAME" />
+		<result property="url" column="URL" />
+	</resultMap>
+
+	<select id="getAllUrl" resultMap="urlTables">
+		SELECT 1
+		"URL_NO",'Intertrade/NEV Check Request'
+		"URL_NAME",'http://10.20.39.122/intertrade/intertrade_request.php?useraccess='
+		"URL" FROM DUAL
+		UNION ALL SELECT 2 "URL_NO",'Intertrade/NEV Check
+		Request'
+		"URL_NAME",'http://10.20.39.122/intertrade/intertrade_request.php?useraccess='
+		"URL" FROM DUAL
+		UNION ALL SELECT 3 "URL_NO",'Intertrade/NEV Check
+		Request'
+		"URL_NAME",'http://10.20.39.122/intertrade/intertrade_request.php?useraccess='
+		"URL" FROM DUAL
+	</select>
+
+</sqlMap>

@@ -112,7 +112,7 @@ var gridSubline;
 
 var gridBranch, gridTariff;
 var linCdList = $F("lineCdList");
-var sublineCdList = $("sublineCdList");
+var sublineCdList = $F("sublineCdList");
 var branchList = $F("branchList");
 var tariffList = $F("tariffList");
 /* var data={ rows: [

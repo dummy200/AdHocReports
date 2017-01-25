@@ -60,6 +60,7 @@ public class PaidPremiumsController extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			List<Intermediary> intmList = (List<Intermediary>) intmService.getAllActiveIntermediary();
 			List<Intermediary> intmTypeList = (List<Intermediary>) intmService.getAllIntmType();
 			// List<Assured> assdList = null;

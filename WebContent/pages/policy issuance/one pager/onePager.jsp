@@ -361,7 +361,6 @@
 	</div>
 </div>
 
-
 <script type="text/javascript">
 	$("hiddenDiv").hide();
 	var page = $F("page");
