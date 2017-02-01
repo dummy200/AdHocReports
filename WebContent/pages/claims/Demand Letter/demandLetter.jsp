@@ -17,6 +17,7 @@
 
 
 <!-- hidden fields -->
+<div id="hiddenDiv">
 <input type="hidden" id="testClaimId" name="testClaimId" value="${testClaimId}">
 <input type="hidden" id="testRecoveryId" name="testRecoveryId" value="${testRecoveryId}">
 <input type="hidden" id="testUserId" name="testUserId" value="${testUserId}">
@@ -35,6 +36,7 @@
 	value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
+</div>
 <%-- <input type="text" id="letterType" name= "letterType" value = "${letterType}"> --%>
 <!-- end hidden fields -->
 
@@ -283,8 +285,8 @@
 								//alert("Please input required fields");
 								showMessageBox("Please input required fields", "I");
 							} else {
-								new Ajax.Updater(
-										"mainContents",
+								new Ajax.Request(
+										//"mainContents",
 										contextPath + "/DemandLetterController",
 										{
 											evalScripts : true,
@@ -298,7 +300,10 @@
 												userEmail : $F("txtUserEmail")
 											},
 											onCreate : showNotice("Generating report. Please wait..."),
-											onComplete : function(response) {
+											onComplete : function(response) {									
+												$("hiddenDiv")
+												.update(
+														response.responseText);
 												printOutputPdf();
 												printConfirm2();
 											}
@@ -312,8 +317,9 @@
 			/* if (checkBlankNull(txtUserEmail) || checkBlankNull(txtUserId)) {
 				alert("Please input required fields");
 			} else { */
-				new Ajax.Updater(
-						"mainContents",
+				if(!checkBlankNull($F("claimId"))){
+				new Ajax.Request(
+						//"mainContents",
 						contextPath + "/DemandLetterController",
 						{
 							evalScripts : true,
@@ -327,9 +333,14 @@
 							},
 							onCreate : showNotice("Generating report. Please wait..."),
 							onComplete : function(response) {
+								$("hiddenDiv")
+								.update(
+										response.responseText);
 								printOutputPdf();
 							}
 						});
+				}else
+					showMessageBox("Please enter valid claim no.", "I");
 			/*}*/
 	});
 
@@ -366,6 +377,9 @@
 						onCreate : showNotice("Updating tables. Please wait..."),
 						onComplete : function(response) {
 							hideNotice("");
+							/* $("hiddenDiv")
+							.update(
+									response.responseText); */
 						}
 					});
 	    }

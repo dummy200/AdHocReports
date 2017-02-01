@@ -760,7 +760,6 @@
 			return false;
 	}
 
-	var reportLink = "http://localhost:2010/GeniisysAdHocReports/";
 	//var strWindowFeatures = "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,resizable=yes,fullscreen=yes";
 	var reportName = $F("reportName");
 	var reportBatch = $F("reportBatch");
@@ -908,7 +907,7 @@
 														sublineCd :/*  $F("batchTxtSublineCd"), */sublineCd,
 														issCd : $F("batchTxtIssCd"),
 														issueCd : /* $F("txtIssCd"), */issCd,
-														userId : "CPIRALPH",//$F("userId"),
+														userId : $F("userId"),
 														batchUserId : batchUserId,
 														issuePlace : $F("txtIssuePlace"),
 														pdfSw : pdfSw

@@ -1,7 +1,14 @@
 
 <!-- hidden fields -->
 <div id="hiddenDiv">
+<input type="hidden" id="testClaimId" name="testClaimId" value="${testClaimId}">
+<input type="hidden" id="testRecoveryId" name="testRecoveryId" value="${testRecoveryId}">
+<input type="hidden" id="testUserId" name="testUserId" value="${testUserId}">
+<input type="hidden" id="testUserEmail" name="testUserEmail" value="${testUserEmail}">
+<input type="hidden" id="page" name="page" value="${page}">
+<input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
+<input type="hidden" id="userId" name= "userId" value = "${adhocUser}">
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
 <input type="hidden" id="reportName" name="reportName"
@@ -12,18 +19,19 @@
 	value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
-<input type="hidden" id="signatory" name="signatory" value="">
 </div>
 
 <script type="text/javascript">
-	printOutputPdf();
-
+	//printOutputPdf();
+	//printConfirm2();
+	
 	function printOutputPdf() {
 		var reportUrl = $F("reportUrl");
 		var reportTitle = $F("reportTitle");
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
 			hideNotice("");
+			//alert(errorMsg);
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath
@@ -44,6 +52,36 @@
 			});
 		}
 	}
+	
+	function printConfirm2(){
+		showConfirmBox("Confirmation", "Successfully printed?", "Yes", "No",
+				function(){
+			new Ajax.Updater(
+					'infoDiv',
+					contextPath + '/DemandLetterController',
+					{
+						evalScripts : true,
+						method : "POST",
+						parameters : {
+							action : "insertToTables",
+							testClaimId : $F("testClaimId"),
+							testRecoveryId : $F("testRecoveryId"),
+							testUserId : $F("testUserId"),
+							testUserEmail : $F("testUserEmail"),
+							reportName : reportName
+						},
+						onCreate : showNotice("Updating tables. Please wait..."),
+						onComplete : function(response) {
+							hideNotice("");
+						}
+					});
+				},
+				function(){
+					
+				},"1"
+		);
+	}
+
 
 	function checkBlankNull(str) {
 		if (str == '' || str == null)

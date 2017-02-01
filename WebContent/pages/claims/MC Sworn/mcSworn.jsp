@@ -16,6 +16,7 @@
 <!-- hidden fields -->
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
+<div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="userId" name= "userId" value = "${adhocUser}">
 <input type="hidden" id="reportTitle" name="reportTitle"
@@ -32,6 +33,7 @@
 <input type="hidden" id="notedByDesig" value="">
 <input type="hidden"id="sign" value=""> 
 <input type="hidden" id="desig" value="">
+</div>
 <!-- end hidden fields -->
 
 <br />
@@ -39,10 +41,6 @@
 <div id="outerDiv" name="outerDiv">
 	<div id="innerDiv" name="outerDiv">
 		<label id="pageTitle">Motor Car - Sworn Statement in Proof of Loss</label>
-		<!--  <span class="refreshers"
-			style="margin-top: 0;"> <label id="reloadForm"
-			name="reloadForm" title="Reload Form">Reload Form</label>
-		</span> -->
 	</div>
 </div>
 <div id="mcSwornDetailsDiv">
@@ -228,8 +226,8 @@
 								//alert("Please input required fields");
 								showMessageBox("Please input required fields", "I");
 							} else {
-								new Ajax.Updater(
-										"mainContents",
+								new Ajax.Request(
+										//"mainContents",
 										contextPath + "/McSwornController",
 										{
 											evalScripts : true,
@@ -247,7 +245,10 @@
 											},
 											onCreate : showNotice("Generating report. Please wait..."),
 											onComplete : function(response) {
-												printOutputPdf();
+												//printOutputPdf();
+												$("hiddenDiv")
+												.update(
+														response.responseText);
 											}
 										});
 							}

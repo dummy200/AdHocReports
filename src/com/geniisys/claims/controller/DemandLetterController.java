@@ -191,7 +191,8 @@ public class DemandLetterController extends HttpServlet{
 				request.setAttribute("testUserEmail", userEmail);
 				
 				//redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(demandLetterPage);
+				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(demandLetterPage);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Demand Letter/hiddenDiv.jsp");
             	dispatcher.forward(request,response);
 			}
 		}
@@ -230,6 +231,7 @@ public class DemandLetterController extends HttpServlet{
 					errorMsg = e.getMessage();
 				}
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Demand Letter/blank.jsp");
+				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Demand Letter/hiddenDiv.jsp");
 				dispatcher.forward(request,response);
 			}
 		}
@@ -273,7 +275,8 @@ public class DemandLetterController extends HttpServlet{
 				request.setAttribute("reportUrl", outputPdf);
 				request.setAttribute("reportTitle", reportName);
 			
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(demandLetterPage);
+				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(demandLetterPage);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Demand Letter/hiddenDiv.jsp");
 				dispatcher.forward(request,response);
 			}
 		}

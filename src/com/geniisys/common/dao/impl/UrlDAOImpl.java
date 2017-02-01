@@ -25,7 +25,6 @@ private SqlMapClient sqlMap;
 
 		try {
 			urlList =  sqlMap.queryForList("getAllUrl");
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

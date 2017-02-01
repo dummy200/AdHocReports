@@ -136,7 +136,8 @@ public class McSwornController extends HttpServlet{
 				request.setAttribute("reportTitle", reportName);
 				
 				//redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(mcSwornPage);
+				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(mcSwornPage);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/MC Sworn/hiddenDiv.jsp");
             	dispatcher.forward(request,response);
 			}
 		}

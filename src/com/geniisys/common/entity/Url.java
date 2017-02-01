@@ -2,23 +2,23 @@ package com.geniisys.common.entity;
 
 public class Url {
 	
-	private Integer urlNo;
+	private String urlNo;
 	private String urlName;
 	private String url;
 	
 	public Url() {}
 	
-	public Url(Integer urlNo,String urlName, String url){
+	public Url(String urlNo,String urlName, String url){
 		this.urlNo = urlNo;
 		this.urlName = urlName;
 		this.url = url;
 	}
 
-	public Integer getUrlNo() {
+	public String getUrlNo() {
 		return urlNo;
 	}
 
-	public void setUrlNo(Integer urlNo) {
+	public void setUrlNo(String urlNo) {
 		this.urlNo = urlNo;
 	}
 

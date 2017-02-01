@@ -227,7 +227,8 @@ public class OfferLetterController extends HttpServlet {
 				request.setAttribute("reportXls", outputXls);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Offer Letter/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

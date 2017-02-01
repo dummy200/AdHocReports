@@ -43,6 +43,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/third_party/modalbox.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/third_party/deployJava.js"></script>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/third_party/dialog.js"></script>
+
 <!-- mtg test -->
 <!-- <script type="text/javascript" src="scripts/lib/prototype.js"></script> -->
 <!--<script type="text/javascript" src="scripts/lib/scriptaculous.js"></script>-->
