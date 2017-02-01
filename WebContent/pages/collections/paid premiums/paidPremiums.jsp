@@ -407,7 +407,6 @@ width:340px;
 				var fromDate = $F("txtFromDate");
 				var toDate = $F("txtToDate");
 				var userId = $F("userId");
-				//var userId = 'CPIRALPH';
 				var chkBox1 = "";
 				var chkBox2 = "";
 				if(!($("rdoPost").checked ? true : false)){

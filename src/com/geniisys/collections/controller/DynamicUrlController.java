@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Base64;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,7 +38,6 @@ public class DynamicUrlController extends HttpServlet {
 			UrlService urlService = new UrlServiceImpl();
 			try {
 				String urlList = (String) urlService.getAllUrl();
-				System.out.println(urlList);
 				request.setAttribute("urlList", urlList);
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -54,15 +54,15 @@ public class DynamicUrlController extends HttpServlet {
 			//String userId = (String) session.getAttribute("adhocUser");
 			String userId = request.getParameter("userId");
 
-			//request.setAttribute("url", url + toMd5(userId));
-			request.setAttribute("url", url + userId);
+			request.setAttribute("url", url + encryptUserId(userId));
+			//request.setAttribute("url", url + userId);
 			System.out.println(url + userId);
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/collections/dynamic url/hiddenDiv.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
 	
-	private String toMd5(String userId){
+	private String encryptUserId(String userId){
 
         MessageDigest md = null;
 		try {
@@ -93,6 +93,13 @@ public class DynamicUrlController extends HttpServlet {
     	hexString.insert(10, "G");
     	//System.out.println("Digest(in hex format):: " + hexString.toString());
     	
-    	return hexString.toString();
+    	//try base 64
+    	byte[] encodedBytes = Base64.getEncoder().encode(userId.getBytes());
+    	byte[] decodedBytes = Base64.getDecoder().decode(userId.getBytes());
+    	System.out.println(new String(encodedBytes));
+    	System.out.println(new String(decodedBytes));
+    	
+    	return new String(encodedBytes);
+    	//return hexString.toString();
 	}
 }

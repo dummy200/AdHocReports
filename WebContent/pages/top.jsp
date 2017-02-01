@@ -16,12 +16,8 @@
 			src="${pageContext.request.contextPath}/images/banner/${clientBanner}"
 			style="height: 60px; margin: 5px 0 0 35px; float: left;" alt=" " /> --%>
 	</div>
-	<%-- <span id="welcomeUserDiv">
-		<jsp:include page="welcomeUser.jsp"></jsp:include>
-	</span> --%>
 	<div id="welcomeUser">
 		<span id="welcomeUserDiv">
-			<%-- <jsp:include page="welcomeUser.jsp"></jsp:include> --%>
 		</span>
 	</div>
 </div>

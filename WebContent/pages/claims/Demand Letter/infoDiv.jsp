@@ -6,6 +6,13 @@
 <input type="hidden" id="recoveryId" name="recoveryId" value="${recoveryId}">
 <input type="hidden" id="reprintFirst" name="reprintFirst" value="${reprintFirst}">
 <input type="hidden" id="reprintSecond" name="reprintSecond" value="${reprintSecond}">
+<input type="hidden" id="testClaimId" name="testClaimId" value="${testClaimId}">
+<input type="hidden" id="testRecoveryId" name="testRecoveryId" value="${testRecoveryId}">
+<input type="hidden" id="testUserId" name="testUserId" value="${testUserId}">
+<input type="hidden" id="testUserEmail" name="testUserEmail" value="${testUserEmail}">
+<input type="hidden" id="page" name="page" value="${page}">
+<input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
+<input type="hidden" id="userId" name= "userId" value = "${adhocUser}">
 <table style="margin-top: 10px; width: 100%;">
 			<c:choose>
 				<c:when test="${errorMsg == '' }">

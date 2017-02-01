@@ -17,11 +17,12 @@
 
 
 <!-- hidden fields -->
-<div id="hiddenDiv">
+
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
-<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
+<div id="hiddenDiv">
+<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
 <input type="hidden" id="reportName" name="reportName"
@@ -687,8 +688,8 @@ function toggletxtOthers(){
 					if (compareDate($F("txtFromDate"),$F("txtToDate"))){
 						showMessageBox("\"From Date\" must be earlier from \"To Date\".", "E");
 					}else{
-						new Ajax.Updater(
-							"mainContents",
+						new Ajax.Request(
+							//"mainContents",
 							contextPath + "/TransmittalController",
 							{
 								evalScripts : true,
@@ -727,13 +728,13 @@ function toggletxtOthers(){
 									chkBox18 : $("chkBox18").checked ? "Y" :  "N",
 									chkBox19 : $("chkBox19").checked ? "Y" :  "N",
 									txtOthers : $("chkBox19").checked ? $F("txtOthers") :  "",
-									signatory : $F("signatory"),
+									signatory : $F("selSign"),
 									designation : $F("txtDesignation")
 								},
 								onCreate : showNotice("Generating report. Please wait..."),
 								onComplete : function(response) {
-									printOutputPdf();
-									//$("hiddenDiv").update(response.responseText);
+									//printOutputPdf();
+									$("hiddenDiv").update(response.responseText);
 									}});
 							}
 				}

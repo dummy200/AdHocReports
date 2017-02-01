@@ -51,6 +51,7 @@ public class GIISUserController extends HttpServlet{
 			String userName = "";
 			try {
 				userName = userService.fetchUserName(request);
+				
 			} catch (SQLException e) {
 				System.out.println("Error fetching username: " + e.getMessage());
 			}

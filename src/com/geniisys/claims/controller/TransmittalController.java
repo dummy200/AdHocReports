@@ -211,8 +211,8 @@ public class TransmittalController extends HttpServlet{
 				request.setAttribute("reportTitle", reportName);
 				
 				//redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/TransmittalController?action=toTransmittalPage");
-				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Transmittal/hiddenDiv.jsp");
+				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/TransmittalController?action=toTransmittalPage");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Transmittal/hiddenDiv.jsp");
             	dispatcher.forward(request,response);
 			}
 		}

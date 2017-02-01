@@ -1,5 +1,8 @@
 
 <!-- hidden fields -->
+<input type="hidden" id="page" name="page" value="${page}">
+<input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
+<input type="hidden" id="userId" name="userId" value="${adhocUser}">
 <div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle"
@@ -12,7 +15,10 @@
 	value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
-<input type="hidden" id="signatory" name="signatory" value="">
+<input type="hidden" id="notedBySign" value=""> 
+<input type="hidden" id="notedByDesig" value="">
+<input type="hidden"id="sign" value=""> 
+<input type="hidden" id="desig" value="">
 </div>
 
 <script type="text/javascript">
@@ -24,6 +30,7 @@
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
 			hideNotice("");
+			//alert(errorMsg);
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath

@@ -39,8 +39,8 @@ public class CheckRequestController extends HttpServlet {
 			
 			//System.out.println(toMd5(userId));
 
-			//request.setAttribute("url", page + toMd5(userId));
-			request.setAttribute("url", page + userId);
+			request.setAttribute("url", page + toMd5(userId));
+			//request.setAttribute("url", page + userId);
 			System.out.println(page + userId);
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/blank.jsp");
 			dispatcher.forward(request, response);
@@ -77,7 +77,8 @@ public class CheckRequestController extends HttpServlet {
     	}
     	hexString.insert(10, "G");
     	//System.out.println("Digest(in hex format):: " + hexString.toString());
-    	
+    	System.out.println("hex method 1: " + sb);
+    	System.out.println("hex method 2: " + hexString);
     	return hexString.toString();
 	}
 }

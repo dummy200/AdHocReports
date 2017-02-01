@@ -11,18 +11,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 	</resultMap>
 
 	<select id="getAllUrl" resultMap="urlTables">
-		SELECT 1
-		"URL_NO",'Intertrade/NEV Check Request'
-		"URL_NAME",'http://10.20.39.122/intertrade/intertrade_request.php?useraccess='
-		"URL" FROM DUAL
-		UNION ALL SELECT 2 "URL_NO",'Intertrade/NEV Check
-		Request'
-		"URL_NAME",'http://10.20.39.122/intertrade/intertrade_request.php?useraccess='
-		"URL" FROM DUAL
-		UNION ALL SELECT 3 "URL_NO",'Intertrade/NEV Check
-		Request'
-		"URL_NAME",'http://10.20.39.122/intertrade/intertrade_request.php?useraccess='
-		"URL" FROM DUAL
+		SELECT URL_NO,URL_NAME,URL FROM ADHOC_URL ORDER BY 1
 	</select>
 
 </sqlMap>

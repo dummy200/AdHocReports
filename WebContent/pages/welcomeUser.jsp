@@ -8,13 +8,12 @@
     <div id="userAccess" style="color: #fff; float: right; margin-right: 5px;"></div><br/>
 	<div id="database" style="color: #fff; float: right; margin-right: 5px;"></div><br/>
  	<div id="dateAndTime" style="color: #fff; float: right; margin-right: 5px;"></div><br/>
-	<!-- <a href="#" onclick="close_window();return false;">close</a> -->
 	<span style="float: right;" id="logoutSpan">
 			Welcome ${userName}!
 			<span id="logout" name="logout"> Logout</span>
 		</span>	
-	 <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
- 	<!-- <input type="hidden" id="adhocUser" name="adhocUser" value="CPIRALPH">--> 
+	<input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
+ 	<!--<input type="hidden" id="adhocUser" name="adhocUser" value="CPIRALPH">-->
 	<script type="text/javascript">
 			var userId = $F(adhocUser);
 			getServerDateAndTime();
@@ -32,23 +31,5 @@
 						"1"
 				);
 		      });
-			
-			//temp fix for onInit user access wasnt loaded
-		 	/* window.onload = function() {
-			    if(!window.location.hash) {
-			        window.location = window.location + '#loaded';
-			        window.location.reload();
-			    }
-			} */
-			/* if (window.location.href.indexOf('reload')==-1) {
-			     window.location.replace(window.location.href+'?reload');
-			} */
-			
-			/* function close_window() {
-				  if (confirm("Close Window?")) {
-				    close();
-				  }
-				} */
-				
 	</script>
 </div>
