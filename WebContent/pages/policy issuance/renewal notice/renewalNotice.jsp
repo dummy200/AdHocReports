@@ -414,7 +414,6 @@
 		if (isPolicyNoFieldsOk()) {
 			var userInput = "95 " +$F("txtLineCd") + " " + $F("txtIssCd").trim().toUpperCase();
 			if(!checkUserAccess(userInput,userAccessObj, userAccessObjLength)){
-				//alert("User has no access.");
 				showMessageBox("User has no access.", "I");
 			}else if(!/^\d+$/.test($F("txtIssueYy").trim())){
 				showMessageBox("Invalid Input. Issue Year must be number", "E");
@@ -442,18 +441,10 @@
 				onCreate : showNotice("Fetching Details. Please wait..."),
 				onComplete : function(response) {
 					hideNotice("");
-					/* var errorMsg2 = $F("errorMsg2");
-					var assuredName = $F("txtAssuredName");
-					if (checkBlankNull($F("errorMsg2"))) {
-						//$("btnPrintCert").enable();
-						$("btnPrintRenewal").enable();
-					} else
-						alert("No data found."); */
 				}
 			});
 			}
 		} else {
-			//alert("Please input required fields");
 			//showMessageBox("Please input required fields", "I");
 			//$("txtSublineCd").focus();
 		}
@@ -557,7 +548,6 @@
 						
 						if (printOptionVal == "I") {
 							if (!isPolicyNoFieldsOk()) {
-								//alert("Please input required fields");
 								showMessageBox("Please input required fields", "I");
 							} else {
 								new Ajax.Request(
@@ -592,11 +582,9 @@
 						} else if (printOptionVal == "B") {
 							if (compareDate($F("txtFromDate"),
 									$F("txtToDate"))){
-								//alert("\"From Date\" should be earlier from \"To Date\".");
 								showMessageBox("\"From Date\" should be earlier from \"To Date\".", "E");
 							}else{
 							if (!isBatchFieldsOk()) {
-								//alert("Please input required fields");
 								showMessageBox("Please input required fields", "I");
 							} else {
 								$("errorMsg").value = "";
@@ -641,7 +629,6 @@
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
 			hideNotice("");
-			//alert(errorMsg);
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath

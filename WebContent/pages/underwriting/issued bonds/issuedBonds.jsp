@@ -186,7 +186,6 @@
 		if(option == 3){
 			reportName = 'REP_BONDS_ISSUED';
 		}
-		//alert(reportName);
 	}
 	
 	var fromCalendar = new dhtmlXCalendarObject({
@@ -286,7 +285,6 @@
 		}
 		}
 		subline = subCd;
-		//alert(subline);
 		$(txtSublineName).writeAttribute("value",sName);
 		}
 

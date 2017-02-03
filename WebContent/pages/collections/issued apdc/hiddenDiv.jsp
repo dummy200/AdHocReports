@@ -22,7 +22,6 @@
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
 			hideNotice("");
-			//alert(errorMsg);
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath

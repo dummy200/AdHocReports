@@ -347,7 +347,6 @@
 	$("btnPrintReport").observe("click", function() {
 	if(compareDate($F("txtFromDate"),$F("txtToDate")))
 	{
-		//alert("Invalid Date.");
 		showMessageBox(
 				"\"From Date\" must be earlier from \"To Date\".",
 				"E");

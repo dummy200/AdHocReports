@@ -167,7 +167,6 @@
 						if (isPolicyNoFieldsOk()) {
 							var userInput = "93 " +$F("txtLineCd") + " " + $F("txtIssCd").trim().toUpperCase();
 							if(!checkUserAccess(userInput,userAccessObj, userAccessObjLength)){
-								//alert("User has no access.");
 								showMessageBox("User has no access.", "E");
 							}else if(!/^\d+$/.test($F("txtClaimYy").trim())){
 								showMessageBox("Invalid Input. Claim Year must be number", "E");
@@ -197,7 +196,6 @@
 									});
 							}
 						} else {
-							//alert("Please input required fields");
 							showMessageBox("Please input required fields", "I");
 						}
 						$("txtSublineCd").focus();
@@ -223,7 +221,6 @@
 					"click",
 					function() {
 							if (!isPolicyNoFieldsOk()) {
-								//alert("Please input required fields");
 								showMessageBox("Please input required fields", "I");
 							} else {
 								new Ajax.Request(
@@ -274,7 +271,6 @@
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
 			hideNotice("");
-			//alert(errorMsg);
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath

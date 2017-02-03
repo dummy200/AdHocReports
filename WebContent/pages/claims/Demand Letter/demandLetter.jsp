@@ -223,7 +223,6 @@
 						if (isPolicyNoFieldsOk()) {
 							var userInput = "93 " +$F("txtLineCd") + " " + $F("txtIssCd").trim().toUpperCase();
 							if(!checkUserAccess(userInput,userAccessObj, userAccessObjLength)){
-								//alert("User has no access.");
 								showMessageBox("User has no access", "E");
 							}else if(!/^[a-zA-Z]*$/g.test($F("txtIssCd").trim())){
 								showMessageBox("Please input valid characters", "I");
@@ -254,7 +253,6 @@
 									});
 							}
 						} else {
-							//alert("Please input required fields");
 							showMessageBox("Please input required fields", "I");
 						}
 						$("txtSublineCd").focus();
@@ -282,7 +280,6 @@
 						var txtUserEmail = $F("txtUserEmail");
 						var txtUserId = $F("txtUserId");
 							if (checkBlankNull(txtUserEmail) || checkBlankNull(txtUserId)) {
-								//alert("Please input required fields");
 								showMessageBox("Please input required fields", "I");
 							} else {
 								new Ajax.Request(
@@ -314,9 +311,6 @@
 	$("btnReprint").observe("click",function(){
 		var txtUserEmail = $F("txtUserEmail");
 		var txtUserId = $F("txtUserId");
-			/* if (checkBlankNull(txtUserEmail) || checkBlankNull(txtUserId)) {
-				alert("Please input required fields");
-			} else { */
 				if(!checkBlankNull($F("claimId"))){
 				new Ajax.Request(
 						//"mainContents",
@@ -420,7 +414,6 @@
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
 			hideNotice("");
-			//alert(errorMsg);
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath

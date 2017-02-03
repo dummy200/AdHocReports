@@ -16,7 +16,7 @@
 	function printOutputPdf() {
 		if (!checkBlankNull($F("errorMsg"))) {
 			hideNotice("");
-			alert($F("errorMsg"));
+			showMessageBox($F("errorMsg"), 'E');
 		} else {
 			var content = contextPath
 					+ "/OutputController?action=showPdf&reportUrl=" + $F("reportUrl");

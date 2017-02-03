@@ -390,7 +390,6 @@
 						intermediaryNo = $F("txtIntermediaryNo");
 						branch = $F("txtBranchCd");
 						userId = $F("userId");
-						//alert(userId);
 							new Ajax.Request(
 									contextPath + "/SOAperAssdIntmController",
 									{
@@ -475,7 +474,6 @@
 	//assured
 	/*  $("selAssd").observe("change", function(){
 		var selected = $("selAssd").getValue();
-		//alert(selected);
 		//getAssdNo(selected,"txtAssdNo");
 	}); */
 	
@@ -521,7 +519,6 @@
 		//$(txtAssdNo).value = aNo;
 	/*  }catch(err) {
 			// goToModule("mainContents",contextPath + "/SOAperAssdIntmController?action=toSOAPage",'Please wait......',"Statement of Account");
-			alert(err.message);
 	    }  */
 	}
 	

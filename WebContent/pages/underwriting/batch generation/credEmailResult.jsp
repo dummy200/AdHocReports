@@ -22,7 +22,6 @@ showCreditingBranchModal($F("branchCode"));
 
 //custom messagebox
 function showCreditingBranchModal(branchCode){
-	//alert($F("credEmailCount"));
 	var message = "";
    /* var message = "<table style='width:250px; margin-left:20px'>"+
 					"<tr>"+
