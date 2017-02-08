@@ -65,7 +65,7 @@
 							style="width: 65%;" value="${offerLetter.insuredUnit}"
 							title="Insured Unit" disabled /></td>
 					</tr>
-					<tr>
+				<%-- 	<tr>
 						<td class="rightAligned" style="width: 25%;">Loss Amount</td>
 						<td class="leftAligned"><input id="txtLossAmt"
 							name="capsField" class="leftAligned" type="text"
@@ -85,7 +85,7 @@
 							name="capsField" class="leftAligned" type="text"
 							style="width: 65%;" value="${offerLetter.netTotal}"
 							title="Net Payable" disabled /></td>
-					</tr>
+					</tr> --%>
 				</c:forEach>
 				</c:when>
 				<c:otherwise>
@@ -145,7 +145,7 @@
 							style="width: 65%;" value=""
 							title="Insured Unit" disabled /></td>
 					</tr>
-					<tr>
+					<!-- <tr>
 						<td class="rightAligned" style="width: 25%;">Loss Amount</td>
 						<td class="leftAligned"><input id="txtLossAmt"
 							name="capsField" class="leftAligned" type="text"
@@ -165,7 +165,7 @@
 							name="capsField" class="leftAligned" type="text"
 							style="width: 65%;" value=""
 							title="Net Payable" disabled /></td>
-					</tr>
+					</tr> -->
 				</c:otherwise>
 	</c:choose>
 </table>

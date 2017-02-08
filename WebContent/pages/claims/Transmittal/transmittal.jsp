@@ -129,7 +129,7 @@
 								name="capsField" class="leftAligned" type="text"
 								style="width: 65%;" value="" title="Insured Unit" disabled /></td>
 						</tr>
-						<tr>
+						<!-- <tr>
 							<td class="rightAligned" style="width: 25%;">Loss Amount</td>
 							<td class="leftAligned"><input id="txtLossAmt"
 								name="capsField" class="leftAligned" type="text"
@@ -154,7 +154,7 @@
 							name="capsField" class="leftAligned" type="text"
 							style="width: 65%;" value=""
 							title="Loss Amount" disabled /></td>
-					</tr>
+					</tr> -->
 					</table>
 				</div>
 			</div>
@@ -591,9 +591,9 @@ function toggletxtOthers(){
 		$("txtPlateNo").value = '';
 		$("txtSerialNo").value = '';
 		$("txtInsuredUnit").value = '';
-		$("txtLossAmt").value = '';
-		$("txtDedAmt").value = '';
-		$("txtNetTotal").value = '';
+		//$("txtLossAmt").value = '';
+		//$("txtDedAmt").value = '';
+		//$("txtNetTotal").value = '';
 		$("chkBox1").checked = false;
 		$("chkBox2").checked = false;
 		$("chkBox3").checked = false;

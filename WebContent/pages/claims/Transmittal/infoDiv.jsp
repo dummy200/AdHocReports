@@ -65,7 +65,7 @@
 							style="width: 65%;" value="${transmittal.insuredUnit}"
 							title="Insured Unit" disabled /></td>
 					</tr>
-					<tr>
+					<%-- <tr>
 						<td class="rightAligned" style="width: 25%;">Loss Amount</td>
 						<td class="leftAligned"><input id="txtLossAmt"
 							name="capsField" class="leftAligned" type="text"
@@ -85,7 +85,7 @@
 							name="capsField" class="leftAligned" type="text"
 							style="width: 65%;" value="${transmittal.netTotal}"
 							title="Net Payable" disabled /></td>
-					</tr>
+					</tr> --%>
 					<tr>
 						<td class="rightAligned" style="width: 25%;">Check No.</td>
 						<td class="leftAligned"><input id="txtCheckVoucher"
@@ -152,7 +152,7 @@
 							style="width: 65%;" value=""
 							title="Insured Unit" disabled /></td>
 					</tr>
-					<tr>
+			<!-- 		<tr>
 						<td class="rightAligned" style="width: 25%;">Loss Amount</td>
 						<td class="leftAligned"><input id="txtLossAmt"
 							name="capsField" class="leftAligned" type="text"
@@ -172,7 +172,7 @@
 							name="capsField" class="leftAligned" type="text"
 							style="width: 65%;" value=""
 							title="Net Payable" disabled /></td>
-					</tr>
+					</tr> -->
 					<tr>
 						<td class="rightAligned" style="width: 25%;">Check No.</td>
 						<td class="leftAligned"><input id="txtCheckVoucher"
