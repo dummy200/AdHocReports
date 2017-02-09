@@ -131,7 +131,7 @@
 							style="width: 65%;" value=""
 							title="Insured Unit" disabled /></td>
 					</tr>
-				<!-- 	<tr>  // ommitted by badz 02.07.17 
+					<tr>  
 						<td class="rightAligned" style="width: 25%;">Loss Amount</td>
 						<td class="leftAligned"><input id="txtLossAmt"
 							name="capsField" class="leftAligned" type="text"
@@ -139,7 +139,7 @@
 							title="Loss Amount" disabled /></td>
 					</tr>
 					<tr>
-						<td class="rightAligned" style="width: 25%;">Deductible Amount</td>
+						<td class="rightAligned" style="width: 25%;">Policy Deductible</td>
 						<td class="leftAligned"><input id="txtDedAmt"
 							name="capsField" class="leftAligned" type="text"
 							style="width: 65%;" value=""
@@ -151,7 +151,7 @@
 							name="capsField" class="leftAligned" type="text"
 							style="width: 65%;" value=""
 							title="Net Payable" disabled /></td>
-					</tr> -->
+					</tr>
 					</table>
 				</div>
 			</div>
@@ -565,9 +565,9 @@
 		$("txtPlateNo").value = '';
 		$("txtSerialNo").value = '';
 		$("txtInsuredUnit").value = '';
-		//$("txtLossAmt").value = '';
-		//$("txtDedAmt").value = '';
-		//$("txtNetTotal").value = '';
+		$("txtLossAmt").value = '';
+		$("txtDedAmt").value = '';
+		$("txtNetTotal").value = '';
 		$("chkBox1").checked = false;
 		$("chkBox2").checked = false;
 		$("chkBox3").checked = false;

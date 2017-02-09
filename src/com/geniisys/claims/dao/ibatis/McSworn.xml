@@ -23,6 +23,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		<result property="motorTypeDesc" column="MOTOR_TYPE_DESC" />
 		<result property="motorNo" column="MOTOR_NO" />
 		<result property="serialNo" column="SERIAL_NO" />
+		<result property="plateNo" column="PLATE_NO" />
 		<result property="lossDay" column="LOSS_DAY" />
 		<result property="lossTime" column="LOSS_TIME" />
 		<result property="lossMonth" column="LOSS_MONTH" />

@@ -134,7 +134,13 @@ public class OfferLetter {
 	}
 
 	public BigDecimal getLossAmt() {
-		return lossAmt.setScale(2, BigDecimal.ROUND_DOWN);
+		int val = 0;
+		if (lossAmt != null){
+			return lossAmt.setScale(2, BigDecimal.ROUND_DOWN);
+		}else{
+			return lossAmt = BigDecimal.valueOf(val);
+		}
+		
 		//DecimalFormat df = new DecimalFormat("#,##0.00");
 		//return new BigDecimal(df.format((lossAmt)));
 	}
@@ -144,7 +150,13 @@ public class OfferLetter {
 	}
 
 	public BigDecimal getDedAmt() throws ParseException {
-		return dedAmt.setScale(2, BigDecimal.ROUND_DOWN);
+		//return dedAmt.setScale(2, BigDecimal.ROUND_DOWN);
+		int val = 0;
+		if (dedAmt != null){
+			return dedAmt.setScale(2, BigDecimal.ROUND_DOWN);
+		}else{
+			return dedAmt = BigDecimal.valueOf(val);
+		}
 	}
 
 	public void setDedAmt(BigDecimal dedAmt) {
@@ -155,7 +167,13 @@ public class OfferLetter {
 		//DecimalFormat df = new DecimalFormat("#,###,##0.00");
 	     //System.out.println(df.format(new BigDecimal(123456.75)));
 		//return new BigDecimal(df.format((netTotal)));
-		return netTotal.setScale(2, BigDecimal.ROUND_DOWN);
+		//return netTotal.setScale(2, BigDecimal.ROUND_DOWN);
+		int val = 0;
+		if (netTotal != null){
+			return netTotal.setScale(2, BigDecimal.ROUND_DOWN);
+		}else{
+			return netTotal = BigDecimal.valueOf(val);
+		}
 	}
 
 	public void setNetTotal(BigDecimal netTotal) {

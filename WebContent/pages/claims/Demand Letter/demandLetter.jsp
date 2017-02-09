@@ -8,6 +8,7 @@
 <div id="printMcSwornMenu">
 	<div id="mainNav" name="mainNav">
 		<div id="smoothmenu1" name="smoothmenu1" class="ddsmoothmenu">
+		
 			<ul>
 				<li><a id="btnExit">Exit</a></li>
 			</ul>
@@ -26,6 +27,7 @@
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="userId" name= "userId" value = "${adhocUser}">
+<!-- <input type="hidden" id="userId" name= "userId" value = "MISSNM">  -->
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
 <input type="hidden" id="reportName" name="reportName"
@@ -129,7 +131,7 @@
 						<tr>
 						<td class="rightAligned" style="width: 35%;"></td>
 						<td class="rightAligned"><input type="radio" id="rdoFirst" name="demandLetterType"
-							value="1"
+							value="FIRST"
 							style="margin-left: 15px; float: left; margin-left: 50px;"
 							checked="" /> <label for="rdoFirst" style="margin-top: 3px;">FIRST DEMAND LETTER</label>
 						</td>
@@ -137,7 +139,7 @@
 						<tr>
 						<td class="rightAligned" style="width: 35%;"></td>
 						<td class="rightAligned"><input type="radio" id="rdoSecond" name="demandLetterType"
-							value="2"
+							value="SECOND"
 							style="margin-left: 15px; float: left; margin-left: 50px;"
 							checked="" /> <label for="rdoSecond" style="margin-top: 3px;">SECOND DEMAND LETTER</label>
 						</td>
@@ -154,10 +156,17 @@
 						<td class="rightAligned" style="width: 25%;">User Id</td>
 						<td class="leftAligned">
 							<input id="txtUserId" name="capsField" class="leftAligned upper" type="text"
-							style="width: 65%;" value="${adhocUser}"
+							style="width: 65%;" value= "${adhocUser}"
 							title="User Id" />
 						</td>
+						<!-- <td class="rightAligned" style="width: 25%;">User Id</td>
+						<td class="leftAligned">
+							<input id="txtUserId" name="capsField" class="leftAligned upper" type="text"
+							style="width: 65%;" value= "MISSNM"
+							title="User Id" />
+						</td> -->
 					</tr>
+					
 					<tr>
 						<td class="rightAligned" style="width: 25%;">User Email</td>
 						<td class="leftAligned">
@@ -199,6 +208,8 @@
 	$("btnReprint").disable();
 	$("txtUserId").disable();
 	
+	
+	
 	$$("input[name='demandLetterType']").each(function(radio) {
 		radio.observe("click", function() {
 			toogleLetterTypeOption(radio.value);
@@ -207,10 +218,10 @@
 	});
 	
 	function toogleLetterTypeOption(option){
-		if(option == '1'){
+		if(option == 'FIRST'){ // badz
 			reportName = 'GICLR025_PCI';
-			reprintName = 'GICLR025_PCI_REPRINT';
-		}else if(option == '2'){
+			reprintName = 'GICLR025_PCI_REPRINT'
+		}else if(option == 'SECOND'){ // badz
 			reportName = 'GICLR025_B_PCI';
 			reprintName = 'GICLR025_B_PCI_REPRINT';
 		}
@@ -220,6 +231,7 @@
 			.observe(
 					"click",
 					function() {
+						//alert($F("rdoFirst"));
 						if (isPolicyNoFieldsOk()) {
 							var userInput = "93 " +$F("txtLineCd") + " " + $F("txtIssCd").trim().toUpperCase();
 							if(!checkUserAccess(userInput,userAccessObj, userAccessObjLength)){
@@ -322,7 +334,7 @@
 								action : "reprintDemand",
 								reportName : reprintName,
 								claimId : $F("claimId"),
-								userId : $F("txtUserId"),
+								userId :   $F("txtUserId"),
 								userEmail : $F("txtUserEmail")
 							},
 							onCreate : showNotice("Generating report. Please wait..."),
@@ -365,6 +377,7 @@
 							testClaimId : $F("testClaimId"),
 							testRecoveryId : $F("testRecoveryId"),
 							testUserId : $F("testUserId"),
+							letterType : $F("rdoFirst"),
 							testUserEmail : $F("testUserEmail"),
 							reportName : reportName
 						},
@@ -393,6 +406,7 @@
 							testClaimId : $F("testClaimId"),
 							testRecoveryId : $F("testRecoveryId"),
 							testUserId : $F("testUserId"),
+							letterType : $F("rdoFirst"),
 							testUserEmail : $F("testUserEmail"),
 							reportName : reportName
 						},

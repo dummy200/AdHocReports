@@ -75,11 +75,6 @@ public class McSwornController extends HttpServlet{
 				System.out.println(errorMsg);
 				request.setAttribute("errorMsg", errorMsg);
 				request.setAttribute("mcSwornList", mcSwornList);
-				for(McSworn val : mcSwornList){
-					totalTag = val.getTotalTag();
-					System.out.println("totalTag: " + totalTag);
-				}
-				
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectPage);
         		dispatcher.forward(request,response);
 			}
@@ -93,7 +88,6 @@ public class McSwornController extends HttpServlet{
 			Integer clmSeqNo = Integer.parseInt(request.getParameter("clmSeqNo"));
 			String userId = request.getParameter("userId");
 			String witness = request.getParameter("witness");
-			//Integer lossType = Integer.parseInt(request.getParameter("lossType"));
 			
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 			String dir = getServletContext().getInitParameter("REPORTS_DIR");
