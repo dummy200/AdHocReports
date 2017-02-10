@@ -415,10 +415,6 @@ var filterGridBy = "";
 		gridIntm.setColTypes("ro,ro,ro");
 		gridIntm.setColSorting("str,str,str");
 		gridIntm.init();
-		/* if(reportName == 'DEALERS_PROD_REP'){
-			alert(filterGridBy);
-			gridIntm.filterBy(1,'DL');
-		} */
 		gridIntm.parse(data,"json");
 		$("gridIntermediaryResult").hide();
 	}
@@ -426,7 +422,6 @@ var filterGridBy = "";
 	$("searchForIntm").observe("click",function() {
 		var parameter = $F("txtIntmSearch");
 		intermediaryNo = '';
-		//alert(filterGridBy);
 		if(!parameter == ''){
 			new Ajax.Request(contextPath +'/PremProductionController',
 					{
@@ -498,7 +493,6 @@ var filterGridBy = "";
 	});	
 	
 	fromCalendar.attachEvent("onClick", function(side,d){
-		//alert("onClick event called, "+side+" calendar, date "+fromCalendar.getFormatedDate(null,d));
 		var strFromD = fromCalendar.getFormatedDate(null,d);
 		var subtractedYear = +strFromD.substring(0, 4) - 1;
 		var strFromD2 = subtractedYear.toString() + strFromD.substring(4,10);
@@ -506,7 +500,6 @@ var filterGridBy = "";
 	});
 	
 	toCalendar.attachEvent("onClick", function(side,d){
-		//alert("onClick event called, "+side+" calendar, date "+fromCalendar.getFormatedDate(null,d));
 		var strToD = toCalendar.getFormatedDate(null,d);
 		var subtractedYear = +strToD.substring(0, 4) - 1;
 		var strToD2 = subtractedYear.toString() + strToD.substring(4,10);
