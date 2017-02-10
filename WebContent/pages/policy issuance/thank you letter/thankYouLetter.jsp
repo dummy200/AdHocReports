@@ -394,7 +394,6 @@
 							+ $F("txtIssCd").trim().toUpperCase();
 					if (!checkUserAccess(userInput, userAccessObj,
 							userAccessObjLength)) {
-						//alert("User has no access.");
 						showMessageBox("User has no access.", "E");
 					} else if (!/^\d+$/.test($F("txtIssueYy").trim())) {
 						showMessageBox(

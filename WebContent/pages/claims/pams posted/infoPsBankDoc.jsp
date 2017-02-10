@@ -265,9 +265,9 @@
 var errorMsg2 = $F("errorMsg2");
 if (!checkBlankNull(errorMsg2)) {
 	if (checkBlankNull(errorMsg)){
-		alert(errorMsg);
+		showMessageBox(errorMsg,'E');
 	}else
-		alert(errorMsg2);
+		showMessageBox(errorMsg2,'E');
 	$("btnPrintReport").disable();
 } else
 	$("btnPrintReport").enable();

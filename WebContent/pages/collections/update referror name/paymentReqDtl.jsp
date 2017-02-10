@@ -53,7 +53,6 @@
 
 
 	 if((errorMsg != '') || (errorMsg != null)){
-	 alert(errorMsg);
 	 $("btnUpdate").disable();
 	 showMessageBox(errorMsg, "E");
 	 } */

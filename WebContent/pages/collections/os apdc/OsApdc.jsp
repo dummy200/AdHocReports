@@ -196,12 +196,6 @@
 	
 	var strWindowFeatures = "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,resizable=yes,fullscreen=yes";
 	$("btnPrint").observe("click", function() {
-	/* if(compareDate($F("txtFromDate"),$F("txtToDate")))
-	{
-		alert("Invalid Date.");
-	}else if (!ifNotEmpty()){
-		alert("Date is required.");
-	}else */
 	if (validateInput())
 		{
 			new Ajax.Request(
@@ -295,7 +289,6 @@
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
 			hideNotice("");
-			//alert(errorMsg);
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath

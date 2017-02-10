@@ -411,7 +411,6 @@
 		if(option == 2){
 			outputType = 2;
 		}
-		//alert(outputType);
 	}
 	
 	function printOutputPdf() {
