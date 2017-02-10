@@ -16,16 +16,18 @@ public class McSworn {
 	private String lossMonth;
 	private String inceptDate;
 	private String expiryDate;
+	private String totalTag;
 	private BigDecimal lossAmt;
 	private BigDecimal deductible;
 	private BigDecimal totalAmount;
+	
 
 	public McSworn() {
 	}
 
 	public McSworn(String claimNo, String policyNo, String assuredName, String modelyear, String motorTypeDesc,
 			String motorNo, String serialNo, String plateNo, String lossDay, String lossTime, String lossMonth,
-			String inceptDate, String expiryDate, BigDecimal lossAmt, BigDecimal deductible, BigDecimal totalAmount) {
+			String inceptDate, String expiryDate, String totalTag, BigDecimal lossAmt, BigDecimal deductible, BigDecimal totalAmount) {
 		this.claimNo = claimNo;
 		this.policyNo = policyNo;
 		this.assuredName = assuredName;
@@ -42,6 +44,7 @@ public class McSworn {
 		this.lossAmt = lossAmt;
 		this.deductible = deductible;
 		this.totalAmount = totalAmount;
+		this.totalTag = totalTag;
 	}
 
 	public String getClaimNo() {
@@ -172,5 +175,13 @@ public class McSworn {
 		this.totalAmount = totalAmount;
 	}
 	
+
+	public String getTotalTag() {
+		return totalTag;
+	}
+
+	public void setTotalTag(String totalTag) {
+		this.totalTag = totalTag;
+	}
 	
 }

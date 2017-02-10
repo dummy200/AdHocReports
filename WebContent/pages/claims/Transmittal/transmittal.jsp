@@ -136,7 +136,7 @@
 								style="width: 65%;" value="" title="Loss Amount" disabled /></td>
 						</tr>
 						<tr>
-							<td class="rightAligned" style="width: 25%;">Deductible
+							<td class="rightAligned" style="width: 25%;">Policy Deductible
 								Amount</td>
 							<td class="leftAligned"><input id="txtDedAmt"
 								name="capsField" class="leftAligned" type="text"
@@ -148,13 +148,6 @@
 								name="capsField" class="leftAligned" type="text"
 								style="width: 65%;" value="" title="Net Payable" disabled /></td>
 						</tr>
-						<tr>
-						<td class="rightAligned" style="width: 25%;">Loss Amount</td>
-						<td class="leftAligned"><input id="txtLossAmt"
-							name="capsField" class="leftAligned" type="text"
-							style="width: 65%;" value=""
-							title="Loss Amount" disabled /></td>
-					</tr>
 					</table>
 				</div>
 			</div>

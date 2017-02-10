@@ -23,6 +23,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		<result property="motorTypeDesc" column="MOTOR_TYPE_DESC" />
 		<result property="motorNo" column="MOTOR_NO" />
 		<result property="serialNo" column="SERIAL_NO" />
+		<result property="plateNo" column="PLATE_NO" />
 		<result property="lossDay" column="LOSS_DAY" />
 		<result property="lossTime" column="LOSS_TIME" />
 		<result property="lossMonth" column="LOSS_MONTH" />
@@ -31,6 +32,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		<result property="lossAmt" column="LOSS_AMOUNT" />
 		<result property="deductible" column="DEDUCTIBLE" />
 		<result property="totalAmount" column="TOTAL_AMOUNT" />
+		<result property="totalTag" column="TOTAL_TAG" />
 	</resultMap>
 
 	<select id="populateMcSworn" resultMap="mcSwornResultMap"
@@ -57,7 +59,8 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		ABS (SUM(NVL(I.DED_AMT,0))) DEDUCTIBLE,
 		SUM(NVL(I.LOSS_AMT,0)) + SUM (NVL(I.DED_AMT,0)) TOTAL_AMOUNT,
 		K.CAR_COMPANY ,
-		J.MAKE
+		J.MAKE,
+		A.TOTAL_TAG
 		FROM GICL_CLAIMS A,GIPI_POLBASIC B, GIIS_ASSURED C, GICL_MOTOR_CAR_DTL D,
 		GIIS_LOSS_CTGRY E, GIIS_MOTORTYPE F,
 		GIAC_DIRECT_CLAIM_PAYTS G, GICL_ADVICE H, GICL_LOSS_EXP_DED_DTL I,GIIS_MC_MAKE
@@ -97,7 +100,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		A.LOSS_DATE,A.ASSURED_NAME, B.INCEPT_DATE, B.EXPIRY_DATE,
 		D.MODEL_YEAR, F.MOTOR_TYPE_DESC, D.MOTOR_NO, D.SERIAL_NO, D.PLATE_NO,
 		E.LOSS_CAT_DES,
-		K.CAR_COMPANY , J.MAKE
+		K.CAR_COMPANY , J.MAKE, A.TOTAL_TAG
 	</select>
 
 </sqlMap>

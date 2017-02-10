@@ -18,7 +18,7 @@ public interface DemandLetterService {
 	Integer checkClaimIdFromDBDemandLetter(HttpServletRequest request) throws SQLException;
 	Boolean checkIfExistsInReprint(DemandLetterReprint reprint) throws SQLException;
 	void insertIntoDBDemandLetter(DemandLetterInsert insertDetails,Integer claimId,String reportName) throws SQLException;
-	void insertIntoDBDemandReprint(DemandLetterInsert insertDetails,Integer claimId,String reportName,String userEmail) throws SQLException;
+	void insertIntoDBDemandReprint(DemandLetterInsert insertDetails,String firstPrintWordAmt,Integer claimId,String reportName,String userEmail) throws SQLException;
 	DemandLetterInsert fetchFirstReportDetails(DemandLetterParameter params) throws SQLException;
 	DemandLetterInsert fetchSecondReportDetails(DemandLetterParameter params) throws SQLException;
 	

@@ -203,18 +203,26 @@ public class DemandLetterController extends HttpServlet{
 			Integer recoveryId = Integer.parseInt(request.getParameter("testRecoveryId"));
 			String userId = request.getParameter("testUserId");
 			String userEmail = request.getParameter("testUserEmail");
-			
+			String demandTypeVar = request.getParameter("letterType");
+			System.out.println("reportName: " + request.getParameter("reportName"));
+		
 			System.out.println(claimId + " " + recoveryId + " " + userId + " " + userEmail);
 			DemandLetterParameter params = new DemandLetterParameter(claimId, recoveryId, userId);
 			try {
 				sqlMap.startTransaction();
 				sqlMap.startBatch();
 				DemandLetterInsert insertDetails = (DemandLetterInsert) demandLetterService.fetchFirstReportDetails(params);
+				System.out.println("demands before: " + insertDetails.getDemands());
+				insertDetails.setDemands(demandTypeVar);
+				System.out.println("demands after: " + insertDetails.getDemands());
 				DemandLetterInsert secondInsertDetails = (DemandLetterInsert) demandLetterService.fetchSecondReportDetails(params);
+				System.out.println("demands before: " + secondInsertDetails.getDemands());
+				secondInsertDetails.setDemands(demandTypeVar);
+				System.out.println("demands after: " + secondInsertDetails.getDemands());
 				System.out.println("update demand letter table");
 				demandLetterService.insertIntoDBDemandLetter(insertDetails,claimId,reportName);
 				System.out.println("update reprint table");
-				demandLetterService.insertIntoDBDemandReprint(secondInsertDetails,claimId,reportName,userEmail);
+				demandLetterService.insertIntoDBDemandReprint(secondInsertDetails,insertDetails.getAmtWord1(),claimId,reportName,userEmail);
 				sqlMap.executeBatch();
 				sqlMap.commitTransaction();
 			} catch (SQLException e) {
@@ -239,6 +247,7 @@ public class DemandLetterController extends HttpServlet{
 		if(action.equalsIgnoreCase("reprintDemand")){
 			Integer claimId = Integer.parseInt(request.getParameter("claimId"));
 			System.out.println("claim id " + claimId);
+			System.out.println("reportName : " + request.getParameter("reportName") );
 					
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 			String dir = getServletContext().getInitParameter("REPORTS_DIR");
