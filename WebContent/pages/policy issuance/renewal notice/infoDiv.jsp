@@ -290,15 +290,9 @@
 <script>
 	var errorMsg2 = $F("errorMsg2");
 	if (!checkBlankNull(errorMsg2)) {
-		//alert(errorMsg2);
-		/* if (!checkBlankNull(errorMsg)){
-			alert(errorMsg);
-		}else */
 		if(errorMsg2 == 'Error: executeQueryForObject returned too many results.'){
-			//alert('Error. Search returned more than one results.');
 			showMessageBox('Error. Search returned more than one results.', "E");
 		}else{
-			//alert(errorMsg2);
 			showMessageBox(errorMsg2, "E");
 		}
 		$("btnPrintRenewal").disable();

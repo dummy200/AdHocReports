@@ -203,13 +203,9 @@
 	$("btnPrintReport").observe("click", function() {
 	if(compareDate($F("txtFromDate"),$F("txtToDate")))
 	{
-		//alert("Invalid Date.");
-		showMessageBox("\"From Date\" must be earlier from \"To Date\".",
-		"E");
+		showMessageBox("\"From Date\" must be earlier from \"To Date\".","E");
 	}else if (ifNotEmpty()){
-		//alert("Some fields are empty.");
-		showMessageBox("Some fields are empty.",
-		"I");
+		showMessageBox("Some fields are empty.","I");
 	}else
 		{
 			new Ajax.Request(

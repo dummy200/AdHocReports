@@ -94,7 +94,6 @@
 					hideNotice("");
 					var errorMsg2 = $F("errorMsg2");
 					var assuredName = $F("txtAssuredName");
-					//alert(errorMsg2);
 					if (checkBlankNull($F("errorMsg2"))){
 						$("btnPrintReport").enable();
 					}else

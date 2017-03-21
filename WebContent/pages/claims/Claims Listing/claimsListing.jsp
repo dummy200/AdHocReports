@@ -433,7 +433,6 @@
 				}else									//expense
 					reportName = 'CLM_ASOF_PER_OUTSTANDING_EXP_SUM';
 			}
-		//alert(reportType + ' ' + reportType2 + ' ' + lossExpenseType);
 		} 			
 	}
 	
@@ -672,7 +671,6 @@
 		var date1 = new Date(fromDate);
 		var date2 = new Date(toDate);
 		var isValid = false;
-		//alert(dateType);
 		if(dateType == 2){
 			if(checkBlankNull(fromDate)){
 				showMessageBox("\"From Date\" is required.","E");
