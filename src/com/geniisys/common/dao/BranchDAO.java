@@ -11,6 +11,7 @@ public interface BranchDAO {
 	List<Branch> getAllBranches();
 	List<Branch> getAllBranches2();
 	List<Branch> getAllBranchesByUserAndTranCd(Map<String,Object> params) throws SQLException;
+	List<Branch> getCashierBranchesByUserAndTranCd(Map<String,Object> params) throws SQLException;
 	String getAllBranches3();
 	List<CreditingEmail> fetchCredBranchEmail(String branchCd) throws SQLException;
 	void updateCreditingEmail(Map<String,Object> params) throws SQLException;

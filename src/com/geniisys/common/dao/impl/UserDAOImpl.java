@@ -80,5 +80,14 @@ public class UserDAOImpl implements UserDAO{
 		List<User> users = (List<User>) sqlMap.queryForList("getAllUsers");
 		return users;
 	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getCashierUsers() throws SQLException {
+		sqlMap = MyAppSqlConfig.getSqlMapInstance();
+		List<User> users = (List<User>) sqlMap.queryForList("getCashierUsers");
+		return users;
+	}
 	
 }

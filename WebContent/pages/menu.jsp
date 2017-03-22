@@ -3,7 +3,7 @@
 	<jsp:include page="/pages/userAccess.jsp"></jsp:include>
 </div>
 <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
-<%--<input type="hidden" id="adhocUser" name="adhocUser" value="CPIRALPH">--%>
+<!-- <input type="hidden" id="adhocUser" name="adhocUser" value="BADZ"> -->
 
 <script type="text/javascript">
 	//init user access
@@ -195,6 +195,8 @@
 								Dealers Report</a></li>
 						<li class="menuSeparator"></li>
 						<li><a id="batchGen" name="batchGen">Batch Generation</a></li>
+						<li><a id="gwpReport" name="gwpReport">GWP Report</a></li>
+						<li><a id="pamsCash" name="pamsCash">PAMS Cashier</a></li>
 					</ul></li>
 			</ul>
 		</div>
@@ -496,6 +498,8 @@
 
 		disableMenu('psBank');
 		disableMenu('pamsIssuance');
+		disableMenu('gwpReport');
+		//disableMenu('pamsCash');
 		//disableMenu('batchGen');
 	} else {
 		//check per module
@@ -521,5 +525,14 @@
 				"toyotaDealers",
 				"/ToyotaDealersController?action=toToyotaDealersPage",
 				"Toyota Dealers Report");
+		checkUserAccess2('GWPCPAIC', moduleIdObjLength, userModuleObj,
+				"gwpReport",
+				"/pages/underwriting/gwp/gwp.jsp", //"/GwpReportController?action=toGwpPage",
+				"GWP Report");
+		checkUserAccess2('PAMSCASH', moduleIdObjLength, userModuleObj,
+				"pamsCash",
+				"/PamsCashierController?action=toPamsCashierPage", //"/GwpReportController?action=toGwpPage",
+				"PAMS Cashier");
+
 	}
 </script>
