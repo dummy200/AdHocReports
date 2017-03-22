@@ -95,5 +95,4 @@ public class BranchServiceImpl implements BranchService {
 		List<Branch> branchCashierList = branchDAO.getCashierBranchesByUserAndTranCd(params);
 		return branchCashierList;
 	}
-
 }
