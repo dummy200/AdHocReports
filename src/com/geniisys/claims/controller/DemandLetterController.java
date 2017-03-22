@@ -47,7 +47,7 @@ public class DemandLetterController extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,6 +56,7 @@ public class DemandLetterController extends HttpServlet{
 		String demandLetterPage = "/pages/claims/Demand Letter/demandLetter.jsp";
 		String reportName = request.getParameter("reportName");
 		Integer letterType = 1;
+		String errorMsg = "";
 		
 		if (action.equals("checkClaimNo")){
 			DemandLetterService demandLetterService = new DemandLetterServiceImpl();
@@ -66,9 +67,32 @@ public class DemandLetterController extends HttpServlet{
 			Boolean reprintSecond = false;
 			
 			try {
-				demandLetterList =(List<DemandLetter>) demandLetterService.populateDemandLetterInfo(request); 
-				Integer listSize = demandLetterList.size();
-				
+				demandLetterList =(List<DemandLetter>) demandLetterService.populateDemandLetterInfo(request);
+				try{
+					Integer listSize = demandLetterList.size();
+					errorMsg = "";
+				}catch(NullPointerException e){
+					errorMsg = "No data found.";
+				}
+				if(!errorMsg.equals("No data found")){
+				Integer claimCount = (Integer) demandLetterService.checkClaimIdFromDBDemandLetter(request);
+				recoveryId = demandLetterList.get(0).getRecoveryId();
+				claimId = demandLetterList.get(0).getClaimId();
+				if(claimCount.equals(1) || claimCount.equals(2)){
+					letterType = 2;
+				}else
+					letterType = 0;
+				//check reprint
+				DemandLetterReprint firstLetter = new DemandLetterReprint();
+				firstLetter.setClaimId(claimId);
+				firstLetter.setDemandType("FIRST");
+				reprintFirst = (Boolean) demandLetterService.checkIfExistsInReprint(firstLetter);
+				DemandLetterReprint secondLetter = new DemandLetterReprint();
+				secondLetter.setClaimId(claimId);
+				secondLetter.setDemandType("SECOND");
+				reprintSecond = (Boolean) demandLetterService.checkIfExistsInReprint(secondLetter);
+				}
+				/*Integer listSize = demandLetterList.size();
 				if(listSize.equals(0)){
 					errorMsg = "No data found.";
 				}else{
@@ -89,7 +113,7 @@ public class DemandLetterController extends HttpServlet{
 					secondLetter.setClaimId(claimId);
 					secondLetter.setDemandType("SECOND");
 					reprintSecond = (Boolean) demandLetterService.checkIfExistsInReprint(secondLetter);
-				}
+				}*/
 				//System.out.println(demandLetterList.get(0).getClaimNo());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -167,7 +191,8 @@ public class DemandLetterController extends HttpServlet{
 				request.setAttribute("testUserEmail", userEmail);
 				
 				//redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(demandLetterPage);
+				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(demandLetterPage);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Demand Letter/hiddenDiv.jsp");
             	dispatcher.forward(request,response);
 			}
 		}
@@ -178,18 +203,26 @@ public class DemandLetterController extends HttpServlet{
 			Integer recoveryId = Integer.parseInt(request.getParameter("testRecoveryId"));
 			String userId = request.getParameter("testUserId");
 			String userEmail = request.getParameter("testUserEmail");
-			
+			String demandTypeVar = request.getParameter("letterType");
+			System.out.println("reportName: " + request.getParameter("reportName"));
+		
 			System.out.println(claimId + " " + recoveryId + " " + userId + " " + userEmail);
 			DemandLetterParameter params = new DemandLetterParameter(claimId, recoveryId, userId);
 			try {
 				sqlMap.startTransaction();
 				sqlMap.startBatch();
 				DemandLetterInsert insertDetails = (DemandLetterInsert) demandLetterService.fetchFirstReportDetails(params);
+				System.out.println("demands before: " + insertDetails.getDemands());
+				insertDetails.setDemands(demandTypeVar);
+				System.out.println("demands after: " + insertDetails.getDemands());
 				DemandLetterInsert secondInsertDetails = (DemandLetterInsert) demandLetterService.fetchSecondReportDetails(params);
+				System.out.println("demands before: " + secondInsertDetails.getDemands());
+				secondInsertDetails.setDemands(demandTypeVar);
+				System.out.println("demands after: " + secondInsertDetails.getDemands());
 				System.out.println("update demand letter table");
 				demandLetterService.insertIntoDBDemandLetter(insertDetails,claimId,reportName);
 				System.out.println("update reprint table");
-				demandLetterService.insertIntoDBDemandReprint(secondInsertDetails,claimId,reportName,userEmail);
+				demandLetterService.insertIntoDBDemandReprint(secondInsertDetails,insertDetails.getAmtWord1(),claimId,reportName,userEmail);
 				sqlMap.executeBatch();
 				sqlMap.commitTransaction();
 			} catch (SQLException e) {
@@ -206,6 +239,7 @@ public class DemandLetterController extends HttpServlet{
 					errorMsg = e.getMessage();
 				}
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Demand Letter/blank.jsp");
+				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Demand Letter/hiddenDiv.jsp");
 				dispatcher.forward(request,response);
 			}
 		}
@@ -213,6 +247,7 @@ public class DemandLetterController extends HttpServlet{
 		if(action.equalsIgnoreCase("reprintDemand")){
 			Integer claimId = Integer.parseInt(request.getParameter("claimId"));
 			System.out.println("claim id " + claimId);
+			System.out.println("reportName : " + request.getParameter("reportName") );
 					
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 			String dir = getServletContext().getInitParameter("REPORTS_DIR");
@@ -249,7 +284,8 @@ public class DemandLetterController extends HttpServlet{
 				request.setAttribute("reportUrl", outputPdf);
 				request.setAttribute("reportTitle", reportName);
 			
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(demandLetterPage);
+				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(demandLetterPage);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Demand Letter/hiddenDiv.jsp");
 				dispatcher.forward(request,response);
 			}
 		}

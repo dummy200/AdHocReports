@@ -22,6 +22,32 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		<result property="issCd" column="ISS_CD"/>
 		<result property="issName" column="ISS_NAME"/>		
 	</resultMap>
+	
+	<resultMap class="com.geniisys.common.entity.CreditingEmail" id="creditingEmailResultMap">
+		 <result property="credBranchCd" column="CRED_BRANCH_CD"/>	
+		<result property="emailAdd" column="EMAIL_ADD"/>
+		<result property="primarySw" column="PRIMARY_SW"/>
+	</resultMap>
+	
+	<select id="fetchCredBranchEmail" resultMap="creditingEmailResultMap" parameterClass="java.lang.String">
+		SELECT CRED_BRANCH_CD,EMAIL_ADD,DECODE(PRIMARY_SW,'Y','1','2')PRIMARY_SW FROM GIIS_CRED_BRANCH_EMAIL
+		WHERE CRED_BRANCH_CD = #value# ORDER BY 2
+	</select>
+	
+	<update id="updateCreditingEmail" parameterClass="java.util.HashMap">
+		UPDATE GIIS_CRED_BRANCH_EMAIL
+			SET EMAIL_ADD = #emailAdd#,
+                 PRIMARY_SW = DECODE(#primarySw#,'on','Y','')
+		WHERE TRIM(CRED_BRANCH_CD) = TRIM(#credBranchCd#)
+		AND UPPER(EMAIL_ADD) = UPPER(#oldEmail#)
+	</update>
+	
+	<insert id="insertCreditingEmail" parameterClass="java.util.HashMap">
+		INSERT INTO GIIS_CRED_BRANCH_EMAIL
+			(CRED_BRANCH_CD, EMAIL_ADD, PRIMARY_SW)
+			VALUES
+			(#credBranchCd#, #emailAdd#, DECODE(#primarySw#,'on','Y',''))
+	</insert>
 
 	<select id="getAllBranches" resultMap="branchResultMap">
 		SELECT DISTINCT(ISS_CD)
@@ -70,7 +96,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 					AND b.ISS_CD = a.ISS_CD
 					AND b.TRAN_CD = a.TRAN_CD
 					AND a.tran_cd = #tranCd#)
-		ORDER BY 1
+		ORDER BY 2
 	</select>
 	
 	<update id="updateGiisIssource" parameterMap="branchParameterMap">

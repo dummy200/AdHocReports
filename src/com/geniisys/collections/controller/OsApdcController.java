@@ -37,19 +37,20 @@ public class OsApdcController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		String redirectPage = "/OsApdcController?action=OsApdc";
 		String page = "/pages/collections/os apdc/OsApdc.jsp";
+		String errorMsg = "";
 		
 		if (action.equals("OsApdc")) {
 			BranchService branchService = new BranchServiceImpl();
 			AccountingEntryService accountingEntryService = new AccountingEntryServiceImpl();
 			try {
-				List<Branch> branches = (List<Branch>) branchService.getAllBranches();
+				List<Branch> branches = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
 				request.setAttribute("branches", branches);
 				
 				List<AccountingEntry> accountingEntry = (List<AccountingEntry>) accountingEntryService.getAllDate();
@@ -118,7 +119,7 @@ public class OsApdcController extends HttpServlet{
 				request.setAttribute("reportUrl", outputPdf);
 				request.setAttribute("reportTitle", reportName);
 				
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectPage);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/collections/os apdc/hiddenDiv.jsp");
             	dispatcher.forward(request,response);
 			}
 		}

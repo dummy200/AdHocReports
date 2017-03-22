@@ -17,10 +17,12 @@
 
 
 <!-- hidden fields -->
+
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
-<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
+<div id="hiddenDiv">
+<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
 <input type="hidden" id="reportName" name="reportName"
@@ -31,8 +33,8 @@
 	value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
-
 <input type="hidden" id="signatory" name="signatory" value="">
+</div>
 <!-- end hidden fields -->
 
 <br />
@@ -134,7 +136,7 @@
 								style="width: 65%;" value="" title="Loss Amount" disabled /></td>
 						</tr>
 						<tr>
-							<td class="rightAligned" style="width: 25%;">Deductible
+							<td class="rightAligned" style="width: 25%;">Policy Deductible
 								Amount</td>
 							<td class="leftAligned"><input id="txtDedAmt"
 								name="capsField" class="leftAligned" type="text"
@@ -146,13 +148,6 @@
 								name="capsField" class="leftAligned" type="text"
 								style="width: 65%;" value="" title="Net Payable" disabled /></td>
 						</tr>
-						<tr>
-						<td class="rightAligned" style="width: 25%;">Loss Amount</td>
-						<td class="leftAligned"><input id="txtLossAmt"
-							name="capsField" class="leftAligned" type="text"
-							style="width: 65%;" value=""
-							title="Loss Amount" disabled /></td>
-					</tr>
 					</table>
 				</div>
 			</div>
@@ -396,6 +391,7 @@
 </div>
 
 <script type="text/javascript">
+$("hiddenDiv").hide();
 makeInputFieldUpperCase();
 $("txtSublineCd").focus();
 $("btnPrint").disable();
@@ -685,8 +681,8 @@ function toggletxtOthers(){
 					if (compareDate($F("txtFromDate"),$F("txtToDate"))){
 						showMessageBox("\"From Date\" must be earlier from \"To Date\".", "E");
 					}else{
-						new Ajax.Updater(
-							"mainContents",
+						new Ajax.Request(
+							//"mainContents",
 							contextPath + "/TransmittalController",
 							{
 								evalScripts : true,
@@ -715,6 +711,7 @@ function toggletxtOthers(){
 									chkBox12 :  $("chkBox12").checked ? "Y" : "N",	
 									chkBox13 : $("chkBox13").checked ? "Y" : "N",
 									chkBox14 : $("chkBox14").checked ? "Y" : "N",
+									chkVoucher : $F("txtCheckVoucher2"),
 									chkBox15 : $("chkBox15").checked ? "Y" : "N",
 									chkBox15a : $("chkBox15").checked ? $F("txtFromDate") : "",
 									chkBox15b : $("chkBox15").checked ? $F("txtToDate") : "",
@@ -724,12 +721,13 @@ function toggletxtOthers(){
 									chkBox18 : $("chkBox18").checked ? "Y" :  "N",
 									chkBox19 : $("chkBox19").checked ? "Y" :  "N",
 									txtOthers : $("chkBox19").checked ? $F("txtOthers") :  "",
-									signatory : $F("signatory"),
+									signatory : $F("selSign"),
 									designation : $F("txtDesignation")
 								},
 								onCreate : showNotice("Generating report. Please wait..."),
 								onComplete : function(response) {
-									printOutputPdf();
+									//printOutputPdf();
+									$("hiddenDiv").update(response.responseText);
 									}});
 							}
 				}
@@ -763,8 +761,8 @@ function toggletxtOthers(){
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+					window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					hideNotice("");
 				}
 			});

@@ -14,4 +14,5 @@ public interface UserDAO {
 	List<String> fetchUserIssCdByTranCd(String userId,String tranCd) throws SQLException;
 	List<String> fetchUserModules(String userId) throws SQLException;
 	List<User> getAllUsers() throws SQLException;
+	List<User> getCashierUsers() throws SQLException;
 }

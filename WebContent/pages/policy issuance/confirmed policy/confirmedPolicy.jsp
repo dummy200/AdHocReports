@@ -207,6 +207,7 @@
 </div>
 
 <script type="text/javascript">
+	$("selDealers").disable();
 	$("hiddenDiv").hide();
 	var page = $F("page");
 	var reportName = 'CONFIRM_POL_REPORT';
@@ -248,11 +249,13 @@
 		toggleTP = 1;
 		if (toggleDealers == 1){
 			$('chkBoxDealers').checked = true;
+			$("selDealers").enable();
 			$("selLine").value = 'MC';
 			//$("txtLineName").value = 'MOTOR CAR';
 			toggleDealers = 2;
 		}else{
 			$('chkBoxDealers').checked = false;
+			$("selDealers").disable();
 			toggleDealers = 1;
 		}
 	}
@@ -314,6 +317,7 @@
 							var fromDate = $F("txtFromDate");
 							var toDate = $F("txtToDate");
 							var dealersCd = $F("txtDealers");
+							var userId = $F("userId");
 							if(dateType == 1){
 								
 							}
@@ -336,7 +340,8 @@
 											toDateAED :  $("rdoAccounting").checked ? toDate : "",
 											fromDateID : $("rdoIncept").checked ? fromDate : "",
 											toDateID :  $("rdoIncept").checked ? toDate : "",
-											dealersCd : dealersCd
+											dealersCd : dealersCd,
+											userId : userId
 										},
 										onCreate : showNotice("Generating report. Please wait..."),
 										onComplete : function(response) {

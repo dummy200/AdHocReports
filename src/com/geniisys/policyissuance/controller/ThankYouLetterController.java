@@ -43,7 +43,7 @@ public class ThankYouLetterController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -54,12 +54,14 @@ public class ThankYouLetterController extends HttpServlet {
 		String page2 = "/ThankYouLetterController?action=toThankYouPage";
 		String redirectPage = "/pages/policy issuance/thank you letter/infoDiv.jsp";
 		String reportName = request.getParameter("reportName");
+		String tranCd = "95";
+		String errorMsg = "";
 		
 		if (action.equals("toThankYouPage")) {
 			SignatoryService signatoryService = new SignatoryServiceImpl();
 			BranchService branchService = new BranchServiceImpl();
 			try {
-				List<Branch> branchList = (List<Branch>) branchService.getAllBranches();
+				List<Branch> branchList = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
 				List<Signatory> signatoryList = (List<Signatory>) signatoryService.getAllActiveSignatory();
 				request.setAttribute("signatoryList", signatoryList);
 				request.setAttribute("branchList", branchList);
@@ -116,6 +118,7 @@ public class ThankYouLetterController extends HttpServlet {
 			String toDate = request.getParameter("toDate");
 			String signatory = request.getParameter("signatory");
 			String designation = request.getParameter("designation");
+			String userId = request.getParameter("userId");
 
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 			String dir = getServletContext().getInitParameter("REPORTS_DIR");
@@ -130,6 +133,8 @@ public class ThankYouLetterController extends HttpServlet {
 			parameters.put("P_TO_DATE", toDate);
 			parameters.put("P_SIGNATORY", signatory);
 			parameters.put("P_DESIGNATION", designation);
+			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD",tranCd);
 
 			try {
 				Connection conn = ConnectionUtil.getConnection();
@@ -161,7 +166,7 @@ public class ThankYouLetterController extends HttpServlet {
 				request.setAttribute("reportTitle", reportName);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/policy issuance/thank you letter/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

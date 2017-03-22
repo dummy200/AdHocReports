@@ -210,7 +210,7 @@
 					<tr>
 						<td class="rightAligned" style="width: 25%;">Extract User</td>
 						<td class="leftAligned" colspan="5"><input id="batchTxtUser"
-							class="leftAligned" type="text" name="capsField"
+							class="leftAligned required" type="text" name="capsField"
 							style="width: 13%;" value="${adhocUser}" title="Extract User" maxlength="10" />
 						</td>
 						<!-- <td class="leftAligned" colspan="5"><input id="batchTxtUser"
@@ -271,6 +271,16 @@
 							class="leftAligned" type="text" name="capsField"
 							style="width: 50%;" value="" title="Contact Number 3"
 							maxlength="20" /></td>
+					</tr>
+					<tr>
+						<td></td>
+					<tr>
+					<tr>
+						<td class="rightAligned" style="width: 25%;"></td>
+						<td class="leftAligned" colspan="5">
+						<input type="checkbox" id="chkPdfSw"
+							name="chkPdfSw"> PDF Switch
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -404,7 +414,6 @@
 		if (isPolicyNoFieldsOk()) {
 			var userInput = "95 " +$F("txtLineCd") + " " + $F("txtIssCd").trim().toUpperCase();
 			if(!checkUserAccess(userInput,userAccessObj, userAccessObjLength)){
-				//alert("User has no access.");
 				showMessageBox("User has no access.", "I");
 			}else if(!/^\d+$/.test($F("txtIssueYy").trim())){
 				showMessageBox("Invalid Input. Issue Year must be number", "E");
@@ -432,18 +441,10 @@
 				onCreate : showNotice("Fetching Details. Please wait..."),
 				onComplete : function(response) {
 					hideNotice("");
-					/* var errorMsg2 = $F("errorMsg2");
-					var assuredName = $F("txtAssuredName");
-					if (checkBlankNull($F("errorMsg2"))) {
-						//$("btnPrintCert").enable();
-						$("btnPrintRenewal").enable();
-					} else
-						alert("No data found."); */
 				}
 			});
 			}
 		} else {
-			//alert("Please input required fields");
 			//showMessageBox("Please input required fields", "I");
 			//$("txtSublineCd").focus();
 		}
@@ -495,11 +496,11 @@
 			//return false;
 		}/*  else
 			isOk = true; */
-		if(renewNo == 0){
+		/* if(renewNo == 0){
 			isOk = false;
 			showMessageBox("Invalid Renew No", "E");
 			$("txtRenewNo").focus();
-		}
+		} */
 		
 		return isOk;
 	}
@@ -535,6 +536,7 @@
 			.observe(
 					"click",
 					function() {
+						var pdfSw = $("chkPdfSw").checked ? "Y" : "N";
 						//get contacts
 						var txtSales1 = $F("txtSales1").trim();
 						var txtSales2 = $F("txtSales2").trim();
@@ -546,7 +548,6 @@
 						
 						if (printOptionVal == "I") {
 							if (!isPolicyNoFieldsOk()) {
-								//alert("Please input required fields");
 								showMessageBox("Please input required fields", "I");
 							} else {
 								new Ajax.Request(
@@ -568,7 +569,8 @@
 												issCd : $F("txtIssCd").trim().toUpperCase(),
 												issueYY : $F("txtIssueYy").trim(),
 												polSeqNo : $F("txtPolSeqNo").trim(),
-												renewNo : $F("txtRenewNo").trim()
+												renewNo : $F("txtRenewNo").trim(),
+												pdfSw : pdfSw
 											},
 											onCreate : showNotice("Generating report. Please wait..."),
 											onComplete : function(response) {
@@ -580,11 +582,9 @@
 						} else if (printOptionVal == "B") {
 							if (compareDate($F("txtFromDate"),
 									$F("txtToDate"))){
-								//alert("\"From Date\" should be earlier from \"To Date\".");
 								showMessageBox("\"From Date\" should be earlier from \"To Date\".", "E");
 							}else{
 							if (!isBatchFieldsOk()) {
-								//alert("Please input required fields");
 								showMessageBox("Please input required fields", "I");
 							} else {
 								$("errorMsg").value = "";
@@ -606,7 +606,8 @@
 												lineCd : $F("batchTxtLineCd").trim().toUpperCase(),
 												sublineCd : $F("batchTxtSublineCd").trim().toUpperCase(),
 												issCd : $F("batchTxtIssCd").trim().toUpperCase(),
-												userId : $F("batchTxtUser").trim().toUpperCase()
+												userId : $F("batchTxtUser").trim().toUpperCase(),
+												pdfSw : pdfSw
 											},
 											onCreate : showNotice("Generating report. Please wait..."),
 											onComplete : function(response) {
@@ -628,7 +629,6 @@
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
 			hideNotice("");
-			//alert(errorMsg);
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath
@@ -642,8 +642,8 @@
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+					window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					hideNotice("");
 				}
 			});

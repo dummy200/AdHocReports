@@ -12,10 +12,13 @@
 </div>
 
 <!-- hidden fields -->
+<input type="hidden" id="userId" name="userId" value="${adhocUser}">
+<div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle" value="${reportTitle}">
 <input type="hidden" id="reportUrl" name="reportUrl" value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination" value="screen">
+</div>
 <!--  -->
 
 <br />
@@ -47,7 +50,7 @@
 				<td class="rightAligned" style="width: 25%;">
 					Line
 				</td>
-				<td class="leftAligned">
+				<!-- <td class="leftAligned">
 						<select name="SelLinecd"
 							id="SelLinecd" style="width: 250px;">
 							    <option value="">ALL LINES</option>
@@ -60,6 +63,14 @@
 								<option value="MH">MH - Marine Hull</option>
 								<option value="MN">MN - Marine Cargo</option>
 						</select>	
+				</td> -->
+				<td class="leftAligned"><select name="selLine" id="selLine"
+								style="width: 250px;">
+									<option value=""></option>
+									<c:forEach var="line" items="${ lineList }">
+										<option value="${line.lineCd}">${line.lineName}</option>
+									</c:forEach>
+							</select>
 				</td>
 			</tr>
 			<tr>	
@@ -149,6 +160,7 @@
 
 		</div>
 <script type="text/javascript">
+	$("hiddenDiv").hide();
 	makeAllInputFieldsUpperCase();
 	$("btnPrintReport").enable();
 	
@@ -191,17 +203,13 @@
 	$("btnPrintReport").observe("click", function() {
 	if(compareDate($F("txtFromDate"),$F("txtToDate")))
 	{
-		//alert("Invalid Date.");
-		showMessageBox("\"From Date\" must be earlier from \"To Date\".",
-		"E");
+		showMessageBox("\"From Date\" must be earlier from \"To Date\".","E");
 	}else if (ifNotEmpty()){
-		//alert("Some fields are empty.");
-		showMessageBox("Some fields are empty.",
-		"I");
+		showMessageBox("Some fields are empty.","I");
 	}else
 		{
-			new Ajax.Updater(
-					"mainContents",
+			new Ajax.Request(
+					//"mainContents",
 					contextPath
 							+ "/PsBankController",
 					{
@@ -217,14 +225,16 @@
 							totext : $F("txtTo"),
 							address1 :$F("txtAddress1"),
 							address2 :$F("txtAddress2"),
-							linecd : $F("SelLinecd"),
-							re :$F("txtRe")
+							lineCd : $F("selLine"),
+							re : $F("txtRe"),
+							userId : $F("userId")
 							
 						},
 						onCreate : showNotice("Generating report. Please wait..."),
 						onComplete : function(response) {
 							hideNotice("");
-							outputToPDF($F("reportUrl"), $F("reportTitle"), $F("errorMsg"));
+							//outputToPDF($F("reportUrl"), $F("reportTitle"), $F("errorMsg"));
+							$("hiddenDiv").update(response.responseText);
 						}
 					});
 	    }

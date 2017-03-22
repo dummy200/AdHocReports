@@ -14,6 +14,7 @@
 	var contextPath = "${pageContext.request.contextPath}";
 </script>
 <title>GENIISYS - General Insurance Information System - Home</title>
+<!-- load all js & css first... -->
 <jsp:include page="head.jsp"></jsp:include>
 <link id="commonCss"
 	href="${pageContext.request.contextPath}/css/theme_colors/common-darkblue.css"
@@ -50,16 +51,6 @@
 	
 		<div id="topDiv">
 			<div id="siteBanner">
-				<%-- <div id="siteBanner1" style="width: 100.2%;">
-					<div id="siteBanner2">
-						<img id="imgBanner"
-							src="${pageContext.request.contextPath}/images/misc/"
-							style="float: left; height: 70%; margin: 10px 0 20px 0; cursor: pointer;"
-							alt="" /> <img
-							src="${pageContext.request.contextPath}/images/banner/"
-							style="height: 60px; margin: 5px 0 0 35px; float: left;" alt=" " />
-					</div>
-				</div> --%>
 				<jsp:include page="/pages/top.jsp" />
 			</div>
 		</div>

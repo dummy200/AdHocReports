@@ -53,7 +53,7 @@ public class SOAperAssdIntmController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -62,7 +62,9 @@ public class SOAperAssdIntmController extends HttpServlet {
 		String action = request.getParameter("action");
 		String page = "/pages/collections/soa per assdIntm/soa.jsp";
 		String page2 = "/SOAperAssdIntmController?action=toSOAPage";
+		String tranCd = "94";
 		Gson gson = new Gson();
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toSOAPage")) {
@@ -140,6 +142,7 @@ public class SOAperAssdIntmController extends HttpServlet {
 			parameters.put("P_INTM_NO", intmNo);
 			parameters.put("P_ASSD_NO", assdNo);
 			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD", tranCd);
 
 			try {
 				System.out.println("converting report................");

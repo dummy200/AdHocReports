@@ -1,6 +1,7 @@
 package com.geniisys.underwriting.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.geniisys.common.entity.Branch;
+import com.geniisys.common.entity.CreditingEmail;
 import com.geniisys.common.entity.Line;
 import com.geniisys.common.entity.Subline;
 import com.geniisys.common.service.BranchService;
@@ -30,7 +32,7 @@ public class BatchGenerationController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -40,9 +42,11 @@ public class BatchGenerationController extends HttpServlet {
 		String action = request.getParameter("action");
 		String page = "/pages/underwriting/batch generation/batchGeneration.jsp";
 		String page2 = "/BatchGenerationController?action=toBatchGenerationPage";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toBatchGenerationPage")) {
+			System.out.println("toBatchGenerationPage");
 			BranchService branchService = new BranchServiceImpl();
 			LineService lineService = new LineServiceImpl();
 			TariffService tariffService = new TariffServiceImpl();
@@ -83,6 +87,49 @@ public class BatchGenerationController extends HttpServlet {
 			System.out.println(errorMsg);
 			request.setAttribute("errorMsg", errorMsg);
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+			dispatcher.forward(request, response);
+		}
+		
+		if(action.equals("getCreditingEmail")){
+			BranchService branchService = new BranchServiceImpl();
+			try {
+				List<CreditingEmail> credEmailList = branchService.fetchCredBranchEmail(request);
+				Integer credEmailCount = credEmailList.size();
+				request.setAttribute("credEmailList", credEmailList);
+				request.setAttribute("credEmailCount", credEmailCount);
+				request.setAttribute("branchCode", request.getParameter("branchCode"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+				errorMsg = e.getMessage();
+			}
+			
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/underwriting/batch generation/credEmailResult.jsp");
+			dispatcher.forward(request, response);
+		}
+		
+		if(action.equals("updateCreditingEmail")){
+			BranchService branchService = new BranchServiceImpl();
+			try {
+					branchService.updateCreditingEmail(request);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				errorMsg = e.getMessage();
+			}
+			
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/BatchGenerationController?action=toBatchGenerationPage");
+			dispatcher.forward(request, response);
+		}
+		
+		if(action.equals("insertCreditingEmail")){
+			BranchService branchService = new BranchServiceImpl();
+			try {
+					branchService.insertCreditingEmail(request);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				errorMsg = e.getMessage();
+			}
+			
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/BatchGenerationController?action=toBatchGenerationPage");
 			dispatcher.forward(request, response);
 		}
 	}

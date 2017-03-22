@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	
 <script>
 var gridSubline;
 </script>
@@ -81,15 +82,27 @@ var gridSubline;
 	<div id="bottomCheckBox">
 		<table>
 			<tr>
-				<td style="float: right; margin-left: 300px;">
-					All Issue Source: <input type="checkbox" id="checkIntm" name="checkIntm" value="">
+				<td><input type="button" class="button" style="width: 150px;"
+							id="btnEmail" value="Crediting Branch Email"></td>
+				<td colspan = "5" style="width:150px;">
+				&nbsp;
 				</td>
-				<td rowspan="2">
+				<td>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All Issue Source: <input type="checkbox" id="checkIntm" name="checkIntm" value="">
+				</td>
+				<td style="width:50px;">
+				&nbsp;
+				</td>
+				<td>
 					All Tariff: <input type="checkbox" id="checkTariff" name="checkTariff" value="">
 				</td>
 			</tr>
 			<tr>
-				<td style="float: right; margin-left: 300px;">
+				<td style="width: 100px;"></td>
+				<td colspan = "5" style="width:100px;">
+				&nbsp;
+				</td>
+				<td>
 					All Crediting Branch: <input type="checkbox" id="checkCred" name="checkCred" value="">
 				</td>
 			</tr>
@@ -107,28 +120,19 @@ var gridSubline;
 				</div>
 	</div>
 </div>
+<div id="credEmailResultDiv">
+<input type="text" id="credEmailList" name="credEmailList" value="${credEmailList}">
+<input type="text" id="branchCode" name="branchCode" value="${branchCode}">
+<input type="text" id="credEmailCount" name="credEmailCount" value="${credEmailCount}">
+</div>
 
 <script type="text/javascript">
-
+$("credEmailResultDiv").hide();
 var gridBranch, gridTariff;
 var linCdList = $F("lineCdList");
-var sublineCdList = $("sublineCdList");
+var sublineCdList = $F("sublineCdList");
 var branchList = $F("branchList");
 var tariffList = $F("tariffList");
-/* var data={ rows: [
-	          { id:1, data: ["HO", "John Grisham",false,true]},
-	          { id:2, data: ["HO", "Stephen King",false,true]},
-	          { id:3, data: ["HO", "John Grisham",false,true]},
-	          { id:4, data: ["HO", "Stephen King",false,true]},
-	          { id:5, data: ["HO", "John Grisham",false,true]},
-	          { id:6, data: ["HO", "Stephen King",false,true]},
-	          { id:7, data: ["HO", "John Grisham",false,true]},
-	          { id:8, data: ["HO", "Stephen King",false,true]},
-	          { id:9, data: ["HO", "John Grisham",false,true]},
-	          { id:10, data: ["HO", "Stephen King",false,true]},
-	          { id:11, data: ["HO", "John Grisham",false,true]}
-	      ]
-	  };  */
 	  
 	var imgPath = contextPath + '/css/codebase/imgs/';
 	gridBranch = new dhtmlXGridObject('gridbox3');
@@ -150,22 +154,6 @@ var tariffList = $F("tariffList");
 	gridTariff.setColSorting("str,str,str");
 	gridTariff.init();
 	gridTariff.parse(tariffList,"json");
-	
-/* 	gridTariff = new dhtmlXGridObject('gridbox4');
-	gridTariff.selMultiRows = true;
-	gridTariff.setImagePath(imgPath);
-	gridTariff.setHeader("Tariff Code, Tariff Name, PDF");
-	gridTariff.setInitWidths("100,*,30");
-	gridTariff.setColAlign("left,left,left");
-	gridTariff.setColTypes("ro,ro,ch");
-	gridTariff.setColSorting("str,str,str");
-	
-	gridTariff.enablePaging(true,10,3,"recinfoArea");
-	gridTariff.setPagingSkin("toolbar");
-	gridTariff.enableAutoWidth(true);
-	gridTariff.enableAutoHeight(true);
-	gridTariff.init();
-	gridTariff.parse(tariffList,"json"); */
 
 	var all = gridBranch.getAllItemIds();
 	
@@ -183,17 +171,37 @@ var tariffList = $F("tariffList");
 						"Please wait.....", "Home");
 			});
 	
-	/* $("btnCheckAllIntm").observe("click",function(){
-		for (var i=0; i<gridBranch.getRowsNum(); i++){
-			gridBranch.cellById(i+1,2).setValue("1");
+	$("btnEmail").observe("click",function(){
+		if(!checkBlankNull(gridBranch.cellById(gridBranch.getSelectedRowId(), 0).getValue())){
+			var branchCode = gridBranch.cellById(gridBranch.getSelectedRowId(), 0).getValue();
+			//showMessageBox("<input type='text'>","I");
+			//testDialog.show();
+			//testttttttt dialog
+			fetchCredBranchEmail(branchCode);
+			//showCreditingBranchModal(branchCode);
 		}
 	});
 	
-	$("btnUncheckAllIntm").observe("click",function(){
-		for (var i=0; i<gridBranch.getRowsNum(); i++){
-			gridBranch.cellById(i+1,2).setValue("0");
-		}
-	}); */
+	function fetchCredBranchEmail(branchCode){
+		new Ajax.Request(
+				contextPath + "/BatchGenerationController",
+				{
+					evalScripts : true,
+					method : "POST",
+					parameters : {
+						action : "getCreditingEmail",
+						branchCode : branchCode
+					},
+					onCreate : showNotice("Please wait..."),
+					onComplete : function(response) {
+						hideNotice("");
+						$("credEmailResultDiv").update(response.responseText);
+						//showCreditingBranchModal(branchCode);
+					}
+				});
+	}
+	
+	
 	
 	//manage checkboxes
 	var isCheckedIntm = 1;
@@ -361,8 +369,8 @@ var tariffList = $F("tariffList");
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+					window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					hideNotice("");
 				}
 			});

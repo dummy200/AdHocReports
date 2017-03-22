@@ -40,4 +40,19 @@ private SqlMapClient sqlMap;
 		}
 		return sublineList;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Subline> getAllSubline(String lineCd) throws SQLException {
+		List<Subline> sublineList = null;
+		sqlMap = MyAppSqlConfig.getSqlMapInstance();
+		try {
+			sublineList =  sqlMap.queryForList("getAllSubline",lineCd);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return sublineList;
+	}
 }

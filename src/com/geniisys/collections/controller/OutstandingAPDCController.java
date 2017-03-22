@@ -38,7 +38,7 @@ public class OutstandingAPDCController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -48,6 +48,8 @@ public class OutstandingAPDCController extends HttpServlet {
 		String page = "/pages/collections/outstanding apdc/outstandingAPDC.jsp";
 		String page2 = "/OutstandingAPDCController?action=toOutstandingAPDCPage";
 		String reportName = request.getParameter("reportName");
+		String tranCd = "94";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toOutstandingAPDCPage")) {
@@ -81,7 +83,8 @@ public class OutstandingAPDCController extends HttpServlet {
 			parameters.put("P_TO_DATE", toDate);
 			parameters.put("P_BRANCH", branchCd);
 			parameters.put("P_USER_ID", userId);
-
+			parameters.put("P_TRAN_CD", tranCd);
+			
 			try {
 				Connection conn = ConnectionUtil.getConnection();
 				JasperPrint print = JasperFillManager.fillReport(fileName, parameters, conn);

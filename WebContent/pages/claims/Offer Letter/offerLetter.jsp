@@ -1,9 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!-- datepicker -->
-
-<!--  -->
-<script>
-</script>
 
 <div id="printOfferLetterMenu">
 	<div id="mainNav" name="mainNav">
@@ -21,10 +16,7 @@
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
-<%-- <input type="hidden" id="reportTitle" name="reportTitle"
-	value="${reportTitle}">
-<input type="hidden" id="reportName" name="reportName"
-	value="${reportName}"> --%>
+<div id="hiddenDiv">
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="FCLTOTOFFR">
 <input type="hidden" id="reportName" name="reportName"
@@ -36,6 +28,7 @@
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
 <input type="hidden" id="signatory" name="signatory" value="">
+</div>
 <!-- end hidden fields -->
 
 <br />
@@ -44,10 +37,6 @@
 	<div id="innerDiv" name="outerDiv">
 		<label id="pageTitle">Motor Car - Offer Letter (Total
 			Loss/Carnap)</label>
-		<!--  <span class="refreshers"
-			style="margin-top: 0;"> <label id="reloadForm"
-			name="reloadForm" title="Reload Form">Reload Form</label>
-		</span> -->
 	</div>
 </div>
 <div id="offerLetterDetailsDiv">
@@ -142,7 +131,7 @@
 							style="width: 65%;" value=""
 							title="Insured Unit" disabled /></td>
 					</tr>
-					<tr>
+					<tr>  
 						<td class="rightAligned" style="width: 25%;">Loss Amount</td>
 						<td class="leftAligned"><input id="txtLossAmt"
 							name="capsField" class="leftAligned" type="text"
@@ -150,7 +139,7 @@
 							title="Loss Amount" disabled /></td>
 					</tr>
 					<tr>
-						<td class="rightAligned" style="width: 25%;">Deductible Amount</td>
+						<td class="rightAligned" style="width: 25%;">Policy Deductible</td>
 						<td class="leftAligned"><input id="txtDedAmt"
 							name="capsField" class="leftAligned" type="text"
 							style="width: 65%;" value=""
@@ -397,6 +386,7 @@
 </div>
 
 <script type="text/javascript">
+	$("hiddenDiv").hide();
 	makeInputFieldUpperCase();
 	$("txtSublineCd").focus();
 	$("btnPrint").disable();
@@ -680,8 +670,8 @@
 					if (compareDate($F("txtFromDate"),$F("txtToDate"))){
 						showMessageBox("\"From Date\" must be earlier from \"To Date\".", "E");
 					}else{
-						new Ajax.Updater(
-							"mainContents",
+						new Ajax.Request(
+							//"mainContents",
 							contextPath + "/OfferLetterController",
 							{
 								evalScripts : true,
@@ -718,12 +708,13 @@
 									chkBox17 : $("chkBox17").checked ? "Y" : "N",			
 									chkBox18 : $("chkBox18").checked ? "Y" :  "N",
 									txtOthers : $("chkBox18").checked ? $F("txtOthers") :  "",
-									signatory : $F("signatory"),
+									signatory : $F("selSign"),
 									designation : $F("txtDesignation")
 								},
 								onCreate : showNotice("Generating report. Please wait..."),
 								onComplete : function(response) {
-									printOutputPdf();
+									//printOutputPdf();
+									$("hiddenDiv").update(response.responseText);
 									}
 								});
 							}
@@ -750,8 +741,8 @@
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+					window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					//show excel try
 					//window.open(contextPath + "/OutputController?action=showExcel&reportXls=" + reportXls);
 					hideNotice("");

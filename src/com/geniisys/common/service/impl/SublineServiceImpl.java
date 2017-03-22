@@ -1,5 +1,6 @@
 package com.geniisys.common.service.impl;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,5 +23,11 @@ public class SublineServiceImpl implements SublineService{
 	public String getAllSublineForDataGrid(HttpServletRequest request) {
 		String lineCd = request.getParameter("lineCd");
 		return this.sublineDAO.getAllSublineForDataGrid(lineCd);
+	}
+
+	@Override
+	public List<Subline> getAllSubline(HttpServletRequest request) throws SQLException {
+		String lineCd = request.getParameter("lineCd");
+		return this.sublineDAO.getAllSubline(lineCd);
 	}
 }

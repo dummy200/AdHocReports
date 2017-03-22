@@ -17,7 +17,8 @@ gridIntm = new dhtmlXGridObject('gridIntermediaryResult');
 gridIntm.setImagePath(contextPath + '/css/codebase/imgs/');
 //gridIntm.setHeader("Intm No., Intm Type, Intermediary Name");
 //gridIntm.setHeader("&nbsp;,&nbsp;,&nbsp;");
-if(filterGridBy == 'DL'){
+//if(filterGridBy == 'DL'){
+if(reportName == 'DEALERS_PROD_REP'){
 	gridIntm.setHeader("Intm No.,Intm Type, Intermediary Name");
 }else{
 gridIntm.setHeader("Intm No.,#combo_filter, Intermediary Name");
@@ -28,7 +29,10 @@ gridIntm.setColTypes("ro,ro,ro");
 gridIntm.setColSorting("str,str,str");
 gridIntm.init();
 gridIntm.parse(intmList,"json");
-gridIntm.filterBy(1,filterGridBy);
+if(reportName == 'DEALERS_PROD_REP'){
+			gridIntm.filterBy(1,'DL');
+		}
+//gridIntm.filterBy(1,filterGridBy);
 gridIntm.attachEvent("onRowSelect", function(id,ind){
 	intermediaryNo = gridIntm.cells(id, 0).getValue();
 	$("txtIntermediaryNo").value = gridIntm.cells(id, 0).getValue();

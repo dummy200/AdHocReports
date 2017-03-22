@@ -32,7 +32,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 		parameterClass="java.lang.String">
 		SELECT LINE_CD,SUBLINE_CD,SUBLINE_NAME
 		FROM GIIS_SUBLINE
-		WHERE LINE_CD = NVL(#value#,LINE_CD)
+		WHERE LINE_CD = #value#
 		ORDER BY 3
 	</select>
 

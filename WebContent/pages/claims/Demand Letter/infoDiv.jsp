@@ -6,6 +6,13 @@
 <input type="hidden" id="recoveryId" name="recoveryId" value="${recoveryId}">
 <input type="hidden" id="reprintFirst" name="reprintFirst" value="${reprintFirst}">
 <input type="hidden" id="reprintSecond" name="reprintSecond" value="${reprintSecond}">
+<input type="hidden" id="testClaimId" name="testClaimId" value="${testClaimId}">
+<input type="hidden" id="testRecoveryId" name="testRecoveryId" value="${testRecoveryId}">
+<input type="hidden" id="testUserId" name="testUserId" value="${testUserId}">
+<input type="hidden" id="testUserEmail" name="testUserEmail" value="${testUserEmail}">
+<input type="hidden" id="page" name="page" value="${page}">
+<input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
+<input type="hidden" id="userId" name= "userId" value = "${adhocUser}">
 <table style="margin-top: 10px; width: 100%;">
 			<c:choose>
 				<c:when test="${errorMsg == '' }">
@@ -75,16 +82,12 @@
 <script>
 	 var errorMsg2 = $F("errorMsg2");
 	 var letterType = $F("letterType");
+	 var reprintFirst = $F("reprintFirst");
+	 var reprintSecond = $F("reprintSecond");
 	if (!checkBlankNull(errorMsg2)) {
-		//alert(errorMsg2);
-		/* if (checkBlankNull(errorMsg)){
-			alert(errorMsg);
-		}else{ */
 			if(errorMsg2 == 'Error: executeQueryForObject returned too many results.'){
-				//alert('Error. Search returned more than one results.');
 				showMessageBox('Error. Search returned more than one results.', "E");
 			}else{
-				//alert(errorMsg2);
 				showMessageBox(errorMsg2, "E");
 			}
 		/* } */
@@ -97,7 +100,7 @@
 	}else
 		$("rdoSecond").disable();
 	
-	if($F("reprintFirst") == 'true' || $("reprintSecond"))
+	if($F("reprintFirst") == 'true' || $F("reprintSecond")== 'true' )
 		$("btnReprint").enable();
 
 	function checkBlankNull(str) {

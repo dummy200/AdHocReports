@@ -19,5 +19,5 @@ function goToModule(div,url,loadingMsg,title){
 			});
 			setDocumentTitle(title);
 		}
-	})
+	});
 }

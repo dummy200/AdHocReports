@@ -31,7 +31,7 @@ public class ReceiptedDollarAcctController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -40,7 +40,8 @@ public class ReceiptedDollarAcctController extends HttpServlet {
 		String action = request.getParameter("action");
 		String page = "/pages/collections/dollar/receiptedDollarAcct.jsp";
 		String reportName = "DOLLAR_RECEIPT_REP";
-
+		String errorMsg = "";
+		
 		if (action.equals("printReport")) {
 			//params
 			

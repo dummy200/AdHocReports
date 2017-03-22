@@ -38,7 +38,7 @@ public class SoaOrixExtController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -48,6 +48,8 @@ public class SoaOrixExtController extends HttpServlet {
 		String action = request.getParameter("action");
 		String page = "/pages/collections/soa orix ext/SoaOrixExt.jsp";
 		String page2 = "/SoaOrixExtController?action=OrixSoaExt";
+		String tranCd = "94";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("OrixSoaExt")) {
@@ -80,6 +82,7 @@ public class SoaOrixExtController extends HttpServlet {
 			String toDate = request.getParameter("toDate");
 			String asofDate = request.getParameter("asofDate");
 			String branch = request.getParameter("branch");
+			String userId = request.getParameter("userId");
 
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 			String dir = getServletContext().getInitParameter("REPORTS_DIR");
@@ -87,10 +90,12 @@ public class SoaOrixExtController extends HttpServlet {
 			String outputXls = getServletContext().getInitParameter("GENERATED_REPORTS_DIR") + reportName + ".xls";
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
 
-			parameters.put("P_SUBLINE", branch);
+			parameters.put("P_BRANCH_CD", branch);
 			parameters.put("P_FROM", fromDate);
 			parameters.put("P_ASOF", asofDate);
 			parameters.put("P_TO", toDate);
+			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD",tranCd);
 
 			System.out.println(asofDate);
 

@@ -16,6 +16,8 @@
 <!-- hidden fields -->
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
+<input type="hidden" id="userId" name="userId" value="${adhocUser}">
+<div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
@@ -27,6 +29,7 @@
 	value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
+</div>
 <input type="hidden" id="notedBySign" value=""> 
 <input type="hidden" id="notedByDesig" value="">
 <input type="hidden"id="sign" value=""> 
@@ -150,7 +153,7 @@
 							id="selNotedBy" style="width: 250px;">
 								<option value=""></option>
 								<c:forEach var="sign" items="${ signatoryList }">
-									<option>${sign.signatory}</option>
+									<option value="${sign.signatoryId}">${sign.signatory}</option>
 								</c:forEach>
 						</select></td>
 					</tr>
@@ -160,7 +163,7 @@
 							id="selSignatory" style="width: 250px;">
 								<option value=""></option>
 								<c:forEach var="sign" items="${ signatoryList }">
-									<option>${sign.signatory}</option>
+									<option value="${sign.signatoryId}">${sign.signatory}</option>
 								</c:forEach>
 						</select></td>
 					</tr>
@@ -259,7 +262,7 @@
 	var sign ='';
 	var desig = '';
 	for (var i = 0; i < signatoryId.length; i++) {
-	if (selected == signatory[i]) {
+	if (selected == signatoryId[i]) {
 		sign = signatory[i];
 		desig = designation[i];
 	}
@@ -275,7 +278,6 @@
 						if (isPolicyNoFieldsOk()) {
 							var userInput = "95 " +$F("txtLineCd") + " " + $F("txtIssCd").trim().toUpperCase();
 							if(!checkUserAccess(userInput,userAccessObj, userAccessObjLength)){
-								//alert("User has no access.");
 								showMessageBox("User has no access.", "E");
 							}else if(!/^\d+$/.test($F("txtIssueYy").trim())){
 								showMessageBox("Invalid Input. Issue Year must be number", "E");
@@ -299,16 +301,31 @@
 											issCd : $F("txtIssCd").trim().toUpperCase(),
 											issueYY : $F("txtIssueYy").trim(),
 											polSeqNo : $F("txtPolSeqNo").trim(),
-											renewNo : $F("txtRenewNo").trim()
+											renewNo : $F("txtRenewNo").trim(),
+											userId : $F("userId")
 										},
 										onCreate : showNotice("Fetching Details. Please wait..."),
 										onComplete : function(response) {
 											hideNotice("");
+											var errorMsg2 = $F("errorMsg2");
+											if($F("txtLineCd").trim().toUpperCase()=='FI' && checkBlankNull(errorMsg2)){
+												//getNotedBy(selected,"notedBySign","notedByDesig");
+												$("selNotedBy").value = '17';
+												getNotedBy($("selNotedBy").getValue(),"notedBySign","notedByDesig");
+												$("selSignatory").value = '80';
+												getNotedBy($("selSignatory").getValue(),"sign","desig");
+												$("selNotedBy").disable();
+												$("selSignatory").disable();
+											}else{
+												$("selNotedBy").enable();
+												$("selSignatory").enable();
+												$("selNotedBy").value = '';
+												$("selSignatory").value = '';
+											}
 										}
 									});
 							}
 						} else {
-							//alert("Please input required fields");
 							showMessageBox("Please input required fields", "I");
 						}
 						$("txtSublineCd").focus();
@@ -337,7 +354,6 @@
 					"click",
 					function() {
 							if (!isPolicyNoFieldsOk()) {
-								//alert("Please input required fields");
 								showMessageBox("Please input required fields", "I");
 							} else {
 								var reason1 = $F("reason1");
@@ -355,8 +371,8 @@
 									reason3 = $F("txtOtherReasons");
 								}else
 									reason3 = '';
-								new Ajax.Updater(
-										"mainContents",
+								new Ajax.Request(
+										//"mainContents",
 										contextPath + "/NonRenewalController",
 										{
 											evalScripts : true,
@@ -381,7 +397,8 @@
 											},
 											onCreate : showNotice("Generating report. Please wait..."),
 											onComplete : function(response) {
-												printOutputPdf();
+												//printOutputPdf();
+												$("hiddenDiv").update(response.responseText);
 											}
 										});
 							}
@@ -407,7 +424,6 @@
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
 			hideNotice("");
-			//alert(errorMsg);
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath
@@ -421,8 +437,8 @@
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+					window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					hideNotice("");
 				}
 			});

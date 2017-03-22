@@ -7,14 +7,3 @@
 		</div>
 	</div>
 </div>
-<script>
-/*
-new Effect.Opacity("bannerAdHocReports", {
-	duration : 0.6,
-	to : 1
-});	
-
-*/
-
-</script>
-

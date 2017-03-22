@@ -19,7 +19,7 @@ public class InquiryMetrobankController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -28,7 +28,8 @@ public class InquiryMetrobankController extends HttpServlet {
 		String action = request.getParameter("action");
 		String page = "/pages/collections/inquiry metrobank/inquiryMetrobank.jsp";
 		String page2 = "/pages/collections/inquiry metrobank/infoDiv.jsp";
-
+		String errorMsg = "";
+		
 		if (action.equals("getEmployee")) {
 			EmployeeService employeeService = new EmployeeServiceImpl();
 			Employee employee = null;

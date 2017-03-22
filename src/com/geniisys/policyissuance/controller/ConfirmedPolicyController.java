@@ -53,7 +53,7 @@ public class ConfirmedPolicyController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -63,6 +63,8 @@ public class ConfirmedPolicyController extends HttpServlet {
 		String page = "/pages/policy issuance/confirmed policy/confirmedPolicy.jsp";
 		String page2 = "/ConfirmedPolicyController?action=toConfirmedPolicyPage";
 		String reportName = request.getParameter("reportName");
+		String tranCd = "95";
+		String errorMsg = "";
 
 		if (action.equals("toConfirmedPolicyPage")) {
 			LineService lineService = new LineServiceImpl();
@@ -101,7 +103,8 @@ public class ConfirmedPolicyController extends HttpServlet {
 			String fromDatePSD = request.getParameter("fromDatePSD");
 			String toDatePSD = request.getParameter("toDatePSD");
 			String dealersCd = request.getParameter("dealersCd");
-
+			String userId = request.getParameter("userId");
+			
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 			String dir = getServletContext().getInitParameter("REPORTS_DIR");
 			String pdfDir = getServletContext().getRealPath("");
@@ -120,6 +123,8 @@ public class ConfirmedPolicyController extends HttpServlet {
 			parameters.put("P_FROM_DATE_PSD", fromDatePSD);
 			parameters.put("P_TO_DATE_PSD", toDatePSD);
 			parameters.put("P_DEALER", dealersCd);
+			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD", tranCd);
 
 			try {
 				System.out.println("converting report................");

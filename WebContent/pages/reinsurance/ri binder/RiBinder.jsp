@@ -12,20 +12,19 @@
 </div>
 
 <!-- hidden fields -->
+<div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="reportTitle" name="reportTitle" value="${reportTitle}">
 <input type="hidden" id="reportUrl" name="reportUrl" value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination" value="screen">
 <!--  -->
+</div>
 
 <br />
 <br />
 <div id ="outerDiv" name="outerDiv">
 	<div id ="innerDiv" name="outerDiv">
 		<label id="pageTitle">Ri Binder</label>
-		<span class="refreshers" style="margin-top: 0;">
-			<label id="reloadForm" name="reloadForm" title="Reload Form">Reload Form</label>
-		</span>
 	</div>
 </div>
 <div id="otherBondDetailsDiv">
@@ -66,11 +65,16 @@
 </div>
 
 <script type="text/javascript">
+	$("hiddenDiv").hide();
 	makeAllInputFieldsUpperCase();
 	$("txtLineCd").focus();
 	$("btnPrintReport").disable();
 	$("searchForPolicy").observe("click", function(){
 		if (isPolicyNoFieldsOk()){
+			var userInput = "96 " + $F("txtLineCd").trim().toUpperCase() + " "
+			+ $F("txtIssCd").trim().toUpperCase();
+			if (!checkUserAccess(userInput, userAccessObj,
+					userAccessObjLength)) {showMessageBox("User has no access.", "E");}else{
 			new Ajax.Updater('infoOtherBondDoc', contextPath
 					+ '/OutputController', {
 				evalScripts : true,
@@ -90,13 +94,13 @@
 					hideNotice("");
 					var errorMsg2 = $F("errorMsg2");
 					var assuredName = $F("txtAssuredName");
-					//alert(errorMsg2);
 					if (checkBlankNull($F("errorMsg2"))){
 						$("btnPrintReport").enable();
 					}else
 						showMessageBox("No data found.","E");
 				}
 				});
+				}
 		} else {
 			showMessageBox("Please input required fields","I");
 			$("txtSublineCd").focus();	
@@ -127,8 +131,8 @@
 		if (!isPolicyNoFieldsOk()) {
 			showMessageBox("Please input required fields","I");
 		} else {
-			new Ajax.Updater(
-					"mainContents",
+			new Ajax.Request(
+					//"mainContents",
 					contextPath
 							+ "/RiBinderController",
 					{
@@ -148,7 +152,8 @@
 						onCreate : showNotice("Generating report. Please wait..."),
 						onComplete : function(response) {
 							hideNotice("");
-							outputToPDF($F("reportUrl"), $F("reportTitle"), $F("errorMsg"));
+							$("hiddenDiv").update(response.responseText);
+							//outputToPDF($F("reportUrl"), $F("reportTitle"), $F("errorMsg"));
 						}
 					});
 		}

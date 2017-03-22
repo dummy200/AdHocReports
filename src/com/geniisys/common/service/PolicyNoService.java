@@ -10,4 +10,6 @@ public interface PolicyNoService {
 	Integer getPolicyId(HttpServletRequest request) throws SQLException;
 	Integer getPolicyIdNonRenew(HttpServletRequest request) throws SQLException;
 	Integer getPolicyIdRenew(HttpServletRequest request) throws SQLException;
+	Integer getResultPolicyIdRenewal(Integer policyId,String tranCd,HttpServletRequest request) throws SQLException;
+	Integer getPolicyIdNonRenewByUserId(HttpServletRequest request) throws SQLException;
 }

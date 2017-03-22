@@ -13,4 +13,6 @@ public interface Gipi_PolbasicService {
 	String getBondDtl(Integer policyID) throws SQLException;
 	Integer fetchPolicyId(HttpServletRequest request) throws SQLException;
 	Integer fetchTpPolicyId(HttpServletRequest request) throws SQLException;
+	Integer fetchClgPolicyId(HttpServletRequest request) throws SQLException;
+	Integer fetchRegPolicyId(HttpServletRequest request) throws SQLException;
 }

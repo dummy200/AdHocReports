@@ -15,13 +15,47 @@ function checkUserAccess2(id, length, obj,menu,func,title){
 		var userAcc = obj.userModuleId[i];
 		if (id == userAcc) {
 			isExists = true;
-			enableMenu(menu);
-			goToPage(menu,func,"Please wait.....",title);
+			/*enableMenu(menu);
+			if(menu=='checkRequest'){
+				$(menu).observe("click", function() {
+				new Ajax.Request(//"blankDiv1",
+						contextPath + func,{
+					method:"GET",
+					evalScripts:true,
+					asynchronous: true,
+					onCreate: showNotice("Please wait....."),
+					onComplete: function (response) {
+						hideNotice("");
+						$("blankDiv1").update(response.responseText);
+					}
+				});
+				});
+			}else
+				goToPage(menu,func,"Please wait.....",title);*/
 		}	
 	}
 	if(!isExists){
 		disableMenu(menu);
+	}else{
+		enableMenu(menu);
+		if(menu=='checkRequest'){
+			$(menu).observe("click", function() {
+			new Ajax.Request(//"blankDiv1",
+					contextPath + func,{
+				method:"GET",
+				evalScripts:true,
+				asynchronous: true,
+				onCreate: showNotice("Please wait....."),
+				onComplete: function (response) {
+					hideNotice("");
+					$("blankDiv1").update(response.responseText);
+				}
+			});
+			});
+		}else
+			goToPage(menu,func,"Please wait.....",title);
 	}
+	
 }
 
 /*function checkUserAccess3(id, length, obj,menu,func,title){
@@ -57,6 +91,7 @@ function checkUserLineCd(lineCd, objLength, lineCdObj) {
 		var userAcc = lineCdObj.userLineCd[i];
 		if (lineCd == userAcc) {
 			isExists = true;
+			break;
 		}
 	}
 	return isExists;

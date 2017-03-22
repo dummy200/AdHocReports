@@ -73,7 +73,7 @@
 							title="Loss Amount" disabled /></td>
 					</tr>
 					<tr>
-						<td class="rightAligned" style="width: 25%;">Deductible Amount</td>
+						<td class="rightAligned" style="width: 25%;">Policy Deductible</td>
 						<td class="leftAligned"><input id="txtDedAmt"
 							name="capsField" class="leftAligned" type="text"
 							style="width: 65%;" value="${transmittal.dedAmt}"
@@ -84,7 +84,9 @@
 						<td class="leftAligned"><input id="txtNetTotal"
 							name="capsField" class="leftAligned" type="text"
 							style="width: 65%;" value="${transmittal.netTotal}"
-							title="Net Payable" disabled /></td>
+							title="Net Payable" disabled />
+							<%-- <input type = "hidden" id= checkVoucherVar value = "${offerLetter.checkVoucher}">  to be uncomment if confirmed from sir sony--%> 
+						</td>
 					</tr>
 					<tr>
 						<td class="rightAligned" style="width: 25%;">Check No.</td>
@@ -160,7 +162,7 @@
 							title="Loss Amount" disabled /></td>
 					</tr>
 					<tr>
-						<td class="rightAligned" style="width: 25%;">Deductible Amount</td>
+						<td class="rightAligned" style="width: 25%;">Policy Deductible</td>
 						<td class="leftAligned"><input id="txtDedAmt"
 							name="capsField" class="leftAligned" type="text"
 							style="width: 65%;" value=""
@@ -184,20 +186,36 @@
 	</c:choose>
 </table>
 <script>
-	 var errorMsg2 = $F("errorMsg2");
-	if (!checkBlankNull(errorMsg2)) {
-			if(errorMsg2 == 'Error: executeQueryForObject returned too many results.'){
+// var checkVoucherVar = $F("checkVoucherVar"); to be uncomment if confirmed from sir sony
+var errorMsg2 = $F("errorMsg2");
+checkErrorMsg(errorMsg2);
+//getcheckVoucher(checkVoucherVar); to be uncomment if confirmed from sir sony
+
+
+function checkErrorMsg(errorMsg2){
+	 if (!checkBlankNull(errorMsg2)) {
+		 if(errorMsg2 == 'Error: executeQueryForObject returned too many results.'){
 				showMessageBox('Error. Search returned more than one results.', "E");
 			}else{
 				showMessageBox(errorMsg2, "E");
 			}
 		$("btnPrint").disable();
-	} else
+	} else{
 		$("btnPrint").enable();
-
-	function checkBlankNull(str) {
-		if (str == '' || str == null)
-			return true;
-		return false;
+		}
 	}
+
+function checkBlankNull(str) {
+	if (str == '' || str == null)
+		return true;
+	return false;
+}
+
+function getcheckVoucher(checkVoucherVar){
+	if(checkVoucherVar == ""){
+		showMessageBox('Report cannot be generated because check number for this cliam does not exist.', "I");
+		$("btnPrint").disable();
+}
+}
+
 </script>

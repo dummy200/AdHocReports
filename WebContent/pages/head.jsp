@@ -23,6 +23,7 @@
 	var daysBeforePasswordExpires = 0;
 	var resultMessageDelimiter = "-*|@geniisys@|*-";
 	var modules = null;
+	var strWindowFeatures = "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,resizable=yes,fullscreen=yes";
 </script>
 
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/misc/geniisys.ico" />
@@ -41,6 +42,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/third_party/unittest.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/third_party/modalbox.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/third_party/deployJava.js"></script>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/third_party/dialog.js"></script>
 
 <!-- mtg test -->
 <!-- <script type="text/javascript" src="scripts/lib/prototype.js"></script> -->
@@ -152,7 +155,7 @@
 	rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/css/codebase/fonts/font_roboto/roboto.css"
 	rel="stylesheet" type="text/css" />
-
+	
 <!-- datagrid -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/third_party/codebase/dhtmlxgrid.js"></script>
 <link href="${pageContext.request.contextPath}/css/codebase/dhtmlxgrid.css"

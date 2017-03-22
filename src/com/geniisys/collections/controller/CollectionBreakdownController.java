@@ -35,7 +35,7 @@ public class CollectionBreakdownController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -45,11 +45,19 @@ public class CollectionBreakdownController extends HttpServlet {
 		String page = "/pages/collections/collection breakdown/collectionBreakdown.jsp";
 		String page2 = "/CollectionBreakdownController?action=toCollectionBreakdownPage";
 		String reportName = request.getParameter("reportName");
+		String tranCd = "94";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toCollectionBreakdownPage")) {
 			BranchService branchService = new BranchServiceImpl();
-			List<Branch> branchList = (List<Branch>) branchService.getAllBranches();
+			List<Branch> branchList = null;
+			try {
+				branchList = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			/*String branchList4 = (String) branchService.getAllBranches4();*/
 			
 			/*AssuredService assuredService = new AssuredServiceImpl();
@@ -87,6 +95,7 @@ public class CollectionBreakdownController extends HttpServlet {
 			parameters.put("P_BRANCH", branchCd);
 			parameters.put("P_PAY_MODE", payMode);
 			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD",tranCd);
 
 			try {
 				System.out.println("converting report................");
@@ -125,7 +134,7 @@ public class CollectionBreakdownController extends HttpServlet {
 				request.setAttribute("reportTitle", reportName);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/collections/collection breakdown/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

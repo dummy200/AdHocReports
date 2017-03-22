@@ -31,4 +31,18 @@ public class PolicyNoDAOImpl implements PolicyNoDAO {
 		Integer policyId = (Integer) sqlMap.queryForObject("getPolicyIdRenewalNotice", params);
 		return policyId;
 	}
+
+	@Override
+	public Integer getResultPolicyIdRenewal(Map<String, Object> params) throws SQLException {
+		sqlMap = MyAppSqlConfig.getSqlMapInstance();
+		Integer policyId = (Integer) sqlMap.queryForObject("getResultPolicyIdRenewal", params);
+		return policyId;
+	}
+
+	@Override
+	public Integer getPolicyIdNonRenewByUserId(Map<String, Object> params) throws SQLException {
+		sqlMap = MyAppSqlConfig.getSqlMapInstance();
+		Integer policyId = (Integer) sqlMap.queryForObject("getPolicyIdNonRenewByUserId", params);
+		return policyId;
+	}
 }

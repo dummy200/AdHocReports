@@ -33,7 +33,7 @@
 		<filter-name>ServletFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
+	
 	<servlet>
 		<servlet-name>PrintController</servlet-name>
 		<servlet-class>com.geniisys.controller.PrintController</servlet-class>
@@ -299,6 +299,24 @@
 	<servlet-mapping>
 		<servlet-name>UpdateRefNameController</servlet-name>
 		<url-pattern>/UpdateRefNameController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CheckRequestController</servlet-name>
+		<servlet-class>com.geniisys.collections.controller.CheckRequestController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CheckRequestController</servlet-name>
+		<url-pattern>/CheckRequestController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DynamicUrlController</servlet-name>
+		<servlet-class>com.geniisys.collections.controller.DynamicUrlController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DynamicUrlController</servlet-name>
+		<url-pattern>/DynamicUrlController</url-pattern>
 	</servlet-mapping>
 	<!-- end collections -->
 	

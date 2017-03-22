@@ -18,7 +18,7 @@
 						style="width: 50%;" value="" title="Assured Name" disabled /></td>
 				</tr>
 	</c:if> --%>
-	<c:choose>
+	<%-- <c:choose>
 		<c:when test="${lineCd eq 'MC' }">
 			<c:choose>
 				<c:when test="${errorMsg == null }">
@@ -171,21 +171,17 @@
 				</tr>
 			</c:forEach>
 		</c:otherwise>
-	</c:choose>
+	</c:choose> --%>
 </table>
 <script>
 	var errorMsg2 = $F("errorMsg2");
 	if (!checkBlankNull(errorMsg2)) {
-		//alert(errorMsg2);
 		if (checkBlankNull(errorMsg)){
-			//alert(errorMsg);
 			showMessageBox(errorMsg, "E");
 		}else{
 			if(errorMsg2 == 'Error: executeQueryForObject returned too many results.'){
-				//alert('Error. Search returned more than one results.');
 				showMessageBox("Error. Search returned more than one results", "E");
 			}else{
-				//alert(errorMsg2);
 				showMessageBox(errorMsg2, "E");
 			}
 		}

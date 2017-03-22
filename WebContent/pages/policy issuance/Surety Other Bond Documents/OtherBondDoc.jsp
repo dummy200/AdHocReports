@@ -283,7 +283,6 @@
 					hideNotice("");
 					var errorMsg2 = $F("errorMsg2");
 					var assuredName = $F("txtAssuredName");
-					//alert(errorMsg2);
 					if (checkBlankNull($F("errorMsg2"))){
 						$("btnPrintReport").enable();
 					}else
@@ -439,7 +438,10 @@
 	var reportName = "REP_WRITPOSS_BOND";
 	var path = "policyissuance/reports/";
 	$("btnPrintReport").observe("click", function() {
-		if (!isPolicyNoFieldsOk()) {
+		var userInput = "95 " +$F("txtLineCd").trim().toUpperCase() + " " + $F("txtIssCd").trim().toUpperCase();
+		if(!checkUserAccess(userInput,userAccessObj, userAccessObjLength)){
+			showMessageBox("User has no access.", "E");
+		}else if (!isPolicyNoFieldsOk()) {
 			showMessageBox("Please input required fields","I");
 		}else {
 			new Ajax.Updater(

@@ -15,10 +15,10 @@
 <td><select name="seLLineCd" id="seLLineCd">
 	<!-- <option value=""></option> -->
 	<c:forEach var="line" items="${ lineCdList }">
-		<option>${line.lineCd}</option>
+		<option value="${line.lineCd}">${line.lineName}</option>
 	</c:forEach>
-	</select> <input id="txtLineName" name="capsField" class="leftAligned"
-	type="text" value="" title="Line Name"disabled />
+	</select> <!-- <input id="txtLineName" name="capsField" class="leftAligned"
+	type="text" value="" title="Line Name"disabled /> -->
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Check/Uncheck All: <input type="checkbox" id="checkSubline" name="checkSubline" value="">
 </td>
 </tr>
@@ -34,7 +34,7 @@ var sublineList = "";
 //var gridSubline;
 var data={ rows: []};
 var selected1 = $("seLLineCd").getValue();
-getLineName(selected1,"txtLineName");
+//getLineName(selected1,"txtLineName");
 getSublineList(selected1);
 
 gridSubline = new dhtmlXGridObject('gridbox');
@@ -51,7 +51,7 @@ gridSubline.parse(data,"json");
 
 $("seLLineCd").observe("change", function(){
 	var selected = $("seLLineCd").getValue();
-	getLineName(selected,"txtLineName");
+	//getLineName(selected,"txtLineName");
 	getSublineList(selected);
 	if($("checkSubline").checked){
 		$("checkSubline").click();

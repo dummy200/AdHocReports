@@ -55,4 +55,5 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" "http://ibatis.apache.
 	
 	<!-- collections -->
 	<sqlMap resource="com/geniisys/collections/dao/ibatis/PaymentRequest.xml"/>
+	<sqlMap resource="com/geniisys/common/dao/ibatis/DynamicUrl.xml" />
 </sqlMapConfig>

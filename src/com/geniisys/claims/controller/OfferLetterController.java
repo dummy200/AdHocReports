@@ -43,7 +43,7 @@ public class OfferLetterController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -54,6 +54,7 @@ public class OfferLetterController extends HttpServlet {
 		String page2 = "/OfferLetterController?action=toOfferLetterPage";
 		String redirectPage = "/pages/claims/Offer Letter/infoDiv.jsp";
 		String reportName = "FCLTOTOFFR";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toOfferLetterPage")) {
@@ -192,13 +193,18 @@ public class OfferLetterController extends HttpServlet {
 				exporter.exportReport();
 				JasperExportManager.exportReportToPdfFile(print, outputPdf);
 				// try excel
-				/*JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parameters, conn);
-
-				JRXlsxExporter exp = new JRXlsxExporter();
-				exp.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
-				exp.setParameter(JRXlsExporterParameter.OUTPUT_FILE_NAME, outputXls);
-
-				exp.exportReport();*/
+				/*
+				 * JasperPrint jasperPrint =
+				 * JasperFillManager.fillReport(fileName, parameters, conn);
+				 * 
+				 * JRXlsxExporter exp = new JRXlsxExporter();
+				 * exp.setParameter(JRXlsExporterParameter.JASPER_PRINT,
+				 * jasperPrint);
+				 * exp.setParameter(JRXlsExporterParameter.OUTPUT_FILE_NAME,
+				 * outputXls);
+				 * 
+				 * exp.exportReport();
+				 */
 			} catch (JRException e) {
 				System.out.println("jre exception: " + e.getMessage().toString());
 				errorMsg = "jre exception: " + e.getMessage().toString();
@@ -221,7 +227,8 @@ public class OfferLetterController extends HttpServlet {
 				request.setAttribute("reportXls", outputXls);
 
 				// redirect to right line
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page2);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/claims/Offer Letter/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

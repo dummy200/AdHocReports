@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.geniisys.common.dao.BranchDAO;
 import com.geniisys.common.entity.Branch;
+import com.geniisys.common.entity.CreditingEmail;
 import com.geniisys.util.MyAppSqlConfig;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
@@ -21,7 +22,6 @@ private SqlMapClient sqlMap;
 			branches =  sqlMap.queryForList("getAllBranches");
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return branches;
@@ -37,7 +37,6 @@ private SqlMapClient sqlMap;
 			branches =  sqlMap.queryForList("getAllBranches2");
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return branches;
@@ -61,5 +60,33 @@ private SqlMapClient sqlMap;
 		sqlMap = MyAppSqlConfig.getSqlMapInstance();
 		List<Branch> branchList = sqlMap.queryForList("getAllBranchesByUserAndTranCd",params);
 		return branchList;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CreditingEmail> fetchCredBranchEmail(String branchCd) throws SQLException {
+		sqlMap = MyAppSqlConfig.getSqlMapInstance();
+		List<CreditingEmail> emailList = sqlMap.queryForList("fetchCredBranchEmail",branchCd);
+		return emailList;
+	}
+
+	@Override
+	public void updateCreditingEmail(Map<String,Object> params) throws SQLException {
+		sqlMap = MyAppSqlConfig.getSqlMapInstance();
+		sqlMap.update("updateCreditingEmail", params);
+	}
+
+	@Override
+	public void insertCreditingEmail(Map<String, Object> params) throws SQLException {
+		sqlMap = MyAppSqlConfig.getSqlMapInstance();
+		sqlMap.insert("insertCreditingEmail", params);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Branch> getCashierBranchesByUserAndTranCd(Map<String, Object> params) throws SQLException {
+		sqlMap = MyAppSqlConfig.getSqlMapInstance();
+		List<Branch> branchCashierList = sqlMap.queryForList("getAllBranchesByUserAndTranCd",params);
+		return branchCashierList;
 	}
 }

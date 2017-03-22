@@ -8,6 +8,7 @@
 <div id="printMcSwornMenu">
 	<div id="mainNav" name="mainNav">
 		<div id="smoothmenu1" name="smoothmenu1" class="ddsmoothmenu">
+		
 			<ul>
 				<li><a id="btnExit">Exit</a></li>
 			</ul>
@@ -17,6 +18,7 @@
 
 
 <!-- hidden fields -->
+<div id="hiddenDiv">
 <input type="hidden" id="testClaimId" name="testClaimId" value="${testClaimId}">
 <input type="hidden" id="testRecoveryId" name="testRecoveryId" value="${testRecoveryId}">
 <input type="hidden" id="testUserId" name="testUserId" value="${testUserId}">
@@ -25,6 +27,7 @@
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="userId" name= "userId" value = "${adhocUser}">
+<!-- <input type="hidden" id="userId" name= "userId" value = "MISSNM">  -->
 <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
 <input type="hidden" id="reportName" name="reportName"
@@ -35,6 +38,7 @@
 	value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
+</div>
 <%-- <input type="text" id="letterType" name= "letterType" value = "${letterType}"> --%>
 <!-- end hidden fields -->
 
@@ -127,7 +131,7 @@
 						<tr>
 						<td class="rightAligned" style="width: 35%;"></td>
 						<td class="rightAligned"><input type="radio" id="rdoFirst" name="demandLetterType"
-							value="1"
+							value="FIRST"
 							style="margin-left: 15px; float: left; margin-left: 50px;"
 							checked="" /> <label for="rdoFirst" style="margin-top: 3px;">FIRST DEMAND LETTER</label>
 						</td>
@@ -135,7 +139,7 @@
 						<tr>
 						<td class="rightAligned" style="width: 35%;"></td>
 						<td class="rightAligned"><input type="radio" id="rdoSecond" name="demandLetterType"
-							value="2"
+							value="SECOND"
 							style="margin-left: 15px; float: left; margin-left: 50px;"
 							checked="" /> <label for="rdoSecond" style="margin-top: 3px;">SECOND DEMAND LETTER</label>
 						</td>
@@ -152,10 +156,17 @@
 						<td class="rightAligned" style="width: 25%;">User Id</td>
 						<td class="leftAligned">
 							<input id="txtUserId" name="capsField" class="leftAligned upper" type="text"
-							style="width: 65%;" value="${adhocUser}"
+							style="width: 65%;" value= "${adhocUser}"
 							title="User Id" />
 						</td>
+						<!-- <td class="rightAligned" style="width: 25%;">User Id</td>
+						<td class="leftAligned">
+							<input id="txtUserId" name="capsField" class="leftAligned upper" type="text"
+							style="width: 65%;" value= "MISSNM"
+							title="User Id" />
+						</td> -->
 					</tr>
+					
 					<tr>
 						<td class="rightAligned" style="width: 25%;">User Email</td>
 						<td class="leftAligned">
@@ -197,6 +208,8 @@
 	$("btnReprint").disable();
 	$("txtUserId").disable();
 	
+	
+	
 	$$("input[name='demandLetterType']").each(function(radio) {
 		radio.observe("click", function() {
 			toogleLetterTypeOption(radio.value);
@@ -205,10 +218,10 @@
 	});
 	
 	function toogleLetterTypeOption(option){
-		if(option == '1'){
+		if(option == 'FIRST'){ // badz
 			reportName = 'GICLR025_PCI';
-			reprintName = 'GICLR025_PCI_REPRINT';
-		}else if(option == '2'){
+			reprintName = 'GICLR025_PCI_REPRINT'
+		}else if(option == 'SECOND'){ // badz
 			reportName = 'GICLR025_B_PCI';
 			reprintName = 'GICLR025_B_PCI_REPRINT';
 		}
@@ -218,10 +231,10 @@
 			.observe(
 					"click",
 					function() {
+						//alert($F("rdoFirst"));
 						if (isPolicyNoFieldsOk()) {
 							var userInput = "93 " +$F("txtLineCd") + " " + $F("txtIssCd").trim().toUpperCase();
 							if(!checkUserAccess(userInput,userAccessObj, userAccessObjLength)){
-								//alert("User has no access.");
 								showMessageBox("User has no access", "E");
 							}else if(!/^[a-zA-Z]*$/g.test($F("txtIssCd").trim())){
 								showMessageBox("Please input valid characters", "I");
@@ -252,7 +265,6 @@
 									});
 							}
 						} else {
-							//alert("Please input required fields");
 							showMessageBox("Please input required fields", "I");
 						}
 						$("txtSublineCd").focus();
@@ -280,11 +292,10 @@
 						var txtUserEmail = $F("txtUserEmail");
 						var txtUserId = $F("txtUserId");
 							if (checkBlankNull(txtUserEmail) || checkBlankNull(txtUserId)) {
-								//alert("Please input required fields");
 								showMessageBox("Please input required fields", "I");
 							} else {
-								new Ajax.Updater(
-										"mainContents",
+								new Ajax.Request(
+										//"mainContents",
 										contextPath + "/DemandLetterController",
 										{
 											evalScripts : true,
@@ -298,7 +309,10 @@
 												userEmail : $F("txtUserEmail")
 											},
 											onCreate : showNotice("Generating report. Please wait..."),
-											onComplete : function(response) {
+											onComplete : function(response) {									
+												$("hiddenDiv")
+												.update(
+														response.responseText);
 												printOutputPdf();
 												printConfirm2();
 											}
@@ -309,11 +323,9 @@
 	$("btnReprint").observe("click",function(){
 		var txtUserEmail = $F("txtUserEmail");
 		var txtUserId = $F("txtUserId");
-			/* if (checkBlankNull(txtUserEmail) || checkBlankNull(txtUserId)) {
-				alert("Please input required fields");
-			} else { */
-				new Ajax.Updater(
-						"mainContents",
+				if(!checkBlankNull($F("claimId"))){
+				new Ajax.Request(
+						//"mainContents",
 						contextPath + "/DemandLetterController",
 						{
 							evalScripts : true,
@@ -322,14 +334,19 @@
 								action : "reprintDemand",
 								reportName : reprintName,
 								claimId : $F("claimId"),
-								userId : $F("txtUserId"),
+								userId :   $F("txtUserId"),
 								userEmail : $F("txtUserEmail")
 							},
 							onCreate : showNotice("Generating report. Please wait..."),
 							onComplete : function(response) {
+								$("hiddenDiv")
+								.update(
+										response.responseText);
 								printOutputPdf();
 							}
 						});
+				}else
+					showMessageBox("Please enter valid claim no.", "I");
 			/*}*/
 	});
 
@@ -360,12 +377,16 @@
 							testClaimId : $F("testClaimId"),
 							testRecoveryId : $F("testRecoveryId"),
 							testUserId : $F("testUserId"),
+							letterType : $F("rdoFirst"),
 							testUserEmail : $F("testUserEmail"),
 							reportName : reportName
 						},
 						onCreate : showNotice("Updating tables. Please wait..."),
 						onComplete : function(response) {
 							hideNotice("");
+							/* $("hiddenDiv")
+							.update(
+									response.responseText); */
 						}
 					});
 	    }
@@ -385,6 +406,7 @@
 							testClaimId : $F("testClaimId"),
 							testRecoveryId : $F("testRecoveryId"),
 							testUserId : $F("testUserId"),
+							letterType : $F("rdoFirst"),
 							testUserEmail : $F("testUserEmail"),
 							reportName : reportName
 						},
@@ -406,7 +428,6 @@
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
 			hideNotice("");
-			//alert(errorMsg);
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath
@@ -420,8 +441,8 @@
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+					window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					hideNotice("");
 				}
 			});

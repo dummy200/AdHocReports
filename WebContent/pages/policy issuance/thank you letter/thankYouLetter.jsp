@@ -14,8 +14,9 @@
 <!-- hidden fields -->
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
-<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
+<div id="hiddenDiv">
+<input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <%-- <input type="hidden" id="reportTitle" name="reportTitle"
 	value="${reportTitle}">
 <input type="hidden" id="reportName" name="reportName"
@@ -30,6 +31,7 @@
 	value="${reportXls}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
+</div>
 <input type="hidden" id="signatory" name="signatory" value="">
 <input type="hidden" id="branchCd" name="branchCd" value="">
 <!-- end hidden fields -->
@@ -219,6 +221,7 @@
 </div>
 
 <script type="text/javascript">
+	$("hiddenDiv").hide();
 	makeInputFieldUpperCase();
 	var reportName = 'THANK_YOU_LETTER_AG';
 	var branchCd = '';
@@ -391,7 +394,6 @@
 							+ $F("txtIssCd").trim().toUpperCase();
 					if (!checkUserAccess(userInput, userAccessObj,
 							userAccessObjLength)) {
-						//alert("User has no access.");
 						showMessageBox("User has no access.", "E");
 					} else if (!/^\d+$/.test($F("txtIssueYy").trim())) {
 						showMessageBox(
@@ -514,8 +516,9 @@
 		var fromDate = $F("txtFromDate");
 		var toDate = $F("txtToDate");
 		branchCd = $F("selBranch");
-		new Ajax.Updater(
-				"mainContents",
+		var userId = $F("userId");
+		new Ajax.Request(
+				//"mainContents",
 				contextPath + "/ThankYouLetterController",
 				{
 					evalScripts : true,
@@ -528,11 +531,13 @@
 						toDate : toDate,
 						signatory : sign,
 						designation : desig,
-						reportName : reportName
+						reportName : reportName,
+						userId : userId
 					},
 					onCreate : showNotice("Generating report. Please wait..."),
 					onComplete : function(response) {
-						printOutputPdf();
+						//printOutputPdf();
+						$("hiddenDiv").update(response.responseText);
 						}
 					});
 	}
@@ -557,8 +562,8 @@
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+					window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					//show excel try
 					//window.open(contextPath + "/OutputController?action=showExcel&reportXls=" + reportXls);
 					hideNotice("");

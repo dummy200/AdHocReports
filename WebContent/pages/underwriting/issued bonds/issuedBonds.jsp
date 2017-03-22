@@ -186,7 +186,6 @@
 		if(option == 3){
 			reportName = 'REP_BONDS_ISSUED';
 		}
-		//alert(reportName);
 	}
 	
 	var fromCalendar = new dhtmlXCalendarObject({
@@ -205,6 +204,7 @@
 					"click",
 					function() {
 						subline = $F("selSubline");
+						var userId = $F("userId");
 						if (validateInput()) {
 							new Ajax.Updater(
 									"mainContents",
@@ -217,7 +217,8 @@
 											reportName : reportName,
 											fromDate : $F("txtFromDate"),
 											toDate : $F("txtToDate"),
-											sublineCd : subline
+											sublineCd : subline,
+											userId : userId
 										},
 										onCreate : showNotice("Generating report. Please wait..."),
 										onComplete : function(response) {
@@ -284,7 +285,6 @@
 		}
 		}
 		subline = subCd;
-		//alert(subline);
 		$(txtSublineName).writeAttribute("value",sName);
 		}
 

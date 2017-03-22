@@ -37,7 +37,7 @@ public class IssuedApdcController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -45,6 +45,8 @@ public class IssuedApdcController extends HttpServlet {
 		String action = request.getParameter("action");
 		String redirectPage = "/IssuedApdcController?action=IssuedApdc";
 		String page = "/pages/collections/issued apdc/issuedApdc.jsp";
+		String tranCd = "94";
+		String errorMsg = "";
 
 		if (action.equals("IssuedApdc")) {
 			SignatoryService signatoryService = new SignatoryServiceImpl();
@@ -55,7 +57,7 @@ public class IssuedApdcController extends HttpServlet {
 			List<User> users = null;
 			try {
 				signatoryList = (List<Signatory>) signatoryService.getAllActiveSignatory();
-				branches = (List<Branch>) branchService.getAllBranches2();
+				branches = (List<Branch>) branchService.getAllBranchesByUserAndTranCd(request);
 				users = (List<User>) userService.getAllUsers();
 				
 			} catch (SQLException e) {
@@ -82,6 +84,7 @@ public class IssuedApdcController extends HttpServlet {
 			String checkby2 = request.getParameter("checkby2");
 			String checkby3 = request.getParameter("checkby3");
 			String checkby4 = request.getParameter("checkby4");
+			String userId = request.getParameter("userId");
 
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 
@@ -107,6 +110,8 @@ public class IssuedApdcController extends HttpServlet {
 			parameters.put("P_PRINTED_BY", checkby1);
 			parameters.put("P_NOTED_BY", checkby2);
 			parameters.put("P_RECEIVED_BY", checkby4);
+			parameters.put("P_USER_ID", userId);
+			parameters.put("P_TRAN_CD",tranCd);
 
 			System.out.println(fileName);
 			request.setAttribute("errorMsg", errorMsg);
@@ -132,7 +137,7 @@ public class IssuedApdcController extends HttpServlet {
 				request.setAttribute("reportUrl", outputPdf);
 				request.setAttribute("reportTitle", reportName);
 
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectPage);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/collections/issued apdc/hiddenDiv.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

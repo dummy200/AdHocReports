@@ -16,6 +16,7 @@
 <!-- hidden fields -->
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
+<div id="hiddenDiv">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
 <input type="hidden" id="userId" name= "userId" value = "${adhocUser}">
 <input type="hidden" id="reportTitle" name="reportTitle"
@@ -32,6 +33,7 @@
 <input type="hidden" id="notedByDesig" value="">
 <input type="hidden"id="sign" value=""> 
 <input type="hidden" id="desig" value="">
+</div>
 <!-- end hidden fields -->
 
 <br />
@@ -39,10 +41,6 @@
 <div id="outerDiv" name="outerDiv">
 	<div id="innerDiv" name="outerDiv">
 		<label id="pageTitle">Motor Car - Sworn Statement in Proof of Loss</label>
-		<!--  <span class="refreshers"
-			style="margin-top: 0;"> <label id="reloadForm"
-			name="reloadForm" title="Reload Form">Reload Form</label>
-		</span> -->
 	</div>
 </div>
 <div id="mcSwornDetailsDiv">
@@ -100,7 +98,7 @@
 					</tr>
 					</table>
 				</div>
-				<table style="margin-top: 10px; width: 100%;">
+			<!-- 	<table style="margin-top: 10px; width: 100%;">
 						<tr>
 						<td class="rightAligned" style="width: 10%;"></td>
 						<td class="leftAligned"><input type="radio" id="rdoPartialLoss" name="lossType"
@@ -114,7 +112,7 @@
 							checked="" /> <label for="rdoTotalLoss" style="margin-top: 3px;">Total Loss</label>
 						</td>
 					</tr>
-					</table>
+					</table> -->
 			</div>
 			<div class="sectionDiv" id="miscDiv"
 				style="width: 97%; margin-left: 8px; margin-top: 9px; float: left;">
@@ -150,17 +148,17 @@
 	//makeAllInputFieldsUpperCase();
 	makeInputFieldUpperCase();
 	$("txtSublineCd").focus();
-	$("rdoPartialLoss").checked = true;
-	$("rdoPartialLoss").click();
+//	$("rdoPartialLoss").checked = true;
+//	$("rdoPartialLoss").click();
 	
-	var lossType = '1';
+/* 	var lossType = '1';
 	$$("input[name='lossType']").each(function(radio) {
 		radio.observe("click", function() {
 			//toogleDateOption(radio.value);
 			//paramType = radio.value;
 			lossType = radio.value;
 			});
-	});
+	}); */
 	
 	$("searchForPolicy")
 			.observe(
@@ -169,7 +167,6 @@
 						if (isPolicyNoFieldsOk()) {
 							var userInput = "93 " +$F("txtLineCd") + " " + $F("txtIssCd").trim().toUpperCase();
 							if(!checkUserAccess(userInput,userAccessObj, userAccessObjLength)){
-								//alert("User has no access.");
 								showMessageBox("User has no access.", "E");
 							}else if(!/^\d+$/.test($F("txtClaimYy").trim())){
 								showMessageBox("Invalid Input. Claim Year must be number", "E");
@@ -199,7 +196,6 @@
 									});
 							}
 						} else {
-							//alert("Please input required fields");
 							showMessageBox("Please input required fields", "I");
 						}
 						$("txtSublineCd").focus();
@@ -225,11 +221,10 @@
 					"click",
 					function() {
 							if (!isPolicyNoFieldsOk()) {
-								//alert("Please input required fields");
 								showMessageBox("Please input required fields", "I");
 							} else {
-								new Ajax.Updater(
-										"mainContents",
+								new Ajax.Request(
+										//"mainContents",
 										contextPath + "/McSwornController",
 										{
 											evalScripts : true,
@@ -242,12 +237,15 @@
 												clmYy : $F("txtClaimYy"),
 												clmSeqNo : $F("txtClaimSeqNo"),
 												userId : $F("userId"),
-												witness : $F("txtWitness"),
-												lossType : lossType
+												witness : $F("txtWitness") //,
+												//lossType : lossType
 											},
 											onCreate : showNotice("Generating report. Please wait..."),
 											onComplete : function(response) {
-												printOutputPdf();
+												//printOutputPdf();
+												$("hiddenDiv")
+												.update(
+														response.responseText);
 											}
 										});
 							}
@@ -273,7 +271,6 @@
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
 			hideNotice("");
-			//alert(errorMsg);
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath
@@ -287,8 +284,8 @@
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open('pages/report.jsp', '',
-							'location=0, toolbar=0, menubar=0, fullscreen=1');
+					window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					hideNotice("");
 				}
 			});

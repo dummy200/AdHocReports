@@ -32,7 +32,7 @@ public class IssuedBondsController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -41,6 +41,8 @@ public class IssuedBondsController extends HttpServlet {
 		String action = request.getParameter("action");
 		String page = "/pages/underwriting/issued bonds/issuedBonds.jsp";
 		String page2 = "/IssuedBondsController?action=toIssuedBondsPage";
+		String tranCd = "94";
+		String errorMsg = "";
 		/* request.getParameter("redirectPage"); */
 
 		if (action.equals("toIssuedBondsPage")) {
@@ -60,7 +62,8 @@ public class IssuedBondsController extends HttpServlet {
 			String sublineCd = request.getParameter("sublineCd");
 			String fromDate = request.getParameter("fromDate");
 			String toDate = request.getParameter("toDate");
-
+			String userId = request.getParameter("userId");
+			
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 			String dir = getServletContext().getInitParameter("REPORTS_DIR");
 			String fileName = dir + "\\" + reportName + ".jasper";
@@ -71,6 +74,8 @@ public class IssuedBondsController extends HttpServlet {
 			parameters.put("P_SUBLINE", sublineCd);
 			parameters.put("P_FROM", fromDate);
 			parameters.put("P_TO", toDate);
+			parameters.put("P_USER_ID",userId);
+			parameters.put("P_TRAN_CD", tranCd);
 
 			try {
 				System.out.println("converting report................");

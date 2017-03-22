@@ -49,13 +49,15 @@ public class RenewalNoticeController extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	private SqlMapClient sqlMap;
-	public static String errorMsg = "";
+	//public String errorMsg = "";
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		String renewalNoticePage = "/pages/policy issuance/renewal notice/renewalNotice.jsp";
 		String redirectPage = request.getParameter("redirectPage");
+		String tranCd = "95";
+		String errorMsg = "";
 		
 		//menu redirect page
 		if(action.equals("toMCRenewal")){
@@ -109,11 +111,22 @@ public class RenewalNoticeController extends HttpServlet{
 			//String bond_dtl = null;
 			//String fetchPolicyIdErrorMsg = "";
 			Integer policyId = null;
+			Integer resultPolicyId = null;
 			try {
-				
-				Integer extractId = null;
+				//Integer extractId = null;
 				policyId = (Integer)policyNoService.getPolicyIdRenew(request);
-				extractId = (Integer)extractIdservice.getExtractId(policyId);
+				if (policyId == null){
+					errorMsg = "No data found.";
+					request.setAttribute("errorMsg", errorMsg);
+				}else{
+					resultPolicyId = (Integer)policyNoService.getResultPolicyIdRenewal(policyId,tranCd,request);
+					if (resultPolicyId == null){
+						errorMsg = "User has no access.";
+						request.setAttribute("errorMsg", errorMsg);
+					}else
+						request.setAttribute("policyId", resultPolicyId);
+				}
+				/*extractId = (Integer)extractIdservice.getExtractId(policyId);
 				System.out.println("policyId: " + policyId);
 				System.out.println("extractId: " + extractId);
 				if (extractId == null){
@@ -125,14 +138,14 @@ public class RenewalNoticeController extends HttpServlet{
 				if(policyId == null){
 					errorMsg = "No data found.";
 				}else
-					errorMsg = null;
+					errorMsg = null;*/
 				
-				Integer assdNo = assuredService.fetchAssuredNo(policyId);
+				/*Integer assdNo = assuredService.fetchAssuredNo(policyId);
 				System.out.println("assd: " + assdNo);
 				assured = assuredService.getAssured(assdNo);
 				System.out.println("assured: " + assured);
 				Integer assdNoGipiPolbasic = assuredService.fetchAssdNoGipiPolbasic(policyId);
-				Gipi_Polbasic = gipiPolbasicService.fetchRefPolNo(policyId);
+				Gipi_Polbasic = gipiPolbasicService.fetchRefPolNo(policyId);*/
 				//assuredGipiPolbasic = assuredService.getAssured(assdNoGipiPolbasic);
 				//bond_dtl = gipiPolbasicService.getBondDtl(policyId);
 				//gipi_Invoices = gipiInvoiceService.fetchGipiInvoice(policyId);
@@ -145,17 +158,11 @@ public class RenewalNoticeController extends HttpServlet{
 				errorMsg = e1.getMessage().toString();
 			}finally{
 				System.out.println(errorMsg);
-				
-				request.setAttribute("errorMsg", errorMsg);
-				request.setAttribute("assured", assured);
+				System.out.println(resultPolicyId);
+				System.out.println(policyId);
+				//request.setAttribute("errorMsg", errorMsg);
 				request.setAttribute("lineCd", lineCd);
-				//request.setAttribute("item", item);
-				request.setAttribute("policyId", policyId);
-				
-				/*request.setAttribute("Gipi_Polbasic", Gipi_Polbasic);
-				request.setAttribute("bond_dtl", bond_dtl);
-				request.setAttribute("gipi_Invoices", gipi_Invoices);
-				request.setAttribute("assuredGipiPolbasic", assuredGipiPolbasic);*/
+				//request.setAttribute("policyId", policyId);
 				
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectPage);
         		dispatcher.forward(request,response);
@@ -168,7 +175,7 @@ public class RenewalNoticeController extends HttpServlet{
 			DefaultJasperReportsContext context = DefaultJasperReportsContext.getInstance();
 			JRPropertiesUtil.getInstance(context).setProperty("net.sf.jasperreports.xpath.executer.factory",
 				    "net.sf.jasperreports.engine.util.xml.JaxenXPathExecuterFactory");
-			
+			String pdfSw = request.getParameter("pdfSw");
 			String lineCd = request.getParameter("lineCd");
 			String page = request.getParameter("page");
 			String sales = request.getParameter("sales");
@@ -196,6 +203,7 @@ public class RenewalNoticeController extends HttpServlet{
 				parameters.put("P_POLICY_ID", polId);
 				parameters.put("P_CONTACT_DETAILS", contacts);
 				parameters.put("P_CONTACT_PERSON", sales);
+				parameters.put("P_PDF_SW", pdfSw);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -239,7 +247,7 @@ public class RenewalNoticeController extends HttpServlet{
 			DefaultJasperReportsContext context = DefaultJasperReportsContext.getInstance();
 			JRPropertiesUtil.getInstance(context).setProperty("net.sf.jasperreports.xpath.executer.factory",
 				    "net.sf.jasperreports.engine.util.xml.JaxenXPathExecuterFactory");
-			
+			String pdfSw = request.getParameter("pdfSw");
 			String lineCd = request.getParameter("lineCd");
 			String page = request.getParameter("page");
 			String fromDate = request.getParameter("fromDate");
@@ -280,6 +288,8 @@ public class RenewalNoticeController extends HttpServlet{
 			parameters.put("P_USER_ID", userId);
 			parameters.put("P_CONTACT_DETAILS", contacts);
 			parameters.put("P_CONTACT_PERSON", sales);
+			parameters.put("P_PDF_SW", pdfSw);
+			parameters.put("P_TRAN_CD",tranCd);
 			
 			System.out.println(lineCd);
 			System.out.println(sublineCd);
@@ -289,7 +299,7 @@ public class RenewalNoticeController extends HttpServlet{
 			System.out.println(userId);
 			System.out.println(contacts);
 			System.out.println(sales);
-			
+			System.out.println(pdfSw);
 			System.out.println(fileName);
 			
 			try {
@@ -301,14 +311,10 @@ public class RenewalNoticeController extends HttpServlet{
 				exporter.setExporterInput(new SimpleExporterInput(print));
 				exporter.exportReport();
 				JasperExportManager.exportReportToPdfFile(print, outputPdf);
-				//JasperExportManager.exportReportToPdfFile(print, outputPdf2);
-				//JasperViewer.viewReport(print, false);
 			} catch (JRException e) {
-				//e.printStackTrace();
 				System.out.println("jre exception: " + e.getMessage().toString());
 				errorMsg = "jre exception: " + e.getMessage().toString();
 			} catch (SQLException e) {
-				//e.printStackTrace();
 				System.out.println("sql exception: " + e.getMessage().toString());
 				errorMsg = "sql exception: " + e.getMessage().toString();
 			} finally {
@@ -327,8 +333,7 @@ public class RenewalNoticeController extends HttpServlet{
 				request.setAttribute("reportTitle", reportName);
 				
 				setRequestPerPage(page,request);
-				
-				//redirect to right line
+	
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/policy issuance/renewal notice/hiddenDiv.jsp");
             	dispatcher.forward(request,response);
 			}
