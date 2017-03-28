@@ -54,6 +54,7 @@ public class McSwornController extends HttpServlet{
 		String mcSwornPage = "/pages/claims/MC Sworn/mcSworn.jsp";
 		String reportName = "GICLR_SWORN_PCI";
 		String errorMsg = "";
+		String totalTag = "";
 				
 		if (action.equals("checkClaimNo")){
 			McSwornService mcSwornService = new McSwornServiceImpl();
@@ -74,7 +75,6 @@ public class McSwornController extends HttpServlet{
 				System.out.println(errorMsg);
 				request.setAttribute("errorMsg", errorMsg);
 				request.setAttribute("mcSwornList", mcSwornList);
-				
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirectPage);
         		dispatcher.forward(request,response);
 			}
@@ -88,7 +88,6 @@ public class McSwornController extends HttpServlet{
 			Integer clmSeqNo = Integer.parseInt(request.getParameter("clmSeqNo"));
 			String userId = request.getParameter("userId");
 			String witness = request.getParameter("witness");
-			Integer lossType = Integer.parseInt(request.getParameter("lossType"));
 			
 			sqlMap = MyAppSqlConfig.getSqlMapInstance();
 			String dir = getServletContext().getInitParameter("REPORTS_DIR");
@@ -103,7 +102,7 @@ public class McSwornController extends HttpServlet{
 			parameters.put("CLM_YY", clmYy);
 			parameters.put("CLM_SEQ_NO", clmSeqNo);
 			parameters.put("WITNESS", witness);
-			parameters.put("P_LOSS_TYPE", lossType);
+			parameters.put("P_LOSS_TYPE", totalTag);
 			parameters.put("P_USER", userId);
 			
 			try {

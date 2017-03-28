@@ -77,5 +77,10 @@ public class UserServiceImpl implements UserService{
 	public List<User> getAllUsers() throws SQLException {
 		return this.userDAO.getAllUsers();
 	}
+
+	@Override
+	public List<User> getCashierUsers() throws SQLException {
+		 return this.userDAO.getCashierUsers();
+	}
 	
 }

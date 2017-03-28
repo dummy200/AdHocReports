@@ -98,7 +98,7 @@
 					</tr>
 					</table>
 				</div>
-				<table style="margin-top: 10px; width: 100%;">
+			<!-- 	<table style="margin-top: 10px; width: 100%;">
 						<tr>
 						<td class="rightAligned" style="width: 10%;"></td>
 						<td class="leftAligned"><input type="radio" id="rdoPartialLoss" name="lossType"
@@ -112,7 +112,7 @@
 							checked="" /> <label for="rdoTotalLoss" style="margin-top: 3px;">Total Loss</label>
 						</td>
 					</tr>
-					</table>
+					</table> -->
 			</div>
 			<div class="sectionDiv" id="miscDiv"
 				style="width: 97%; margin-left: 8px; margin-top: 9px; float: left;">
@@ -148,17 +148,17 @@
 	//makeAllInputFieldsUpperCase();
 	makeInputFieldUpperCase();
 	$("txtSublineCd").focus();
-	$("rdoPartialLoss").checked = true;
-	$("rdoPartialLoss").click();
+//	$("rdoPartialLoss").checked = true;
+//	$("rdoPartialLoss").click();
 	
-	var lossType = '1';
+/* 	var lossType = '1';
 	$$("input[name='lossType']").each(function(radio) {
 		radio.observe("click", function() {
 			//toogleDateOption(radio.value);
 			//paramType = radio.value;
 			lossType = radio.value;
 			});
-	});
+	}); */
 	
 	$("searchForPolicy")
 			.observe(
@@ -237,8 +237,8 @@
 												clmYy : $F("txtClaimYy"),
 												clmSeqNo : $F("txtClaimSeqNo"),
 												userId : $F("userId"),
-												witness : $F("txtWitness"),
-												lossType : lossType
+												witness : $F("txtWitness") //,
+												//lossType : lossType
 											},
 											onCreate : showNotice("Generating report. Please wait..."),
 											onComplete : function(response) {

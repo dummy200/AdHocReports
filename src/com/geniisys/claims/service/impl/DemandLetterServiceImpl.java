@@ -102,7 +102,7 @@ public class DemandLetterServiceImpl implements DemandLetterService {
 	}*/
 	
 	@Override
-	public void insertIntoDBDemandReprint(DemandLetterInsert insertDetails,Integer claimId,String reportName,String userEmail) throws SQLException {
+	public void insertIntoDBDemandReprint(DemandLetterInsert insertDetails,String firstPrintWordAmt,Integer claimId,String reportName,String userEmail) throws SQLException {
 		String assdName = insertDetails.getAssdName();
 		String policyNo = insertDetails.getPolicyNumber();
 		String recoveryNo = insertDetails.getRecoveryNo();
@@ -111,7 +111,7 @@ public class DemandLetterServiceImpl implements DemandLetterService {
 		String plateNo1 = insertDetails.getPlateNo1();
 		String car2 = insertDetails.getCar2();
 		String plateNo2 = insertDetails.getPlateNo2();
-		String amtWord1 = insertDetails.getAmtWord1();
+		String amtWord1 = firstPrintWordAmt;//insertDetails.getAmtWord1();
 		String amtWord2 = insertDetails.getAmtWord2();
 		String amtWord3 = insertDetails.getAmtWord3();
 		String userId = insertDetails.getUserId();
@@ -119,11 +119,13 @@ public class DemandLetterServiceImpl implements DemandLetterService {
 		String branchCd = insertDetails.getBranchCd();
 		String claimNo = insertDetails.getClaimNo();
 		String lossDate = insertDetails.getDspLossDate();
+		//String demandType = insertDetails.getDemands();
 		String demandType = "FIRST";
 		if(reportName.equals("GICLR025_B_PCI")){
+			amtWord1 = insertDetails.getAmtWord1();
 			demandType = "SECOND";
 		}
-		System.out.println(lossDate);
+		
 		DemandLetterReprint demandLetterTab = new DemandLetterReprint(claimId,
 				checkStringIfNull(assdName),
 				checkStringIfNull(policyNo),
@@ -163,6 +165,8 @@ public class DemandLetterServiceImpl implements DemandLetterService {
 				checkStringIfNull(userId),
 				checkStringIfNull(userEmail),
 				"");
+		
+		System.out.println("demandLetterTab Type : " + demandLetterTab.getDemandType());
 		this.getDemandLetterDAO().insertIntoDBDemandReprint(demandLetterTab);
 	}
 	
