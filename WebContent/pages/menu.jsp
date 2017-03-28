@@ -2,8 +2,8 @@
 <div id="hiddenDiv">
 	<jsp:include page="/pages/userAccess.jsp"></jsp:include>
 </div>
-<input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
-<!-- <input type="hidden" id="adhocUser" name="adhocUser" value="BADZ"> -->
+<%-- <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}"> --%>
+<input type="hidden" id="adhocUser" name="adhocUser" value="BADZ">
 
 <script type="text/javascript">
 	//init user access
