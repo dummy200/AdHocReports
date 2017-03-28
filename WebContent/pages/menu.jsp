@@ -3,7 +3,7 @@
 	<jsp:include page="/pages/userAccess.jsp"></jsp:include>
 </div>
 <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
-<!-- <input type="hidden" id="adhocUser" name="adhocUser" value="BADZ"> -->
+ <--<input type="hidden" id="adhocUser" name="adhocUser" value="BADZ"> -->
 
 <script type="text/javascript">
 	//init user access
@@ -112,6 +112,7 @@
 								Assured/Intermediary</a></li>
 						<li><a id="orixSoaExt" name="orixSoaExt">Statement of
 								Account - ORIX</a></li>
+						<li><a id="orixSoaExt2" name="orixSoaExt2">Check Warehouse</a></li>		
 						<li><a id="updateRefName" name="updateRefName">Update
 								Referror Name</a></li>
 						<li class="menuSeparator"></li>
@@ -195,8 +196,6 @@
 								Dealers Report</a></li>
 						<li class="menuSeparator"></li>
 						<li><a id="batchGen" name="batchGen">Batch Generation</a></li>
-						<li><a id="gwpReport" name="gwpReport">GWP Report</a></li>
-						<li><a id="pamsCash" name="pamsCash">PAMS Cashier</a></li>
 					</ul></li>
 			</ul>
 		</div>
@@ -269,6 +268,7 @@
 		disableMenu('receiptedDollarAcct');
 		disableMenu('soaPerAssdIntm');
 		disableMenu('orixSoaExt');
+		disableMenu('orixSoaExt2');
 		disableMenu('updateRefName');
 		disableMenu('dynamicUrl');
 		//disableMenu('checkRequest');
@@ -317,6 +317,8 @@
 				"SOA per Assured/Intermediary");
 		checkUserAccess2('FSOAORIX', moduleIdObjLength, userModuleObj,
 				"orixSoaExt", "/SoaOrixExtController?action=OrixSoaExt&tranCd=94&userId="+userId, "Statement of Account ORIX");
+		checkUserAccess2('FSOAORIX', moduleIdObjLength, userModuleObj,
+				"orixSoaExt2", "/SoaOrixExtController2?action=OrixSoaExt2&tranCd=94&userId="+userId, "Check Warehouse");
 		checkUserAccess2('FACINTRADE', moduleIdObjLength, userModuleObj,
 				"updateRefName",
 				"/pages/collections/update referror name/updateRefName.jsp",
@@ -498,8 +500,6 @@
 
 		disableMenu('psBank');
 		disableMenu('pamsIssuance');
-		disableMenu('gwpReport');
-		//disableMenu('pamsCash');
 		//disableMenu('batchGen');
 	} else {
 		//check per module
@@ -525,14 +525,5 @@
 				"toyotaDealers",
 				"/ToyotaDealersController?action=toToyotaDealersPage",
 				"Toyota Dealers Report");
-		checkUserAccess2('GWPCPAIC', moduleIdObjLength, userModuleObj,
-				"gwpReport",
-				"/pages/underwriting/gwp/gwp.jsp", //"/GwpReportController?action=toGwpPage",
-				"GWP Report");
-		checkUserAccess2('PAMSCASH', moduleIdObjLength, userModuleObj,
-				"pamsCash",
-				"/PamsCashierController?action=toPamsCashierPage", //"/GwpReportController?action=toGwpPage",
-				"PAMS Cashier");
-
 	}
 </script>
