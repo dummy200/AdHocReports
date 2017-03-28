@@ -12,6 +12,7 @@ public interface BranchService {
 	List<Branch> getAllBranches();
 	List<Branch> getAllBranches2();
 	List<Branch> getAllBranchesByUserAndTranCd(HttpServletRequest request) throws SQLException;
+	List<Branch> getCashierBranchesByUserAndTranCd(HttpServletRequest request) throws SQLException;
 	String getAllBranches3();
 	String getAllBranches4();
 	List<CreditingEmail> fetchCredBranchEmail(HttpServletRequest request) throws SQLException;

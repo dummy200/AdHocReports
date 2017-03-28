@@ -28,8 +28,8 @@ public class ConnectionUtil {
 			Class.forName(JDBC_DRIVER);
 			/*String url = "jdbc:oracle:thin:@10.20.39.12:1521:PCIC";
 			conn = DriverManager.getConnection(url, "CPI", "CPI12345!");*/
-			String url = "jdbc:oracle:thin:@10.20.39.28:1521:PCIC";
-			//String url = "jdbc:oracle:thin:@10.20.39.29:1521:PCIC";
+			//String url = "jdbc:oracle:thin:@10.20.39.28:1521:PCIC";
+			String url = "jdbc:oracle:thin:@10.20.39.29:1521:PCIC";
 			conn = DriverManager.getConnection(url, "CPI", "CPI.1234");
 		return conn;
 		}catch(Exception e){

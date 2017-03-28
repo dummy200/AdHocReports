@@ -86,4 +86,13 @@ public class BranchServiceImpl implements BranchService {
 		System.out.println("insert finished");
 	}
 
+	@Override
+	public List<Branch> getCashierBranchesByUserAndTranCd(HttpServletRequest request) throws SQLException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("userId", request.getParameter("userId"));
+		System.out.println("userId: " + request.getParameter("userId") );
+		params.put("tranCd", request.getParameter("tranCd"));
+		List<Branch> branchCashierList = branchDAO.getCashierBranchesByUserAndTranCd(params);
+		return branchCashierList;
+	}
 }

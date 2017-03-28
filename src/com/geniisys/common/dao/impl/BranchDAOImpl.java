@@ -22,7 +22,6 @@ private SqlMapClient sqlMap;
 			branches =  sqlMap.queryForList("getAllBranches");
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return branches;
@@ -38,7 +37,6 @@ private SqlMapClient sqlMap;
 			branches =  sqlMap.queryForList("getAllBranches2");
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return branches;
@@ -82,5 +80,13 @@ private SqlMapClient sqlMap;
 	public void insertCreditingEmail(Map<String, Object> params) throws SQLException {
 		sqlMap = MyAppSqlConfig.getSqlMapInstance();
 		sqlMap.insert("insertCreditingEmail", params);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Branch> getCashierBranchesByUserAndTranCd(Map<String, Object> params) throws SQLException {
+		sqlMap = MyAppSqlConfig.getSqlMapInstance();
+		List<Branch> branchCashierList = sqlMap.queryForList("getAllBranchesByUserAndTranCd",params);
+		return branchCashierList;
 	}
 }

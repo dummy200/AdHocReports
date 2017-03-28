@@ -17,4 +17,5 @@ public interface UserService {
 	List<String> fetchUserModules(HttpServletRequest request) throws SQLException;
 	String fetchUserAccess1(HttpServletRequest request) throws SQLException;
 	List<User> getAllUsers() throws SQLException;
+	List<User> getCashierUsers() throws SQLException;
 }
