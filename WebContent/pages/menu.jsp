@@ -3,7 +3,7 @@
 	<jsp:include page="/pages/userAccess.jsp"></jsp:include>
 </div>
 <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
-<%--<input type="hidden" id="adhocUser" name="adhocUser" value="CPIRALPH">--%>
+<!-- <--<input type="hidden" id="adhocUser" name="adhocUser" value="BADZ"> -->
 
 <script type="text/javascript">
 	//init user access
@@ -112,6 +112,7 @@
 								Assured/Intermediary</a></li>
 						<li><a id="orixSoaExt" name="orixSoaExt">Statement of
 								Account - ORIX</a></li>
+						<li><a id="orixSoaExt2" name="orixSoaExt2">Check Warehouse</a></li>		
 						<li><a id="updateRefName" name="updateRefName">Update
 								Referror Name</a></li>
 						<li class="menuSeparator"></li>
@@ -267,6 +268,7 @@
 		disableMenu('receiptedDollarAcct');
 		disableMenu('soaPerAssdIntm');
 		disableMenu('orixSoaExt');
+		disableMenu('orixSoaExt2');
 		disableMenu('updateRefName');
 		disableMenu('dynamicUrl');
 		//disableMenu('checkRequest');
@@ -315,6 +317,8 @@
 				"SOA per Assured/Intermediary");
 		checkUserAccess2('FSOAORIX', moduleIdObjLength, userModuleObj,
 				"orixSoaExt", "/SoaOrixExtController?action=OrixSoaExt&tranCd=94&userId="+userId, "Statement of Account ORIX");
+		checkUserAccess2('FSOAORIX', moduleIdObjLength, userModuleObj,
+				"orixSoaExt2", "/SoaOrixExtController2?action=OrixSoaExt2&tranCd=94&userId="+userId, "Check Warehouse");
 		checkUserAccess2('FACINTRADE', moduleIdObjLength, userModuleObj,
 				"updateRefName",
 				"/pages/collections/update referror name/updateRefName.jsp",
