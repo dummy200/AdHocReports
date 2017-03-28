@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Cashiers">
+
+	<resultMap class="com.geniisys.common.entity.User" id="cashierResultMap">
+		 <result property="userId" column="USER_ID"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="userGrp" column="GRP_ISS_CD"/>
+	</resultMap>
+
+
+	<select id="getCashierUsers" resultMap="cashierResultMap">
+		SELECT cashiers.user_id
+             , gu.user_name
+             , gu.grp_iss_cd
+        FROM (
+              SELECT user_id
+              FROM giac_order_of_payts
+              GROUP BY user_id
+              UNION
+              SELECT user_id
+              FROM giac_spoiled_or
+              GROUP BY user_id
+              UNION
+              SELECT a.user_id
+              FROM giac_comm_voucher_ext a
+              WHERE print_tag = 'P'
+              GROUP BY user_id
+              UNION
+              SELECT gcd.user_id
+              FROM giac_chk_disbursement gcd
+                ,  giac_acctrans gc
+              WHERE check_stat = 2
+              AND gcd.gacc_tran_id= gc.tran_id
+              GROUP BY gcd.user_id
+              UNION
+              SELECT gcd.user_id
+              FROM giac_chk_disbursement gcd
+                ,  giac_acctrans gc
+              WHERE check_stat = 3
+              AND gcd.gacc_tran_id= gc.tran_id
+              GROUP BY gcd.user_id
+              UNION
+              SELECT rcd.user_id
+              FROM request_check_det rcd
+              WHERE rcd.req_printed = 'P'
+              GROUP BY rcd.user_id
+              UNION
+              SELECT rcd.user_id
+              FROM request_check_det rcd
+              WHERE rcd.req_printed = 'S'
+              GROUP BY rcd.user_id
+              ) cashiers, giis_users gu
+        WHERE cashiers.user_id = gu.user_id
+        GROUP BY cashiers.user_id
+               , gu.user_name
+        ORDER BY cashiers.user_id
+	</select>
+
+
+</sqlMap>

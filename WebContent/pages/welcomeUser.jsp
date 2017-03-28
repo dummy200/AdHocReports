@@ -12,8 +12,8 @@
 			Welcome ${userName}!
 			<span id="logout" name="logout"> Logout</span>
 		</span>	
-	<input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
- 	<!--<input type="hidden" id="adhocUser" name="adhocUser" value="CPIRALPH">-->
+	<%-- <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}"> --%>
+ 	<input type="hidden" id="adhocUser" name="adhocUser" value="BADZ">
 	<script type="text/javascript">
 			var userId = $F(adhocUser);
 			getServerDateAndTime();

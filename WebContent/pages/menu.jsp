@@ -2,8 +2,9 @@
 <div id="hiddenDiv">
 	<jsp:include page="/pages/userAccess.jsp"></jsp:include>
 </div>
+
 <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
- <--<input type="hidden" id="adhocUser" name="adhocUser" value="BADZ"> -->
+<!-- <input type="hidden" id="adhocUser" name="adhocUser" value="BADZ"> -->
 
 <script type="text/javascript">
 	//init user access
@@ -500,6 +501,8 @@
 
 		disableMenu('psBank');
 		disableMenu('pamsIssuance');
+		disableMenu('gwpReport');
+		//disableMenu('pamsCash');
 		//disableMenu('batchGen');
 	} else {
 		//check per module
@@ -525,5 +528,14 @@
 				"toyotaDealers",
 				"/ToyotaDealersController?action=toToyotaDealersPage",
 				"Toyota Dealers Report");
+		checkUserAccess2('GWPCPAIC', moduleIdObjLength, userModuleObj,
+				"gwpReport",
+				"/pages/underwriting/gwp/gwp.jsp", //"/GwpReportController?action=toGwpPage",
+				"GWP Report");
+		checkUserAccess2('PAMSCASH', moduleIdObjLength, userModuleObj,
+				"pamsCash",
+				"/PamsCashierController?action=toPamsCashierPage", //"/GwpReportController?action=toGwpPage",
+				"PAMS Cashier");
+		
 	}
 </script>
