@@ -115,10 +115,15 @@
 						<li><a id="updateRefName" name="updateRefName">Update
 								Referror Name</a></li>
 						<li class="menuSeparator"></li>
+						<li><a id="endOfMonth" name="dynamicUrl">End Of Month</a>
+							<ul style="width: 160px;">
+								<li><a id="monthEndReports" name="monthEndReports">Month End Reports</a></li>
+							</ul></li>
 						<!-- <li><a id="checkRequest" name="checkRequest">Update
 								Check Request</a></li> -->
 						<!-- <li><a id="checkRequest" name="checkRequest">Intertrade/NEV
 								Check Request</a></li> -->
+						<li class="menuSeparator"></li>
 						<li><a id="dynamicUrl" name="dynamicUrl">Dynamic URL</a></li>
 					</ul></li>
 				<li><a id="policyIssuance">Policy Issuance</a>
@@ -321,6 +326,11 @@
 				"updateRefName",
 				"/pages/collections/update referror name/updateRefName.jsp",
 				"Inquiry - Metrobank Referror");
+		checkUserAccess2('MONTHEND', moduleIdObjLength, userModuleObj,
+				"monthEndReports",
+				"/MonthEndProdReportController?action=toMonthEndReportPage",
+				/* "/pages/collections/month end/monthEndReports.jsp", */
+				"Month End Reports");
 		/* checkUserAccess2('FACCHKREP', moduleIdObjLength, userModuleObj,
 				"checkRequest", "/CheckRequestController?action=toCheckRequest&userId="+userId, "Update Check Request"); */
 		
