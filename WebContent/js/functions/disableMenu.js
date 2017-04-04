@@ -27,6 +27,5 @@ function disableMenu(menuId){
 		if(message.include("is null")){			
 			e.message = menuId + " is null";
 		}
-		showErrorMessage("disableMenu", e);
 	}
 }

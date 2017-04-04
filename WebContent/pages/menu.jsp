@@ -1,11 +1,13 @@
 <%@ taglib prefix="c" uri="/WEB-INF/tld/c.tld"%>
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Pragma","no-cache");
+%>
 <div id="hiddenDiv">
 	<jsp:include page="/pages/userAccess.jsp"></jsp:include>
-</div>
-
-<input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
+	<input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
 <!-- <input type="hidden" id="adhocUser" name="adhocUser" value="BADZ"> -->
-
+</div>
 <script type="text/javascript">
 	//init user access
 	//all
@@ -116,11 +118,16 @@
 						<li><a id="orixSoaExt2" name="orixSoaExt2">Check Warehouse</a></li>		
 						<li><a id="updateRefName" name="updateRefName">Update
 								Referror Name</a></li>
-						<li class="menuSeparator"></li>
+						<!-- <li class="menuSeparator"></li>
+						<li><a id="endOfMonth" name="dynamicUrl">End Of Month</a>
+							<ul style="width: 160px;">
+								<li><a id="monthEndReports" name="monthEndReports">Month End Reports</a></li>
+							</ul></li> -->
 						<!-- <li><a id="checkRequest" name="checkRequest">Update
 								Check Request</a></li> -->
 						<!-- <li><a id="checkRequest" name="checkRequest">Intertrade/NEV
 								Check Request</a></li> -->
+						<li class="menuSeparator"></li>
 						<li><a id="dynamicUrl" name="dynamicUrl">Dynamic URL</a></li>
 					</ul></li>
 				<li><a id="policyIssuance">Policy Issuance</a>
@@ -197,6 +204,8 @@
 								Dealers Report</a></li>
 						<li class="menuSeparator"></li>
 						<li><a id="batchGen" name="batchGen">Batch Generation</a></li>
+						<li><a id="gwpReport" name="gwpReport">GWP Report</a></li>
+						<li><a id="pamsCash" name="pamsCash">PAMS Cashier</a></li>
 					</ul></li>
 			</ul>
 		</div>
@@ -271,6 +280,7 @@
 		disableMenu('orixSoaExt');
 		disableMenu('orixSoaExt2');
 		disableMenu('updateRefName');
+		disableMenu('endOfMonth');
 		disableMenu('dynamicUrl');
 		//disableMenu('checkRequest');
 	} else {
@@ -318,12 +328,18 @@
 				"SOA per Assured/Intermediary");
 		checkUserAccess2('FSOAORIX', moduleIdObjLength, userModuleObj,
 				"orixSoaExt", "/SoaOrixExtController?action=OrixSoaExt&tranCd=94&userId="+userId, "Statement of Account ORIX");
-		checkUserAccess2('FSOAORIX', moduleIdObjLength, userModuleObj,
-				"orixSoaExt2", "/SoaOrixExtController2?action=OrixSoaExt2&tranCd=94&userId="+userId, "Check Warehouse");
+		checkUserAccess2('FISSAPDC', moduleIdObjLength, userModuleObj,
+                "orixSoaExt2", "/SoaOrixExtController2?action=OrixSoaExt2&tranCd=94&userId="+userId, 
+                "Check Warehouse");
 		checkUserAccess2('FACINTRADE', moduleIdObjLength, userModuleObj,
 				"updateRefName",
 				"/pages/collections/update referror name/updateRefName.jsp",
 				"Inquiry - Metrobank Referror");
+		checkUserAccess2('MONTHEND', moduleIdObjLength, userModuleObj,
+				"monthEndReports",
+				"/MonthEndProdReportController?action=toMonthEndReportPage",
+				/* "/pages/collections/month end/monthEndReports.jsp", */
+				"Month End Reports");
 		/* checkUserAccess2('FACCHKREP', moduleIdObjLength, userModuleObj,
 				"checkRequest", "/CheckRequestController?action=toCheckRequest&userId="+userId, "Update Check Request"); */
 		
@@ -502,7 +518,7 @@
 		disableMenu('psBank');
 		disableMenu('pamsIssuance');
 		disableMenu('gwpReport');
-		//disableMenu('pamsCash');
+		disableMenu('pamsCash');
 		//disableMenu('batchGen');
 	} else {
 		//check per module
@@ -536,6 +552,5 @@
 				"pamsCash",
 				"/PamsCashierController?action=toPamsCashierPage", //"/GwpReportController?action=toGwpPage",
 				"PAMS Cashier");
-		
 	}
 </script>

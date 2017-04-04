@@ -80,6 +80,5 @@ function printGenericReport(content, reportTitle, afterPrintFunc, withCsv){
 			});
 		}
 	}catch(e){
-		showErrorMessage("printGenericReport", e);
 	}	
 }

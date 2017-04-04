@@ -10,6 +10,7 @@
 
 
 <!-- hidden fields -->
+<div id="hiddenDiv">
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
 <input type="hidden" id="errorMsg" name="errorMsg" value="${errorMsg}">
@@ -22,9 +23,6 @@
 	value="${reportUrl}">
 <input type="hidden" id="selDestination" name="selDestination"
 	value="screen">
-<%-- <input type="text" id="letterType" name= "letterType" value = "${letterType}"> --%>
-
-<div id="hiddenDiv">
 </div>
 <!-- end hidden fields -->
 
@@ -194,8 +192,8 @@
 					"click",
 					function() {
 						if (validateInput()) {
-							new Ajax.Updater(
-									"mainContents",
+							new Ajax.Request(
+									//"mainContents",
 									contextPath + "/GwpReportController",
 									{
 										evalScripts : true,
@@ -211,6 +209,7 @@
 										},
 										onCreate : showNotice("Generating report. Please wait..."),
 										onComplete : function(response) {
+											$("hiddenDiv").update(response.responseText);
 											printOutputPdf();
 										}
 									});

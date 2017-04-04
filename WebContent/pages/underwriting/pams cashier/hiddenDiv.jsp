@@ -20,11 +20,10 @@
 </div>
 
 <script type="text/javascript">
-	printOutputXls();
+	printOutputPdf();
 
-	function printOutputXls() {
+	function printOutputPdf() {
 		var reportUrl = $F("reportUrl");
-		var reportXls = $F("reportXls");
 		var reportTitle = $F("reportTitle");
 		var errorMsg = $F("errorMsg");
 		if (!checkBlankNull(errorMsg)) {
@@ -32,7 +31,7 @@
 			showMessageBox(errorMsg, "E");
 		} else {
 			var content = contextPath
-					+ "/OutputController?action=showPdf&reportUrl=" + reportXls;
+					+ "/OutputController?action=showPdf&reportUrl=" + reportUrl;
 			new Ajax.Request(contextPath + "/GIISUserController", {
 				action : "POST",
 				asynchronous : false,
@@ -42,7 +41,8 @@
 					reportTitle : $F("reportTitle")
 				},
 				onComplete : function(response) {
-					window.open(contextPath + "/OutputController?action=showExcel&reportXls=" + reportXls);
+					window.open('pages/report.jsp', '',strWindowFeatures);
+							//'location=0, toolbar=0, menubar=0, fullscreen=1');
 					hideNotice("");
 				}
 			});

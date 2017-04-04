@@ -1,5 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Pragma","no-cache");
+%>
 
 <input type="hidden" id="checkReqIntmList" name="checkReqIntmList"
 	value='${checkReqIntmList}'>
@@ -43,6 +47,7 @@
 <script type="text/javascript">
 	/* for dataGrid */
 	var checkReqIntmList = $F("checkReqIntmList");
+	console.log(checkReqIntmList);
 	var imgPath = contextPath + '/css/codebase/imgs/';
 	var remarks = '';
 	var premSeqNo = '';
@@ -85,7 +90,6 @@
 		var remarks1 = "";
 		var remarks2 = "";
 		for (var i = 0; i < gridCheckIntm.getRowsNum(); i++) {
-			console.log("REMARKS: " + remarks);
 			remarks1 = gridCheckIntm.cellById(i + 1, 5).getValue();
 			remarks2 = remarks1.replace(/[^a-zA-Z0-9 ]/g, ' '); // to solve remarks with special characters
 			if (i == 0) {

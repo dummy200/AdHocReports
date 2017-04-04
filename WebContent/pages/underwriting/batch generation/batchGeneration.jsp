@@ -1,4 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Pragma","no-cache");
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	
@@ -133,6 +137,7 @@ var linCdList = $F("lineCdList");
 var sublineCdList = $F("sublineCdList");
 var branchList = $F("branchList");
 var tariffList = $F("tariffList");
+console.log(tariffList);
 	  
 	var imgPath = contextPath + '/css/codebase/imgs/';
 	gridBranch = new dhtmlXGridObject('gridbox3');
@@ -303,7 +308,7 @@ var tariffList = $F("tariffList");
 		
 		for (var i=0; i<gridSubline.getRowsNum(); i++){
 			sublineCd = sublineCd + ',' + gridSubline.cellById(i+1, 0).getValue();
-			sublinePdfVal = sublinePdfVal + ',' + gridSubline.cellById(i+1, 2).getValue(); 
+			sublinePdfVal = sublinePdfVal + ',' + gridSubline.cellById(i+1, 2).getValue(); 	
 		}
 		
 		

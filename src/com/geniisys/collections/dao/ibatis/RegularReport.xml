@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="RegularReport">
+
+<typeAlias alias="RegularReport" type="com.geniisys.common.entity.RegularReport" />
+
+<resultMap class="com.geniisys.common.entity.RegularReport" id="regReportResultMap">
+	<result property="reportName"   column= "REPORT_NAME"/>
+	<result property="reportCategory"   column= "REPORT_CATEGORY"/>
+</resultMap>
+
+<select id="getReportList" resultMap="regReportResultMap">
+	SELECT * FROM regular_reports ORDER BY 1
+</select>
+
+</sqlMap>

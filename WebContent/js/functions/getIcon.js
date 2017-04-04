@@ -8,6 +8,5 @@ function getIcon(msgIcon){
 		if (msgIcon=="S") icon = imgMessage.SUCCESS;
 		return icon;
 	}catch (e) {
-		showErrorMessage("getIcon",e);
 	}	
 }
