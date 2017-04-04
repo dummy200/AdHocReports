@@ -1,4 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Pragma","no-cache");
+%>
 <div id= "hiddenDiv">
 	<input type="hidden" id="reportList" name="reportList"  value='${reportList}'>
 	<input type="hidden" id="dateList" name="dateList"  value='${dateList}'>

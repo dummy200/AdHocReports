@@ -5,8 +5,8 @@
 %>
 <div id="hiddenDiv">
 	<jsp:include page="/pages/userAccess.jsp"></jsp:include>
-	<%-- <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}"> --%>
-<input type="hidden" id="adhocUser" name="adhocUser" value="BADZ">
+	<input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
+<!-- <input type="hidden" id="adhocUser" name="adhocUser" value="BADZ"> -->
 </div>
 
 
