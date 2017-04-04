@@ -8,8 +8,6 @@
 	<input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
 <!-- <input type="hidden" id="adhocUser" name="adhocUser" value="BADZ"> -->
 </div>
-
-
 <script type="text/javascript">
 	//init user access
 	//all
@@ -554,6 +552,5 @@
 				"pamsCash",
 				"/PamsCashierController?action=toPamsCashierPage", //"/GwpReportController?action=toGwpPage",
 				"PAMS Cashier");
-
 	}
 </script>

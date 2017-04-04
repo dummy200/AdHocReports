@@ -21,7 +21,6 @@
 
 <script type="text/javascript">
 	printOutputPdf();
-
 	function printOutputPdf() {
 		var reportUrl = $F("reportUrl");
 		var reportTitle = $F("reportTitle");

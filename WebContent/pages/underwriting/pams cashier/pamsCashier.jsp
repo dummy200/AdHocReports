@@ -144,7 +144,68 @@
 <script type="text/javascript">
 	//  userId = $F("txtUserId");
 	var reportName = 'PAMS_CASHIER_PCI';
-
+							       <table style="margin-top: 10px; width: 100%;">
+							          <tr>
+							             <td style="width: 50%;"><b>Filter By:</b></td>
+							          </tr>
+					               </table>
+					              
+						              <table style="margin-top: 10px; width: 100%;">
+							                <tr>
+									        <td class="rightAligned">User</td>
+								               <!-- <td class="leftAligned">
+								               	<input id="txtLineCd" class="leftAligned upper" type="text" name="capsField" style="width: 80%;" value="" title="Line Code" />
+								               </td> -->
+								               <td class="leftAligned"><select name="txtUserId" id="txtUserId"
+								               	style="width: 80%;">
+								               		<option value="ALL"></option>
+							                        <c:forEach var="user" items="${ cashierList }">
+								               			<option value="${user.userId}">${user.userId} - ${user.userName}</option>
+								                    </c:forEach>
+								               </select>
+								               </td>
+							                </tr>
+						                </table>
+						                <div id= "userDiv">
+							                <table style="margin-top: 10px; width: 100%;">
+								                <tr>
+										        <td class="rightAligned">Branch</td>
+									               <!-- <td class="leftAligned">
+									               	<input id="txtLineCd" class="leftAligned upper" type="text" name="capsField" style="width: 80%;" value="" title="Line Code" />
+									               </td> -->
+									               <td class="leftAligned"><select name="txtBranchCd" id="txtBranchCd"
+									               	style="width: 80%;">
+									               		<option value=""></option>
+								                        <c:forEach var="branch" items="${ cashierBranchList }">
+									               			<option value="${branch.issCd}">${branch.issCd} - ${branch.issName}</option>
+									                    </c:forEach>
+									               </select>
+									               </td>
+								                </tr>
+							                </table>
+						                </div>
+					              </div>
+							</td>
+						</tr>
+					</table>
+			       <div class="sectionDiv" id="printDiv"
+					style="width: 97%; margin-left: 8px; margin-top: 9px; float: left; border-color: white;">
+					<div id="printofferLetterButtonsDiv" align="center">
+						<input type="button" class="button" style="width: 90px;"
+							id="btnCancel" value="Cancel"> <input type="button"
+							class="button" style="width: 90px;" id="btnPrint" value="Print">
+					</div>
+				</div>
+				</div>
+				</div>
+				</div>
+				</div>
+				
+				
+<script type="text/javascript">
+ //  userId = $F("txtUserId");
+   var reportName = 'PAMS_CASHIER_PCI';
+ 
 	var fromCalendar = new dhtmlXCalendarObject({
 		input : "txtFromDate",
 		button : "imgFromDate"
@@ -154,7 +215,6 @@
 		input : "txtToDate",
 		button : "imgToDate"
 	});
-
 	/* var fromCalendar2 = new dhtmlXCalendarObject({
 		input : "txtFromDate2",
 		button : "imgFromDate2"
@@ -238,12 +298,86 @@
 		}
 	});
 
+ 	var userId = $F("txtUserId");
+	$("txtUserId")
+	.observe(
+			"click",	 
+	function (userId){
+				if($F("txtUserId") == 'ALL'){
+					new Ajax.Request(
+							//"hiddenDiv",
+							contextPath + "/PamsCashierController",
+							{
+								evalScripts : true,
+								method : "POST",
+								parameters : {
+									action : "getAllBranches"	
+								},
+								//onCreate : showNotice("Fetching Details. Please wait..."),
+								onComplete : function(response) {
+								hideNotice("");
+								$("userDiv").update(response.responseText);
+								}});
+				}else if(!checkBlankNull($F("txtUserId")) && ($F("txtUserId") != 'ALL')){
+						new Ajax.Request(
+								//"hiddenDiv",
+								contextPath + "/PamsCashierController",
+								{
+									evalScripts : true,
+									method : "POST",
+									parameters : {
+										action : "getBranches",
+										userId : $F("txtUserId"),
+										tranCd : "98"	
+									},
+									//onCreate : showNotice("Fetching Details. Please wait..."),
+									onComplete : function(response) {
+									hideNotice("");
+									$("userDiv").update(response.responseText);
+									}});
+				 }
+		}
+			);
+	//print function
+	$("btnPrint")
+			.observe(
+					"click",
+					function() {
+						var userId = $F("txtUserId");
+						if(userId == 'ALL'){
+							userId = null;
+						}
+						//alert('nivebfwekhfwh')
+						if (validateInput()) {
+							new Ajax.Updater(
+									"mainContents",
+									contextPath + "/PamsCashierController",
+									{
+										evalScripts : true,
+										method : "POST",
+										parameters : {
+											action : "printReport",
+											reportName : reportName,
+											fromDate : $F("txtFromDate"),
+											toDate : $F("txtToDate"),
+											userId : userId,
+											branchCd : $F("txtBranchCd"),
+											user : $F("adhocUser")
+										},
+										onCreate : showNotice("Generating report. Please wait..."),
+										onComplete : function(response) {
+											printOutputPdf();
+										}
+									});
+						}
+					});
+	
 	function checkBlankNull(str) {
 		if (str == '' || str == null)
 			return true;
 		return false;
 	}
-
+	
 	function compareDate(fromDate, toDate) {
 		var date1 = new Date(fromDate);
 		var date2 = new Date(toDate);
@@ -252,7 +386,7 @@
 		} else
 			return false;
 	}
-
+  
 	function validateInput() {
 		var isOk = false;
 		if (checkBlankNull($F("txtFromDate"))
@@ -268,7 +402,6 @@
 			isOk = true;
 		return isOk;
 	}
-
 	$("btnExit").observe(
 			"click",
 			function() {
@@ -282,7 +415,7 @@
 				goToModule(divToUpdate, contextPath + "/pages/main.jsp",
 						"Please wait.....", "Home");
 			});
-
+  
 	function printOutputPdf() {
 		var reportUrl = $F("reportUrl");
 		var reportTitle = $F("reportTitle");

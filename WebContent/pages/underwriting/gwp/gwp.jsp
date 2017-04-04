@@ -10,9 +10,6 @@
 
 
 <!-- hidden fields -->
-
-<%-- <input type="text" id="letterType" name= "letterType" value = "${letterType}"> --%>
-
 <div id="hiddenDiv">
 <input type="hidden" id="page" name="page" value="${page}">
 <input type="hidden" id="lineCd" name="lineCd" value="${lineCd}">
@@ -213,6 +210,7 @@
 										onCreate : showNotice("Generating report. Please wait..."),
 										onComplete : function(response) {
 											$("hiddenDiv").update(response.responseText);
+											printOutputPdf();
 										}
 									});
 						}
