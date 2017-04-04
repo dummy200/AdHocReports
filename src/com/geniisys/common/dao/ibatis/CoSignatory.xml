@@ -14,7 +14,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd
 	<select id="getCoAllActive" resultMap="signResultMap">
 	    SELECT * FROM
         (
-        SELECT PRIN_ID ,PRIN_SIGNOR,DESIGNATION,ISSUE_PLACE
+        SELECT PRIN_ID ,PRIN_SIGNOR,TRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(designation,'''',''),'"',''),',',''),CHR(10),''),'\','')) DESIGNATION,ISSUE_PLACE
           FROM GIIS_PRIN_SIGNTRY 
           UNION ALL
         SELECT  111111 TRIAL_ID,TRIAL_TITLE||' '||TRIAL_NAME TRIAL

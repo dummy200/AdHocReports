@@ -3,6 +3,10 @@
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Pragma","no-cache");
+%>
     
 <div style="width: 78%; z-index: 500; position: relative; top: -64px; font-size: 10px; float: left; margin-left: 200px;">
     <div id="userAccess" style="color: #fff; float: right; margin-right: 5px;"></div><br/>
@@ -12,8 +16,8 @@
 			Welcome ${userName}!
 			<span id="logout" name="logout"> Logout</span>
 		</span>	
-	<input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}">
- 	<!--<input type="hidden" id="adhocUser" name="adhocUser" value="CPIRALPH">-->
+	<%-- <input type="hidden" id="adhocUser" name="adhocUser" value="${adhocUser}"> --%>
+ 	<input type="hidden" id="adhocUser" name="adhocUser" value="BADZ">
 	<script type="text/javascript">
 			var userId = $F(adhocUser);
 			getServerDateAndTime();

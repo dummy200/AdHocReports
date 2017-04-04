@@ -1,5 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Pragma","no-cache");
+%>
 <input type="hidden" id="errorMsg2" name="errorMsg2" value="${fetchPolicyIdErrorMsg}">
 
 <table style="margin-top: 0px; width: 100%;">

@@ -3,6 +3,10 @@
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Pragma","no-cache");
+%>
 
 <input type="hidden" id="userId" name="userId" value="${adhocUser}">
 <div id="siteBanner1" style="width: 100.2%;">

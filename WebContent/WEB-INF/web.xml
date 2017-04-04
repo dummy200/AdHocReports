@@ -25,14 +25,18 @@
 	<!-- when applying to live, uncomment adhoc user in welcomeUser.jsp and menu.jsp -->
 	<!-- test -->
 
-<!-- 	<filter>
+	<filter>
 		<filter-name>ServletFilter</filter-name>
 		<filter-class>com.geniisys.filter.ServletFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>ServletFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping> -->
+	</filter-mapping>
+	
+	<session-config>
+        <session-timeout>0</session-timeout>
+	</session-config>
 	
 	<servlet>
 		<servlet-name>PrintController</servlet-name>
@@ -411,6 +415,24 @@
 		<servlet-name>SoaOrixExtController2</servlet-name>
 		<url-pattern>/SoaOrixExtController2</url-pattern>
 	</servlet-mapping>
+	
+	 <servlet>
+	    <servlet-name>GwpReportController</servlet-name>
+	    <servlet-class>com.geniisys.underwriting.controller.GwpReportController</servlet-class>
+	  </servlet>
+	  <servlet-mapping>
+	    <servlet-name>GwpReportController</servlet-name>
+	    <url-pattern>/GwpReportController</url-pattern>
+	  </servlet-mapping>
+  
+	  <servlet>
+	    <servlet-name>PamsCashierController</servlet-name>
+	    <servlet-class>com.geniisys.underwriting.controller.PamsCashierController</servlet-class>
+	  </servlet>
+	  <servlet-mapping>
+	  <servlet-name>PamsCashierController</servlet-name>
+	    <url-pattern>/PamsCashierController</url-pattern>
+	  </servlet-mapping>
 	<!-- end reinsurance -->
 
 </web-app>

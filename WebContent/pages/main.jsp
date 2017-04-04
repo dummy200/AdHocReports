@@ -1,4 +1,7 @@
-
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Pragma","no-cache");
+%>
 <div id="mainContents" name="mainContents">
 	<div>
 		<jsp:include page="/pages/menu.jsp"></jsp:include>

@@ -1090,7 +1090,6 @@ Window.prototype = {
 		};		
 	  } catch (e) {
 		  win.close();
-		  showErrorMessage("createTableGrid", e);
 	  }
   } ,
   
